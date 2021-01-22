@@ -7,4 +7,4 @@ add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-add_executable(DIPAL main.cpp include/Image.hpp include/Image.cpp)
+add_executable(DIPAL main.cpp include/Image.hpp include/Image.cpp include/Segmentation.cpp include/Segmentation.hpp)
