@@ -7,4 +7,4 @@ add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-add_executable(DIPAL main.cpp include/Image.hpp include/Image.cpp include/Segmentation.cpp include/Segmentation.hpp)
+add_executable(DIPAL main.cpp include/Image/Image.hpp include/Image/Image.cpp include/Segmentation/Segmentation.cpp include/Segmentation/Segmentation.hpp include/Format/Format.cpp include/Format/Format.hpp include/Compression/JPEG.cpp include/Compression/JPEG.hpp include/Compression/BMP.cpp include/Compression/BMP.hpp include/Compression/TIFF.cpp include/Compression/TIFF.hpp include/Compression/GIF.cpp include/Compression/GIF.hpp include/Compression/PNG.cpp include/Compression/PNG.hpp include/Compression/SVG.cpp include/Compression/SVG.hpp include/Math/Math.cpp include/Math/Math.hpp)

@@ -4,7 +4,7 @@
 
 #ifndef DIPAL_SEGMENTATION_HPP
 #define DIPAL_SEGMENTATION_HPP
-#include "Image.hpp"
+#include "../Image/Image.hpp"
 
 class Segmentation {
 private:
