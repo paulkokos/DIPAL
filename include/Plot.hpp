@@ -7,6 +7,9 @@
 
 
 class Plot {
+private:
+
+public:
 
 };
 
