@@ -7,7 +7,11 @@
 
 
 class Plot {
+
 private:
+    Plot::Plot() {
+
+    }
 
 public:
 
