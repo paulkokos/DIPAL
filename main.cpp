@@ -1,5 +1,5 @@
-#include <stdio.h>
-
+#include <cstdio>
+#include <iostream>
 const int BYTES_PER_PIXEL = 3; /// red, green, & blue
 const int FILE_HEADER_SIZE = 14;
 const int INFO_HEADER_SIZE = 40;
@@ -11,17 +11,19 @@ unsigned char* createBitmapInfoHeader(int height, int width);
 
 int main ()
 {
+    int sizeOfHeader = sizeof(INFO_HEADER_SIZE);
     int height = 512;
     int width = 512;
+    std::cout << sizeOfHeader << std::endl;
     unsigned char image[height][width][BYTES_PER_PIXEL];
-    char* imageFileName = (char*) "../bitmapImage.jpg";
+    char* imageFileName = (char*) "../Output.jpg";
 
     int i, j;
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            image[i][j][2] = (unsigned char) ( i * 255 / height );             ///red
-            image[i][j][1] = (unsigned char) ( j * 255 / width );              ///green
-            image[i][j][0] = (unsigned char) ( (i+j) * 255 / (height+width) ); ///blue
+            image[i][j][2] = (unsigned char) ( 0 );             ///red
+            image[i][j][1] = (unsigned char) ( 0 );              ///green
+            image[i][j][0] = (unsigned char) (  255  ); ///blue
         }
     }
 
