@@ -14,16 +14,16 @@ int main ()
     int sizeOfHeader = sizeof(INFO_HEADER_SIZE);
     int height = 512;
     int width = 512;
-    std::cout << sizeOfHeader << std::endl;
+    std::cout << "Size of header:" <<sizeOfHeader << std::endl;
     unsigned char image[height][width][BYTES_PER_PIXEL];
     char* imageFileName = (char*) "../Output.jpg";
 
     int i, j;
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            image[i][j][2] = (unsigned char) ( 0 );             ///red
+            image[i][j][2] = (unsigned char) ( 255 );             ///red
             image[i][j][1] = (unsigned char) ( 0 );              ///green
-            image[i][j][0] = (unsigned char) (  255  ); ///blue
+            image[i][j][0] = (unsigned char) (  0  ); ///blue
         }
     }
 
