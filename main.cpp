@@ -16,7 +16,7 @@ int main ()
     int width = 512;
     std::cout << "Size of header:" <<sizeOfHeader << std::endl;
     unsigned char image[height][width][BYTES_PER_PIXEL];
-    char* imageFileName = (char*) "../Output.jpg";
+    char* imageFileName = (char*) "../Output.bmp";
 
     int i, j;
     for (i = 0; i < height; i++) {
@@ -110,3 +110,5 @@ unsigned char* createBitmapInfoHeader (int height, int width)
 
     return infoHeader;
 }
+
+//:color depth mechanism
