@@ -108,6 +108,9 @@ unsigned char* createBitmapInfoHeader (int height, int width)
     infoHeader[12] = (unsigned char)(1);
     infoHeader[14] = (unsigned char)(BYTES_PER_PIXEL*8);
 
+
+
+
     return infoHeader;
 }
 
