@@ -6,7 +6,9 @@
 #define DIPAL_LINEARALGEBRA_HPP
 
 
-class LinearAlgebra {
+#include "Math.hpp"
+
+class LinearAlgebra : private Math{
 
 };
 
