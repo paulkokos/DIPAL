@@ -6,7 +6,9 @@
 #define DIPAL_VECTORS_HPP
 
 
-class Vectors {
+#include "Math.hpp"
+
+class Vectors : private Math{
 
 };
 
