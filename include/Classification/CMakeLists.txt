@@ -1,1 +1,1 @@
-add_library(classification Classification.cpp Classification.hpp)
+add_library(Classification Classification.cpp Classification.hpp)
