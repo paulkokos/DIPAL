@@ -8,7 +8,7 @@
 
 #include "Image.hpp"
 
-class GrayscaleImage : public Image{
+class GrayscaleImage : protected Image{
 
 };
 
