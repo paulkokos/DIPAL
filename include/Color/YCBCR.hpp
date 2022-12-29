@@ -6,7 +6,9 @@
 #define DIPAL_YCBCR_HPP
 
 
-class YCBCR {
+#include "Color.hpp"
+
+class YCBCR : protected Color{
 
 };
 

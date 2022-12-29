@@ -10,6 +10,9 @@ class Color {
     //constructor
 
     //destructor
+public:
+
+private:
 
 
 };

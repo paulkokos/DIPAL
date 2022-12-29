@@ -5,8 +5,9 @@
 #ifndef DIPAL_HMMD_HPP
 #define DIPAL_HMMD_HPP
 
+#include "Color.hpp"
 
-class HMMD {
+class HMMD :protected Color{
 
 };
 
