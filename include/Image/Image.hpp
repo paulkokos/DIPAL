@@ -89,12 +89,12 @@ public:
     void setHistogramIterator(const vector<int>::iterator &histogramIterator);
 
 private:
-    int width;
+    uint8_t width;
     string name;
-    int bitDepth;
-    unsigned int fileSize;
-    int minimumIntensity;
-    int maximumIntensity;
+    uint8_t bitDepth;
+    uint8_t fileSize;
+    uint8_t minimumIntensity;
+    uint8_t maximumIntensity;
     string imageClass;
     string format;
     string imageType;

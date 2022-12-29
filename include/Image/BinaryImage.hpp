@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Image.hpp"
 
-class BinaryImage : private Image{
+class BinaryImage : protected Image{
     BinaryImage(std::uint64_t* height, std::uint64_t* width, std::uint8_t* colorDepth, std::string* fileName);
 
 };
