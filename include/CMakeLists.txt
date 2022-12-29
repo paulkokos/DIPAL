@@ -13,3 +13,4 @@ add_subdirectory(Sampling)
 add_subdirectory(Segmentation)
 add_subdirectory(Transformation)
 
+add_library(DIPAL DIPAL.cpp DIPAL.hpp)

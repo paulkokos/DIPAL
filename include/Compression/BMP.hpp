@@ -5,8 +5,9 @@
 #ifndef DIPAL_BMP_HPP
 #define DIPAL_BMP_HPP
 
+#include "Compression.hpp"
 
-class BMP {
+class BMP :protected Compression{
 
 };
 
