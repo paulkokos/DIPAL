@@ -6,7 +6,7 @@
 #define DIPAL_CIELAB_HPP
 
 
-class CIELAB {
+class CIELAB :protected Color{
 
 };
 

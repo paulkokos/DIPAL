@@ -5,8 +5,8 @@
 #ifndef DIPAL_RGB_HPP
 #define DIPAL_RGB_HPP
 
-
-class RGB {
+#include "Color.hpp"
+class RGB :protected Color{
 
 };
 

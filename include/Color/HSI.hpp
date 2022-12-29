@@ -5,8 +5,9 @@
 #ifndef DIPAL_HSI_HPP
 #define DIPAL_HSI_HPP
 
+#include "Color.hpp"
 
-class HSI {
+class HSI : protected Color{
 
 };
 

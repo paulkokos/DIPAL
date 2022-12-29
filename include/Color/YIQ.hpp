@@ -6,7 +6,9 @@
 #define DIPAL_YIQ_HPP
 
 
-class YIQ {
+#include "Color.hpp"
+
+class YIQ : protected Color{
 
 };
 

@@ -4,9 +4,9 @@
 
 #ifndef DIPAL_SRGB_HPP
 #define DIPAL_SRGB_HPP
+#include "Color.hpp"
 
-
-class SRGB {
+class SRGB :protected Color{
 
 };
 

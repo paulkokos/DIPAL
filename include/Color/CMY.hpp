@@ -5,8 +5,8 @@
 #ifndef DIPAL_CMY_HPP
 #define DIPAL_CMY_HPP
 
-
-class CMY {
+#include "Color.hpp"
+class CMY : protected Color{
 
 };
 

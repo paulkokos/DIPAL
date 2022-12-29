@@ -5,8 +5,9 @@
 #ifndef DIPAL_HSV_HPP
 #define DIPAL_HSV_HPP
 
+#include "Color.hpp"
 
-class HSV {
+class HSV : protected Color{
 
 };
 
