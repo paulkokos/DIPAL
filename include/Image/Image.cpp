@@ -115,3 +115,12 @@ const vector<int> &Image::getHistogram() const {
 void Image::setHistogram(const vector<int> &histogram) {
     Image::histogram = histogram;
 }
+
+FILE Image::imageRead(std::string location, std::string fileType) {
+
+    return FILE();
+}
+
+std::string Image::imageWrite(std::string name, std::string location, std::string fileType) {
+    return std::string();
+}
