@@ -115,7 +115,8 @@ private:
 
 
 public:
-    FILE imread(std::string location, std::string fileType);
+    FILE imageRead(std::string location, std::string fileType);
+    std::string imageWrite(std::string name, std::string location, std::string fileType);
 
 };
 
