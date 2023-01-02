@@ -115,6 +115,7 @@ private:
 
 
 public:
+    FILE imread(std::string location, std::string fileType);
 
 };
 
