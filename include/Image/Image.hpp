@@ -19,6 +19,30 @@ using std::string;
 class Image {
 private:
     int height;
+    uint8_t width;
+    string name;
+    uint8_t bitDepth;
+    uint8_t fileSize;
+    uint8_t minimumIntensity;
+    uint8_t maximumIntensity;
+    string imageClass;
+    string format;
+    string imageType;
+    string colorType;
+    vector<int> formatSignature;
+    vector<int> colorMap;
+    vector<int> histogram;
+    vector<int>::iterator formatSignatureIterator;
+    vector<int>::iterator colorMapIterator;
+    vector<int>::iterator histogramIterator;
+    struct creationDate {
+        CalendarDate date;
+        CalendarTime time;
+    };
+    struct header {
+
+    };
+
 public:
     int getHeight() const;
 
@@ -88,34 +112,8 @@ public:
 
     void setHistogramIterator(const vector<int>::iterator &histogramIterator);
 
-private:
-    uint8_t width;
-    string name;
-    uint8_t bitDepth;
-    uint8_t fileSize;
-    uint8_t minimumIntensity;
-    uint8_t maximumIntensity;
-    string imageClass;
-    string format;
-    string imageType;
-    string colorType;
-    vector<int> formatSignature;
-    vector<int> colorMap;
-    vector<int> histogram;
-    vector<int>::iterator formatSignatureIterator;
-    vector<int>::iterator colorMapIterator;
-    vector<int>::iterator histogramIterator;
-    struct creationDate {
-        CalendarDate date;
-        CalendarTime time;
-    };
-    struct header {
-
-    };
-
-
-public:
     FILE imageRead(std::string location, std::string fileType);
+
     std::string imageWrite(std::string name, std::string location, std::string fileType);
 
 };
