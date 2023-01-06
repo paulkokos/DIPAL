@@ -8,9 +8,6 @@ void generateBitmapImage(unsigned char* image, int height, int width, char* imag
 unsigned char* createBitmapFileHeader(int height, int stride);
 unsigned char* createBitmapInfoHeader(int height, int width);
 
-
-
-
 int main ()
 {
     int sizeOfHeader = sizeof(INFO_HEADER_SIZE);
