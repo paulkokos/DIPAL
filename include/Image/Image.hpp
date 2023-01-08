@@ -44,6 +44,9 @@ private:
     };
 
 public:
+
+    vector<int> getBitmapImageHeader();
+
     int getHeight() const;
 
     void setHeight(int height);
