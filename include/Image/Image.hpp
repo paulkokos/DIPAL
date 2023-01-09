@@ -45,6 +45,9 @@ private:
 
 public:
 
+
+
+
     vector<int> getBitmapImageHeader();
 
     int getHeight() const;
