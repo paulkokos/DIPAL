@@ -5,8 +5,9 @@
 #ifndef DIPAL_HLS_H
 #define DIPAL_HLS_H
 
+#include "Color.hpp"
 
-class HLS {
+class HLS :protected Color{
 
 };
 
