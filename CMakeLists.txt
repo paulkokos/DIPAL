@@ -11,4 +11,4 @@ add_subdirectory(tests)
 target_link_libraries(Classification Color)
 #target_link_libraries(Color)
 
-add_executable(MAIN main.cpp include/DIPAL.cpp include/DIPAL.hpp)
+add_executable(MAIN main1.cpp include/DIPAL.cpp include/DIPAL.hpp main1.cpp include/Image/Image.cpp include/Image/Image.hpp)
