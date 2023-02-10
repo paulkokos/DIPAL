@@ -2,6 +2,7 @@
 // Created by paulkokos on 11/27/2020.
 //
 
+#include <iostream>
 #include "Image.hpp"
 
 int Image::getHeight() const {
@@ -123,4 +124,27 @@ FILE Image::imageRead(std::string location, std::string fileType) {
 
 std::string Image::imageWrite(std::string name, std::string location, std::string fileType) {
     return std::string();
+}
+
+void Image::imageShow() {
+//    printf("Hello!!!!");
+    std::cout << "return image show";
+}
+
+Image::Image() {
+    height =0;
+    width = 0;
+    name = "noname";
+    bitDepth = 0;
+    fileSize = 0;
+    minimumIntensity = 0;
+    maximumIntensity = 0;
+    imageClass = "";
+    format = "";
+    imageType = "";
+    colorType = "";
+    formatSignature.clear();
+    colorMap.clear();
+    colorMap.clear();
+    histogram.clear();
 }

@@ -6,7 +6,9 @@
 #define DIPAL_CIELAB_HPP
 
 
-class CIELAB :protected Color{
+#include "Color.hpp"
+
+class CIELAB : public Color{
 
 };
 

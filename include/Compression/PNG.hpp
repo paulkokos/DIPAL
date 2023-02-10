@@ -5,8 +5,9 @@
 #ifndef DIPAL_PNG_HPP
 #define DIPAL_PNG_HPP
 
+#include "Compression.hpp"
 
-class PNG {
+class PNG :Compression{
 
 };
 
