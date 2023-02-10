@@ -12,5 +12,7 @@ add_subdirectory(Quantization)
 add_subdirectory(Sampling)
 add_subdirectory(Segmentation)
 add_subdirectory(Transformation)
+add_library(DIPAL DIPAL.hpp DIPAL.cpp)
 
-add_library(DIPAL DIPAL.cpp DIPAL.hpp Classification/Classification.cpp Classification/Classification.hpp)
+
+#target_link_libraries(DIPAL Geometric)

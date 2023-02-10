@@ -1,1 +1,5 @@
+#add_library(Transformation Geometric)
+project(Transformation)
 add_subdirectory(Geometric)
+add_library(Transformation Transformation.cpp Transformation.hpp)
+target_link_libraries( Transformation Geometric )
