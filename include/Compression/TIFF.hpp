@@ -5,8 +5,9 @@
 #ifndef DIPAL_TIFF_HPP
 #define DIPAL_TIFF_HPP
 
+#include "Compression.hpp"
 
-class TIFF {
+class TIFF : protected Compression{
 
 };
 

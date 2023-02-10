@@ -5,8 +5,9 @@
 #ifndef DIPAL_GIF_HPP
 #define DIPAL_GIF_HPP
 
+#include "Compression.hpp"
 
-class GIF {
+class GIF :protected Compression{
 
 };
 

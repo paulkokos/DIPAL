@@ -5,11 +5,17 @@
 #ifndef DIPAL_DIPAL_HPP
 #define DIPAL_DIPAL_HPP
 
-#include "Color/Color.hpp"
-#include "Compression/Compression.hpp"
-class DIPAL :protected Color,Compression{
-private:
-    Compression compression;
+
+namespace DIPAL {
+    class test{
+    public:
+        int testaro();
+
+    public:
+        test();
+    };
+
+//    void test();
 };
 
 

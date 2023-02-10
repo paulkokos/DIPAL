@@ -6,9 +6,10 @@
 #define DIPAL_JPEG_HPP
 
 
-#include "../Format/Format.hpp"
+#include "Compression.hpp"
 
-class JPEG : public Format{
+
+class JPEG : Compression{
 
 };
 

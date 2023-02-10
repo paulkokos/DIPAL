@@ -9,6 +9,7 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
+//#include "Image.hpp"
 #include "../CalendarDate.h"
 #include "../CalendarTime.h"
 
@@ -44,9 +45,9 @@ private:
     };
 
 public:
+    Image();
 
-
-
+    void imageShow();
 
     vector<int> getBitmapImageHeader();
 
