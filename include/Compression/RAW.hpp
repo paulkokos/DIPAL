@@ -5,8 +5,9 @@
 #ifndef DIPAL_RAW_HPP
 #define DIPAL_RAW_HPP
 
+#include "Compression.hpp"
 
-class RAW {
+class RAW :protected Compression{
 
 };
 

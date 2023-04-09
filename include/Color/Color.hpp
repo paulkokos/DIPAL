@@ -13,7 +13,7 @@ class Color {
 public:
 
 private:
-
+uint8_t channels;
 
 };
 

@@ -5,8 +5,9 @@
 #ifndef DIPAL_SVG_HPP
 #define DIPAL_SVG_HPP
 
+#include "Compression.hpp"
 
-class SVG {
+class SVG: protected Compression{
 
 };
 
