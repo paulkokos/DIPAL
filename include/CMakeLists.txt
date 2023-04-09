@@ -12,5 +12,7 @@ add_subdirectory(Quantization)
 add_subdirectory(Sampling)
 add_subdirectory(Segmentation)
 add_subdirectory(Transformation)
+add_library(DIPAL DIPAL.hpp DIPAL.cpp)
 
-add_library(DIPAL DIPAL.cpp DIPAL.hpp Math/Algebra/Algebra.cpp Math/Algebra/Algebra.hpp Math/Calculus/Calculus.cpp Math/Calculus/Calculus.hpp "Math/Linear Algebra/LinearAlgebra.cpp" "Math/Linear Algebra/LinearAlgebra.hpp" Math/Statistics/Statistics.cpp Math/Statistics/Statistics.hpp)
+
+#target_link_libraries(DIPAL Geometric)
