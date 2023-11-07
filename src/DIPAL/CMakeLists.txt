@@ -1,0 +1,1 @@
+add_executable(DIPAL DIPAL.cpp DIPAL.hpp)
