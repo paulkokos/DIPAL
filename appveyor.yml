@@ -5,5 +5,5 @@ environment:
     - BUILD_CONFIGURATION: Debug
     - BUILD_CONFIGURATION: Release
 build_script:
-  - cmake -G "Unix Makefiles" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_CONFIGURATION% .
+  - cmake -G "NMake Makefiles" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_CONFIGURATION% .
   - cmake --build . --config %BUILD_CONFIGURATION%
