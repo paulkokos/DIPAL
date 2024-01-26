@@ -62,10 +62,10 @@ unsigned char* createBitmapFileHeader (int height, int stride)
     int fileSize = FILE_HEADER_SIZE + INFO_HEADER_SIZE + (stride * height);
 
     static unsigned char fileHeader[] = {
-            0,0,     /// signature
-            0,0,0,0, /// image file size in bytes
-            0,0,0,0, /// reserved
-            0,0,0,0, /// start of pixel array
+            0,0,                     /// signature
+            0,0,0,0,          /// image file size in bytes
+            0,0,0,0,          /// reserved
+            0,0,0,0,      /// start of pixel array
     };
 
     fileHeader[ 0] = (unsigned char)('B');
