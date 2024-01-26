@@ -7,7 +7,9 @@
 
 
 class Geometry {
-
+  struct Point {
+    
+  };
 };
 
 
