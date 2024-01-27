@@ -1,5 +1,0 @@
-add_subdirectory(Algebra)
-add_subdirectory(Calculus)
-add_subdirectory(Geometry)
-add_subdirectory(Linear\ Algebra)
-add_subdirectory(Statistics)

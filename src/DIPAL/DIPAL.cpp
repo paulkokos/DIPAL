@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "DIPAL.hpp"
+#include "../../include/DIPAL/DIPAL.hpp"
 
 DIPAL::DIPAL() {
     std::cout << "Hello world from the library";
