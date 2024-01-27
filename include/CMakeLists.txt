@@ -12,5 +12,5 @@ add_subdirectory(Quantization)
 add_subdirectory(Sampling)
 add_subdirectory(Segmentation)
 add_subdirectory(Transformation)
-
+add_subdirectory("DIPAL")
 #target_link_libraries(DIPAL Geometric)
