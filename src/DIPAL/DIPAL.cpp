@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../../include/DIPAL/DIPAL.hpp"
+#include "../../include/DIPAL/ImgProc.hpp"
 
 DIPAL::DIPAL() {
     std::cout << "Hello world from the library";

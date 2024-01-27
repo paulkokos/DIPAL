@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Image.hpp"
+#include "../../include/Image/Image.hpp"
 
 int Image::getHeight() const {
     return height;
