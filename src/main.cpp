@@ -1,7 +1,7 @@
 #include <iostream>
-//#include "../include/DIPAL.hpp"
+//#include "../include/ImgProc.hpp"
 int main() {
-//    DIPAL testa;
+//    ImgProc testa;
 //    testa.testaro();
     std::cout << "Hello, World!" << std::endl;
     return 0;

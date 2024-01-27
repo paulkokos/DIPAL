@@ -1,4 +1,4 @@
-# DIPAL
+# ImgProc
 Digital Image Processing and Analysis Library
 
 ### Description

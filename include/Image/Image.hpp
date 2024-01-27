@@ -12,6 +12,7 @@
 //#include "Image.hpp"
 #include "../CalendarDate.h"
 #include "../CalendarTime.h"
+#include "Header.h"
 
 using std::iterator;
 using std::vector;
@@ -19,6 +20,7 @@ using std::string;
 
 class Image {
 private:
+    Header *header  = new Header();
     int height;
     uint8_t width;
     string name;
@@ -40,9 +42,9 @@ private:
         CalendarDate date;
         CalendarTime time;
     };
-    struct header {
-
-    };
+//    struct header {
+//
+//    };
 
 public:
     Image();
