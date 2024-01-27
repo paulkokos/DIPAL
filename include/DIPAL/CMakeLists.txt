@@ -1,1 +1,0 @@
-add_library(DIPAL DIPAL.cpp DIPAL.hpp)

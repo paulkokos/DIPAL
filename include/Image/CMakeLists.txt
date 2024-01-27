@@ -1,1 +1,0 @@
-add_executable(GrayscaleImage.cpp GrayscaleImage.hpp Image.cpp Image.hpp ColorImage.hpp ColorImage.cpp BinaryImage.hpp BinaryImage.cpp)
