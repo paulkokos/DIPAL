@@ -1,9 +1,12 @@
 #include <iostream>
-#include "include/DIPAL/ImgProc.hpp"
+#include "include/image/Image.hpp"
 using namespace DIPAL;
 int main() {
-    ImgProc *img = new ImgProc();
-
-    std::cout << "Hello !!!" << std::endl;
+    Image img;
+    img.helloWorld();
+    Image *img2 = new Image();
+    img.helloWorld();
+//    img.helloWorld();
+//    std::cout << "Hello !!!" << std::endl;
     return 0;
 }

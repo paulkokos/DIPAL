@@ -10,6 +10,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+
 class Header {
 private:
     int height;
@@ -29,12 +31,12 @@ private:
     std::vector<int>::iterator formatSignatureIterator;
     std::vector<int>::iterator colorMapIterator;
     std::vector<int>::iterator histogramIterator;
-    struct creationDate {
-        CalendarDate date;
-        CalendarTime time;
-    };
+//    struct creationDate {
+//        CalendarDate date;
+//        CalendarTime time;
+//    };
     static Header* geaderPtr;
-//    Header();
+    Header();
 
 public:
     static Header* getInstance();

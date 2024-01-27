@@ -4,9 +4,6 @@
 
 #include "../../include/Image/Header.h"
 
-Header() {
-
-}
 
 void Header::print() {
 
@@ -17,5 +14,9 @@ Header *Header::getInstance() {
 }
 
 void Header::setValues() {
+
+}
+
+Header::Header() {
 
 }

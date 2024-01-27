@@ -5,146 +5,153 @@
 #include <iostream>
 #include "../../include/Image/Image.hpp"
 
-int Image::getHeight() const {
+int DIPAL::Image::getHeight() const {
     return height;
 }
 
-void Image::setHeight(int height) {
+void DIPAL::Image::setHeight(int height) {
     Image::height = height;
 }
 
-int Image::getWidth() const {
+int DIPAL::Image::getWidth() const {
     return width;
 }
 
-void Image::setWidth(int width) {
+void DIPAL::Image::setWidth(int width) {
     Image::width = width;
 }
 
-const string &Image::getName() const {
+const string &DIPAL::Image::getName() const {
     return name;
 }
 
-void Image::setName(const string &name) {
-    Image::name = name;
+void DIPAL::Image::setName(const string &name) {
+    this->name = name;
 }
 
-int Image::getBitDepth() const {
+int DIPAL::Image::getBitDepth() const {
     return bitDepth;
 }
 
-void Image::setBitDepth(int bitDepth) {
+void DIPAL::Image::setBitDepth(int bitDepth) {
     Image::bitDepth = bitDepth;
 }
 
-unsigned int Image::getFileSize() const {
+unsigned int DIPAL::Image::getFileSize() const {
     return fileSize;
 }
 
-void Image::setFileSize(unsigned int fileSize) {
+void DIPAL::Image::setFileSize(unsigned int fileSize) {
     Image::fileSize = fileSize;
 }
 
-int Image::getMinimumIntensity() const {
+int DIPAL::Image::getMinimumIntensity() const {
     return minimumIntensity;
 }
 
-void Image::setMinimumIntensity(int minimumIntensity) {
+void DIPAL::Image::setMinimumIntensity(int minimumIntensity) {
     Image::minimumIntensity = minimumIntensity;
 }
 
-int Image::getMaximumIntensity() const {
+int DIPAL::Image::getMaximumIntensity() const {
     return maximumIntensity;
 }
 
-void Image::setMaximumIntensity(int maximumIntensity) {
-    Image::maximumIntensity = maximumIntensity;
+void DIPAL::Image::setMaximumIntensity(int maximumIntensity) {
+    DIPAL::Image::maximumIntensity = maximumIntensity;
 }
 
-const string &Image::getImageClass() const {
+const string &DIPAL::Image::getImageClass() const {
     return imageClass;
 }
 
-void Image::setImageClass(const string &imageClass) {
+void DIPAL::Image::setImageClass(const string &imageClass) {
     Image::imageClass = imageClass;
 }
 
-const string &Image::getFormat() const {
+const string &DIPAL::Image::getFormat() const {
     return format;
 }
 
-void Image::setFormat(const string &format) {
+void DIPAL::Image::setFormat(const string &format) {
     Image::format = format;
 }
 
-const string &Image::getImageType() const {
+const string &DIPAL::Image::getImageType() const {
     return imageType;
 }
 
-void Image::setImageType(const string &imageType) {
+void DIPAL::Image::setImageType(const string &imageType) {
     Image::imageType = imageType;
 }
 
-const string &Image::getColorType() const {
+const string &DIPAL::Image::getColorType() const {
     return colorType;
 }
 
-void Image::setColorType(const string &colorType) {
+void DIPAL::Image::setColorType(const string &colorType) {
     Image::colorType = colorType;
 }
 
-const vector<int> &Image::getFormatSignature() const {
+const vector<int> &DIPAL::Image::getFormatSignature() const {
     return formatSignature;
 }
 
-void Image::setFormatSignature(const vector<int> &formatSignature) {
+void DIPAL::Image::setFormatSignature(const vector<int> &formatSignature) {
     Image::formatSignature = formatSignature;
 }
 
-const vector<int> &Image::getColorMap() const {
+const vector<int> &DIPAL::Image::getColorMap() const {
     return colorMap;
 }
 
-void Image::setColorMap(const vector<int> &colorMap) {
+void DIPAL::Image::setColorMap(const vector<int> &colorMap) {
     Image::colorMap = colorMap;
 }
 
-const vector<int> &Image::getHistogram() const {
+const vector<int> &DIPAL::Image::getHistogram() const {
     return histogram;
 }
 
-void Image::setHistogram(const vector<int> &histogram) {
+void DIPAL::Image::setHistogram(const vector<int> &histogram) {
     Image::histogram = histogram;
 }
 
-FILE Image::imageRead(std::string location, std::string fileType) {
+FILE DIPAL::Image::imageRead(std::string location, std::string fileType) {
 
     return FILE();
 }
 
-std::string Image::imageWrite(std::string name, std::string location, std::string fileType) {
+std::string DIPAL::Image::imageWrite(std::string name, std::string location, std::string fileType) {
     return std::string();
 }
 
-void Image::imageShow() {
+void DIPAL::Image::imageShow() {
 //    printf("Hello!!!!");
     std::cout << "return image show";
 }
 
-Image::Image() {
-    height =0;
-    width = 0;
-    name = "noname";
-    bitDepth = 0;
-    fileSize = 0;
-    minimumIntensity = 0;
-    maximumIntensity = 0;
-    imageClass = "";
-    format = "";
-    imageType = "";
-    colorType = "";
-    formatSignature.clear();
-    colorMap.clear();
-    colorMap.clear();
-    histogram.clear();
+//DIPAL::Image::Image() {
+//    this->header =  Header::getInstance();
+//    height =0;
+//    width = 0;
+//    name = "noname";
+//    bitDepth = 0;
+//    fileSize = 0;
+//    minimumIntensity = 0;
+//    maximumIntensity = 0;
+//    imageClass = "";
+//    format = "";
+//    imageType = "";
+//    colorType = "";
+//    formatSignature.clear();
+//    colorMap.clear();
+//    colorMap.clear();
+//    histogram.clear();
+//}
+
+DIPAL::Image::Image() {}
+
+void DIPAL::Image::helloWorld() {
+    std::cout << "Hello world from DIPALL::Image";
 }
