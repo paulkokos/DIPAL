@@ -1,6 +1,13 @@
 #include <iostream>
+#include "include/image/Image.hpp"
+using namespace DIPAL;
 int main() {
-
-    std::cout << "Hello !!!" << std::endl;
+    Image img;
+    img.helloWorld();
+    Image *img2 = new Image();
+    img.helloWorld();
+    delete img2;
+//    img.helloWorld();
+//    std::cout << "Hello !!!" << std::endl;
     return 0;
 }

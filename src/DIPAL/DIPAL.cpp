@@ -1,10 +1,10 @@
+////
+//// Created by paulk on 12/29/2022.
+////
 //
-// Created by paulk on 12/29/2022.
+//#include <iostream>
+//#include "../../include/DIPAL/ImgProc.hpp"
 //
-
-#include <iostream>
-#include "../../include/DIPAL/DIPAL.hpp"
-
-DIPAL::DIPAL() {
-    std::cout << "Hello world from the library";
-}
+//DIPAL::DIPAL() {
+//    std::cout << "Hello world from the library";
+//}
