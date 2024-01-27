@@ -1,1 +1,0 @@
-add_library(DIPAL STATIC Actions.hpp)
