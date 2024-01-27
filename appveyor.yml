@@ -7,4 +7,4 @@ environment:
 
 build_script:
   - cmake -G "Ninja" -DCMAKE_BUILD_TYPE=%BUILD_CONFIGURATION% .
-  - cmake --build . --config %BUILD_CONFIGURATION%
+  - cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release
