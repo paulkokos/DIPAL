@@ -1,8 +1,8 @@
-add_library(Compression BMP.hpp BMP.cpp
-        Compression.hpp Compression.cpp
-        GIF.hpp GIF.cpp
-        JPEG.hpp JPEG.cpp
-        PNG.hpp PNG.cpp
-        RAW.hpp RAW.cpp
-        SVG.hpp SVG.cpp
-        TIFF.hpp TIFF.cpp)
+add_library(Compression BMP.cpp
+        Compression.cpp
+        GIF.cpp
+        JPEG.cpp
+        PNG.cpp
+        RAW.cpp
+        SVG.cpp
+        TIFF.cpp)

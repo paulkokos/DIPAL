@@ -1,1 +1,1 @@
-add_executable(DIPAL DIPAL.cpp DIPAL.hpp)
+add_executable(DIPAL DIPAL.cpp)
