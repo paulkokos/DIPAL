@@ -1,5 +1,4 @@
 #include <iostream>
-#include "include/DIPAL.hpp"
 #include "include/Image/Image.hpp"
 //#include "Image/Image.hpp"
 using namespace DIPAL;
