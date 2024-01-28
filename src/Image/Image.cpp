@@ -150,7 +150,7 @@ void DIPAL::Image::imageShow() {
 //        bufferHeader[i];
 //    }
     for (int i =0; i < 54; i++) {
-        std::cout  << (int)bufferHeader[i]<< " ";
+        std::cout <<std::hex << (int)bufferHeader[i]<< " ";
     }
 
     reinterpret_cast<std::string *> (bufferHeader);
