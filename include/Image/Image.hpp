@@ -29,7 +29,7 @@ namespace DIPAL {
         Header *header;    //Singleton Pattern
         int height;
         uint8_t width;
-        string* name;
+        string name;
         uint8_t bitDepth;
         uint8_t fileSize;
         uint8_t minimumIntensity;
@@ -57,7 +57,7 @@ namespace DIPAL {
 
 
 
-        FILE imageShow();
+        void imageShow();
 
         vector<int> getBitmapImageHeader();
 
