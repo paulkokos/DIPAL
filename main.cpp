@@ -6,6 +6,7 @@ int main() {
     img.helloWorld();
     Image *img2 = new Image();
     img.helloWorld();
+    img.imageShow();
     delete img2;
 //    img.helloWorld();
 //    std::cout << "Hello !!!" << std::endl;
