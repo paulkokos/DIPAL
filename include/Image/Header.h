@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "../../"
 
 
 class Header {
@@ -34,7 +35,9 @@ private:
 
 
 
-    std::string name;
+    std::string fileName;
+    std::string fileExtension;
+    std::string filePath;
     uint8_t minimumIntensity;
     uint8_t maximumIntensity;
     std::string imageClass;
@@ -47,10 +50,7 @@ private:
     std::vector<int>::iterator formatSignatureIterator;
     std::vector<int>::iterator colorMapIterator;
     std::vector<int>::iterator histogramIterator;
-//    struct creationDate {
-//        CalendarDate date;
-//        CalendarTime time;
-//    };
+
     static Header* geaderPtr;
     Header();
 
