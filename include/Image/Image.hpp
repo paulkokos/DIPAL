@@ -14,16 +14,22 @@
 #include "../../include/Calendar/CalendarTime.h"
 #include "Header.h"
 
+///TODO: Temporary global variables-> will change
+
+const int COLOR_LAYERS = 3;         //red, green,blue
+const int FILE_HEADER_SIZE = 14;
+const int INFO_HEADER_SIZE = 40;
+
 using std::iterator;
 using std::vector;
 using std::string;
 namespace DIPAL {
     class Image {
     private:
-//        Header *header;    //Singleton Pattern
+        Header *header;    //Singleton Pattern
         int height;
         uint8_t width;
-        string name;
+        string* name;
         uint8_t bitDepth;
         uint8_t fileSize;
         uint8_t minimumIntensity;
@@ -49,7 +55,7 @@ namespace DIPAL {
     public:
         Image();
 
-        void imageShow();
+        FILE imageShow();
 
         vector<int> getBitmapImageHeader();
 
