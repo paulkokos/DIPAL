@@ -55,6 +55,8 @@ namespace DIPAL {
     public:
         Image();
 
+
+
         FILE imageShow();
 
         vector<int> getBitmapImageHeader();
