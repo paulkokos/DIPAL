@@ -2,4 +2,4 @@
 // Created by paulk on 12/13/2022.
 //
 
-#include "BinaryImage.hpp"
+#include "../../../DIPAL/include/Image/BinaryImage.hpp"
