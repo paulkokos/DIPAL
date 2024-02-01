@@ -8,6 +8,12 @@ int main() {
     img.helloWorld();
     img.imageShow();
     delete img2;
+
+
+
+
+
+
 //    img.helloWorld();
 //    std::cout << "Hello !!!" << std::endl;
     return 0;
