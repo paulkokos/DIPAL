@@ -21,6 +21,3 @@ void Header::setValues() {
 Header::Header() {
 
 }
-
-
-
