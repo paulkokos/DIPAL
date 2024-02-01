@@ -7,6 +7,9 @@ int main() {
     Image *img2 = new Image();
     img.helloWorld();
     delete img2;
+
+
+
 //    img.helloWorld();
 //    std::cout << "Hello !!!" << std::endl;
     return 0;
