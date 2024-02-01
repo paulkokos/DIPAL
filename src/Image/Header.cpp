@@ -10,7 +10,8 @@ void Header::print() {
 }
 
 Header *Header::getInstance() {
-    return NULL;
+
+    return nullptr;
 }
 
 void Header::setValues() {

@@ -7,7 +7,7 @@
 
 #include "Compression.hpp"
 
-class BMP :protected Compression{
+class BMP :protected Compression {
 
 };
 
