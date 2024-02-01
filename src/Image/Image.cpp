@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include "../../include/Image/Image.hpp"
+#include "../../include/Image/Header.h"
 
 int DIPAL::Image::getHeight() const {
     return height;
@@ -127,8 +129,35 @@ std::string DIPAL::Image::imageWrite(std::string name, std::string location, std
 }
 
 void DIPAL::Image::imageShow() {
-//    printf("Hello!!!!");
-    std::cout << "return image show";
+    //image header 54 bytes
+    //image color table 1028 bytes
+    unsigned char headerOfFile[54];
+    unsigned char colorTable[1024];
+    char bufferHeader[54];
+    std::string buffer;
+    std::ifstream inStream;
+
+    inStream.open("../.../../etc/sails.bmp",std::ios::binary |std::ios::in | std::ios::app);
+    if (!inStream.is_open()) {
+        std::cout << "\nOpening of the file is failed\n";
+    } else {
+        std::cout << "Opening of the file is valid";
+    }
+    inStream.read(bufferHeader, 54);
+
+    //Testing and verifing
+//    for (auto i : buffer) {
+//        bufferHeader[i];
+//    }
+    for (int i =0; i < 54; i++) {
+        std::cout <<std::hex << (int)bufferHeader[i]<< " ";
+    }
+
+    reinterpret_cast<std::string *> (bufferHeader);
+
+//    std::cout << "Length " <<  bufferHeader.size();
+    //End of testing and verifing
+    inStream.close();
 }
 
 //DIPAL::Image::Image() {
