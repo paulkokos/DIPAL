@@ -7,10 +7,12 @@
 
 
 #include "Image.hpp"
-
-class ColorImage : protected Image{
-
-};
+namespace DIPAL {
+    class ColorImage : public Image {
+    public:
+        ColorImage();
+    };
+}
 
 
 #endif //DIPAL_COLORIMAGE_HPP

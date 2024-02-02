@@ -7,10 +7,12 @@
 
 
 #include "Image.hpp"
+namespace DIPAL {
+    class GrayscaleImage :  Image {
+    public:
+        GrayscaleImage();
 
-class GrayscaleImage : protected Image{
-
-};
-
+    };
+}
 
 #endif //DIPAL_GRAYSCALEIMAGE_HPP
