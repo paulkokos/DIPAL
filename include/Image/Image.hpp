@@ -62,6 +62,7 @@ namespace DIPAL {
 
         void setHeight(int height);
 
+
         int getWidth() const;
 
         void setWidth(int width);

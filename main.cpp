@@ -16,7 +16,8 @@ int main() {
     Image *img2 = new Image();
     img.helloWorld();
     img.imageShow();
-    //delete img2;
+    delete img2;
+
 
 
 
