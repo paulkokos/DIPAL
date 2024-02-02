@@ -8,7 +8,7 @@
 #include "../../include/Image/Header.h"
 
 int DIPAL::Image::getHeight() const {
-    return height;
+    return ;
 }
 
 void DIPAL::Image::setHeight(int height) {
@@ -179,7 +179,9 @@ void DIPAL::Image::imageShow() {
 //    histogram.clear();
 //}
 
-DIPAL::Image::Image() {}
+DIPAL::Image::Image() {
+    this->header;
+}
 
 void DIPAL::Image::helloWorld() {
     std::cout << "Hello world from DIPALL::Image";
