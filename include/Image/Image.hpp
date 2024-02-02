@@ -49,6 +49,7 @@ namespace DIPAL {
 //    };
 
     public:
+        virtual void convert() =0;
         Image();
 
 
