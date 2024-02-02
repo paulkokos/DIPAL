@@ -3,8 +3,7 @@
 //
 
 #include "../../../DIPAL/include/Image/GrayscaleImage.hpp"
-
+//constructors
 DIPAL::GrayscaleImage::GrayscaleImage() {
-    GrayscaleImage::helloWorld();
 
 }

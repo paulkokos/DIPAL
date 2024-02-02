@@ -8,8 +8,7 @@
 
 #include "Image.hpp"
 namespace DIPAL {
-    class GrayscaleImage : protected Image {
-
+    class GrayscaleImage :  Image {
     public:
         GrayscaleImage();
 
