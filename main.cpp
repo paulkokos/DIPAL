@@ -6,6 +6,7 @@ using namespace DIPAL;
 //Header* Header::headerPtr = nullptr;
 int main() {
     Image *image = new Image();
+    image->imageShow();
 //    image
 //      Header& header = Header::getHeaderInstance();
 //      GrayscaleImage *image1 = new Grayscale();
