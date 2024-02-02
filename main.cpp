@@ -1,5 +1,6 @@
 #include <iostream>
 #include "include/image/Image.hpp"
+#include "include/image/GrayscaleImage.hpp"
 #include "include/Image/BinaryImage.hpp"
 
 using namespace DIPAL;
@@ -12,7 +13,10 @@ int main() {
 //    img.imageShow();
     delete img2;
 
-
+    Image *img2 = new Image();
+    img.helloWorld();
+    img.imageShow();
+    //delete img2;
 
 
 

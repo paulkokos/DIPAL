@@ -130,7 +130,7 @@ namespace DIPAL {
 
         std::string imageWrite(std::string name, std::string location, std::string fileType);
 
-        void helloWorld();
+        friend void helloWorld();
     };
 }
 
