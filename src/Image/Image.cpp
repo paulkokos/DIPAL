@@ -179,7 +179,9 @@ void DIPAL::Image::imageShow() {
 //    histogram.clear();
 //}
 
-DIPAL::Image::Image() {}
+DIPAL::Image::Image() {
+    this->header
+}
 
 void DIPAL::Image::helloWorld() {
     std::cout << "Hello world from DIPALL::Image";
