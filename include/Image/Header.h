@@ -15,6 +15,8 @@
 
 class Header {
 private:
+
+    //Header Variables
     unsigned char signature_B;       //'B' signature (1 byte)
     unsigned char signature_M;       //'M' signature (1 byte)
     uint8_t reserved1;
