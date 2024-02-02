@@ -2,4 +2,9 @@
 // Created by paulkokos on 23/1/21.
 //
 
-#include "GrayscaleImage.hpp"
+#include "../../../DIPAL/include/Image/GrayscaleImage.hpp"
+
+DIPAL::GrayscaleImage::GrayscaleImage() {
+    GrayscaleImage::helloWorld();
+
+}

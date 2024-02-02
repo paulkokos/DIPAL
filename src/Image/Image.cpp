@@ -128,7 +128,7 @@ std::string DIPAL::Image::imageWrite(std::string name, std::string location, std
     return std::string();
 }
 
-void DIPAL::Image::imageShow() {
+friend void DIPAL::Image::imageShow() {
     //image header 54 bytes
     //image color table 1028 bytes
     unsigned char headerOfFile[54];
