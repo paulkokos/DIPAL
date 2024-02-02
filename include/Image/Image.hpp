@@ -26,12 +26,8 @@ using std::string;
 namespace DIPAL {
     class Image {
     private:
-        Header *header;    //Singleton Pattern
-        int height;
-        uint8_t width;
-        string name;
-        uint8_t bitDepth;
-        uint8_t fileSize;
+        Header *header ;    //Singleton Pattern
+
         uint8_t minimumIntensity;
         uint8_t maximumIntensity;
         string imageClass;
@@ -53,6 +49,7 @@ namespace DIPAL {
 //    };
 
     public:
+        virtual void convert() =0;
         Image();
 
 
