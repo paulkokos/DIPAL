@@ -3,3 +3,9 @@
 //
 
 #include "../../../DIPAL/include/Image/BinaryImage.hpp"
+
+DIPAL::BinaryImage::BinaryImage()  {
+    BinaryImage::helloWorld();
+
+
+}

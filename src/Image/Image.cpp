@@ -8,7 +8,7 @@
 #include "../../include/Image/Header.h"
 
 int DIPAL::Image::getHeight() const {
-    return height;
+    return ;
 }
 
 void DIPAL::Image::setHeight(int height) {
@@ -180,7 +180,7 @@ void DIPAL::Image::imageShow() {
 //}
 
 DIPAL::Image::Image() {
-    this->header
+    this->header;
 }
 
 void DIPAL::Image::helloWorld() {

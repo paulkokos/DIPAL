@@ -22,7 +22,18 @@ private:
     uint8_t reserved1;
     uint8_t reserved2;              // reserved 2+2 bytes (plz ignore)
     unsigned int bitmapInfoHeader;    //size of info header (must be 40)
-    unsigned int width;              //4 bytes in header
+    unsigned int width;
+public:
+    unsigned int getWidth() const;
+
+    void setWidth(unsigned int width);
+
+    unsigned int getHeight() const;
+
+    void setHeight(unsigned int height);
+
+private:
+    //4 bytes in header
     unsigned int height;             //4 bytes in header
     uint8_t planes;          //number of planes in the image (must be 1)
     unsigned int offsetImageStart;    //4 bytes

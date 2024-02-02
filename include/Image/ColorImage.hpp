@@ -8,7 +8,7 @@
 
 #include "Image.hpp"
 
-class ColorImage : protected Image{
+class ColorImage : public Image{
 
 };
 

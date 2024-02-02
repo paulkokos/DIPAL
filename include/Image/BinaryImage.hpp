@@ -7,8 +7,14 @@
 #include <iostream>
 #include "Image.hpp"
 namespace DIPAL {
-    class BinaryImage : protected Image {
+    class BinaryImage : public Image {
+    public:
         BinaryImage(std::uint64_t *height, std::uint64_t *width, std::uint8_t *colorDepth, std::string *fileName);
+
+
+        BinaryImage();
+
+        
 
     };
 }
