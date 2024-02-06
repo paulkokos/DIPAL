@@ -186,3 +186,10 @@ DIPAL::Image::Image() {
 void DIPAL::Image::helloWorld() {
     std::cout << "Hello world from DIPALL::Image";
 }
+
+FILE DIPAL::Image::imShow(Header header,std::string location, std::string fileName, std::string fileExtention) {
+    File file;
+
+
+    return file;
+}

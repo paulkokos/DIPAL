@@ -131,6 +131,9 @@ namespace DIPAL {
         std::string imageWrite(std::string name, std::string location, std::string fileType);
 
         void helloWorld();
+
+        FILE imShow(std::string path,std::string fileName,std::string fileExtention);
+
     };
 }
 
