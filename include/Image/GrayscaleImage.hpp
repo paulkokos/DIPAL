@@ -7,11 +7,18 @@
 
 
 #include "Image.hpp"
+#include "ColorImage.hpp"
 namespace DIPAL {
     class GrayscaleImage :  Image {
     public:
         GrayscaleImage();
 
+        Image RGB2Gray(ColorImage image);
+
+        void imRead(std::string fileName);
+
+
+        void imShow() override;
     };
 }
 
