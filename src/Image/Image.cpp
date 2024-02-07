@@ -200,5 +200,9 @@ namespace DIPAL {
 //        std::cout << "Hello world from the class image";
     }
 
+    void Image::imShow() {
+
+    }
+
 
 }

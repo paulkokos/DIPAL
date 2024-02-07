@@ -6,4 +6,17 @@
 //constructors
 DIPAL::GrayscaleImage::GrayscaleImage() {
 
+
+}
+
+DIPAL::Image DIPAL::GrayscaleImage::RGB2Gray(DIPAL::ColorImage image) {
+    return DIPAL::Image();
+}
+
+void DIPAL::GrayscaleImage::imRead(std::string fileName) {
+
+}
+
+void DIPAL::GrayscaleImage::imShow() {
+
 }
