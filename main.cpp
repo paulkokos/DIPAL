@@ -8,11 +8,11 @@ int main() {
     Image *image = new Image();
 //    image
       Header& header = Header::getHeaderInstance();
-      GrayscaleImage *image1 = new Grayscale();
-    auto *image = new GrayscaleImage();
+     // GrayscaleImage *image1 = new Grayscale();
+    //auto *image = new GrayscaleImage();
     image->helloWorld();
     auto* img = new Image();
     img->helloWorld();
-    Header *header = Header::getHeaderInstance();
+    //Header *header = Header::getHeaderInstance();
     return 0;
 }
