@@ -10,7 +10,7 @@ DIPAL::Header* DIPAL::Header::headerPtr = nullptr;
 
 namespace DIPAL {
 //int DIPAL::Image::getHeight() const {
-//    return ;
+//    return height;
 //}
 //
 //void DIPAL::Image::setHeight(int height) {
