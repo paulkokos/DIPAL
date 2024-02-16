@@ -5,19 +5,16 @@
 #ifndef DIPAL_BINARYIMAGE_HPP
 #define DIPAL_BINARYIMAGE_HPP
 #include <iostream>
-#include "ImageFactory.hpp"
+#include "Image.hpp"
 
 namespace DIPAL {
-    class BinaryImage : public ImageFactory {
+    class BinaryImage : public Image {
     public:
-        BinaryImage(std::uint64_t *height, std::uint64_t *width, std::uint8_t *colorDepth, std::string *fileName);
+//        BinaryImage(std::uint64_t *height, std::uint64_t *width, std::uint8_t *colorDepth, std::string *fileName);
 
 
         BinaryImage();
 
-        void imShow() const override{
-            std::cout << "Hello from imshow() from Binary\n";
-        }
     };
 }
 

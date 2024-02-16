@@ -9,10 +9,11 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
-//#include "../../include/ImageCreator/Header.hpp"
+//#include "../../include/Image/Header.hpp"
 //#include "../../include/Calendar/CalendarDate.h"
 //#include "../../include/Calendar/CalendarTime.h"
 #include "Header.hpp"
+#include "Image.hpp"
 
 ///TODO: Temporary global variables-> will change
 struct DefaultVariables {
@@ -38,7 +39,7 @@ using std::iterator;
 using std::vector;
 using std::string;
 namespace DIPAL {
-    class ImageCreator {
+    class Image {
     private:
         Header& header =   Header::getHeaderInstance();    //Singleton Pattern
         uint8_t minimumIntensity;
@@ -56,7 +57,7 @@ namespace DIPAL {
 
 
     public:
-        ImageCreator();
+        Image();
 //        virtual void convert() =0;
 
 
@@ -137,13 +138,11 @@ namespace DIPAL {
 //
 //        std::string imageWrite(std::string name, std::string location, std::string fileType);
 
-        virtual void imShow();
+//        virtual void imShow();
 
          void helloWorld();
 
-
-
-        virtual ~ImageCreator();
+         virtual ~Image();
     };
 }
 
