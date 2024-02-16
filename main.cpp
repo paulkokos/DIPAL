@@ -5,8 +5,9 @@
 using namespace DIPAL;
 //Header* Header::headerPtr = nullptr;
 int main() {
-    Image *img = new Image();
-    img->helloWorld();
+    Image *img = new BinaryImage();
+    img->imShow();
+//    ImageCreator* img1 = new BinaryImage();
     return 0;
 
 }

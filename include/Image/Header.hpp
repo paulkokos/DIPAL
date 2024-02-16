@@ -45,6 +45,7 @@ namespace DIPAL {
         void getHeader();
 
 
+
         static Header &getHeaderInstance();
 
         Header(const Header &) = delete;
