@@ -11,8 +11,8 @@ namespace DIPAL {
 
     }
 
-    DIPAL::Image DIPAL::GrayscaleImage::RGB2Gray(DIPAL::ColorImage image) {
-        return DIPAL::Image();
+    DIPAL::ImageCreator DIPAL::GrayscaleImage::RGB2Gray(DIPAL::ColorImage image) {
+        return DIPAL::ImageCreator();
     }
 
     void DIPAL::GrayscaleImage::imRead(std::string fileName) {

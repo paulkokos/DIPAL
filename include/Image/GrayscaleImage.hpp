@@ -9,11 +9,11 @@
 #include "Image.hpp"
 #include "ColorImage.hpp"
 namespace DIPAL {
-    class GrayscaleImage :  public Image {
+    class GrayscaleImage :  public ImageCreator {
     public:
         GrayscaleImage();
 
-        Image RGB2Gray(ColorImage image);
+        ImageCreator RGB2Gray(ColorImage image);
 
         void imRead(std::string fileName);
     };
