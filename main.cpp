@@ -8,4 +8,5 @@ int main() {
     Image *img = new Image();
     img->helloWorld();
     return 0;
+
 }
