@@ -199,7 +199,7 @@ namespace DIPAL {
 //                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
 //                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
 
-        std::cout << "Hello world from the class image";
+        std::cout << "Hello world from the class image\n";
     }
 
     void Image::imShow() {
