@@ -6,11 +6,9 @@
 #include <fstream>
 #include "../../include/Image/Image.hpp"
 #include "../../include/Image/Header.hpp"
-DIPAL::Header* DIPAL::Header::headerPtr = nullptr;
-
-
 
 namespace DIPAL {
+    Header* Header::headerPtr = nullptr;
 //int DIPAL::Image::getHeight() const {
 //    return ;
 //}
