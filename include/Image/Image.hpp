@@ -138,9 +138,9 @@ namespace DIPAL {
 //
 //        std::string imageWrite(std::string name, std::string location, std::string fileType);
 
-//        virtual void imShow();
+         virtual std::string imShow() const = 0;
 
-         void helloWorld();
+         virtual void helloWorld();
 
          virtual ~Image();
     };

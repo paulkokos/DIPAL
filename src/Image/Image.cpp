@@ -7,9 +7,30 @@
 #include "../../include/Image/Image.hpp"
 #include "../../include/Image/Header.hpp"
 
-namespace DIPAL {
+namespace DIPAL{
+
     Header* Header::headerPtr = nullptr;
-//int DIPAL::Image::getHeight() const {
+
+    Image::Image() {
+        std::cout << "Hello world from the class image\n";
+
+    }
+
+    Image::~Image() {
+
+        std::cout << "Good bye world from the class image\n";
+
+    }
+
+    void Image::helloWorld() {
+//    header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER,DefaultVariables::WIDTH,
+//                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
+//                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
+
+        std::cout << "Hello world from the class image\n";
+    }
+
+    //int DIPAL::Image::getHeight() const {
 //    return ;
 //}
 //
@@ -180,31 +201,6 @@ namespace DIPAL {
 //    colorMap.clear();
 //    histogram.clear();
 //}
-
-    Image::Image() {
-        std::cout << "Hello world from the class image\n";
-
-    }
-
-    Image::~Image() {
-
-        std::cout << "Good bye world from the class image\n";
-
-    }
-
-    void Image::helloWorld() {
-//    header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER,DefaultVariables::WIDTH,
-//                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
-//                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
-
-        std::cout << "Hello world from the class image\n";
-    }
-
-
-
-//    void Image::imShow() const override {
-//
-//    }
 
 
 }

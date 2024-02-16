@@ -14,6 +14,7 @@ namespace DIPAL {
 
 
         BinaryImage();
+        std::string imShow() const override;
 
     };
 }

@@ -17,5 +17,7 @@ add_executable(DIPAL
 
 
         main.cpp
+        src/Image/ImageFactory.cpp
+        include/Image/ImageFactory.h
 )
 #add_executable(Main main.cpp)
