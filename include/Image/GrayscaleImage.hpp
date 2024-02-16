@@ -12,10 +12,8 @@ namespace DIPAL {
     class GrayscaleImage :  public Image {
     public:
         GrayscaleImage();
+        std::string imShow() const override;
 
-        Image RGB2Gray(ColorImage image);
-
-        void imRead(std::string fileName);
     };
 }
 
