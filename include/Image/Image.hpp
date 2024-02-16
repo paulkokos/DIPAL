@@ -41,25 +41,18 @@ namespace DIPAL {
     class Image {
     private:
         Header& header =   Header::getHeaderInstance();    //Singleton Pattern
-//        uint8_t minimumIntensity;
-//        uint8_t maximumIntensity;
-//        string imageClass;
-//        string format;
-//        string imageType;
-//        string colorType;
-//        vector<int> formatSignature;
-//        vector<int> colorMap;
-//        vector<int> histogram;
-//        vector<int>::iterator formatSignatureIterator;
-//        vector<int>::iterator colorMapIterator;
-//        vector<int>::iterator histogramIterator;
-//        struct creationDate {
-//            CalendarDate date;
-//            CalendarTime time;
-//        };
-//    struct header {
-//
-//    };
+        uint8_t minimumIntensity;
+        uint8_t maximumIntensity;
+        string imageClass;
+        string format;
+        string imageType;
+        string colorType;
+        vector<int> formatSignature;
+        vector<int> colorMap;
+        vector<int> histogram;
+        vector<int>::iterator formatSignatureIterator;
+        vector<int>::iterator colorMapIterator;
+        vector<int>::iterator histogramIterator;
 
     public:
         Image();

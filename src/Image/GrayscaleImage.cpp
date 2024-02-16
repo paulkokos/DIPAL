@@ -17,6 +17,6 @@ void DIPAL::GrayscaleImage::imRead(std::string fileName) {
 
 }
 
-void DIPAL::GrayscaleImage::imShow() {
-
-}
+//void DIPAL::GrayscaleImage::imShow() {
+//
+//}
