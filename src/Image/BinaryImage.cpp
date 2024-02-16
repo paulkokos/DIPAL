@@ -3,9 +3,9 @@
 //
 
 #include "../../../DIPAL/include/Image/BinaryImage.hpp"
+namespace DIPAL {
+    BinaryImage::BinaryImage() {
+        std::cout << "Hello world from Binary image\n";
 
-//DIPAL::BinaryImage::BinaryImage()  {
-//    BinaryImage::helloWorld();
-//
-//
-//}
+    }
+}

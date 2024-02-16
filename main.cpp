@@ -7,10 +7,10 @@ using namespace DIPAL;
 int main() {
     Image *image = new Image();
 //    image
-      Header& header = Header::getHeaderInstance();
-      header.getHeader();
+//      Header& header = Header::getHeaderInstance();
+//      header.getHeader();
 
-      Image *image1 = new Image();
+      Image *image1 = new GrayscaleImage();
     //auto *image = new GrayscaleImage();
     image->helloWorld();
     auto* img = new Image();

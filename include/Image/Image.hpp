@@ -54,6 +54,7 @@ namespace DIPAL {
         vector<int>::iterator colorMapIterator;
         vector<int>::iterator histogramIterator;
 
+
     public:
         Image();
 //        virtual void convert() =0;

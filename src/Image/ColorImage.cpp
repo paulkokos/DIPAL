@@ -3,7 +3,8 @@
 //
 
 #include "../../include/Image/ColorImage.hpp"
-
-DIPAL::ColorImage::ColorImage() {
-
+namespace DIPAL {
+    ColorImage::ColorImage() {
+        std::cout << "Hello world for ColorImage Class\n";
+    }
 }
