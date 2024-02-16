@@ -9,7 +9,7 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
-//#include "../../include/Image/Header.hpp"
+//#include "../../include/ImageCreator/Header.hpp"
 //#include "../../include/Calendar/CalendarDate.h"
 //#include "../../include/Calendar/CalendarTime.h"
 #include "Header.hpp"
@@ -38,7 +38,7 @@ using std::iterator;
 using std::vector;
 using std::string;
 namespace DIPAL {
-    class Image {
+    class ImageCreator {
     private:
         Header& header =   Header::getHeaderInstance();    //Singleton Pattern
         uint8_t minimumIntensity;
@@ -56,7 +56,7 @@ namespace DIPAL {
 
 
     public:
-        Image();
+        ImageCreator();
 //        virtual void convert() =0;
 
 
@@ -143,7 +143,7 @@ namespace DIPAL {
 
 
 
-        virtual ~Image();
+        virtual ~ImageCreator();
     };
 }
 

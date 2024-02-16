@@ -10,9 +10,8 @@
 namespace DIPAL {
     class ImageFactory {
     public:
-        virtual void inShow() {}
-//        virtual Image *createImage() = 0;
-//        virtual  ~ImageFactory() {}
+        virtual void imShow() const = 0;
+        virtual ~ImageFactory();
     };
 }
 
