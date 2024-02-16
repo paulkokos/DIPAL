@@ -8,7 +8,7 @@
 
 #include "Image.hpp"
 namespace DIPAL {
-    class ColorImage : public Image {
+    class ColorImage : public ImageCreator {
     public:
         ColorImage();
     };
