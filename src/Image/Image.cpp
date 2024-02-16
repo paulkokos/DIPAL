@@ -8,6 +8,8 @@
 #include "../../include/Image/Header.hpp"
 DIPAL::Header* DIPAL::Header::headerPtr = nullptr;
 
+
+
 namespace DIPAL {
 //int DIPAL::Image::getHeight() const {
 //    return ;
@@ -197,7 +199,7 @@ namespace DIPAL {
 //                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
 //                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
 
-//        std::cout << "Hello world from the class image";
+        std::cout << "Hello world from the class image";
     }
 
     void Image::imShow() {

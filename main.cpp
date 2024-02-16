@@ -8,6 +8,8 @@ int main() {
     Image *image = new Image();
 //    image
       Header& header = Header::getHeaderInstance();
+      header.getHeader();
+
       Image *image1 = new Image();
     //auto *image = new GrayscaleImage();
     image->helloWorld();

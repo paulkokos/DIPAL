@@ -147,6 +147,8 @@ namespace DIPAL {
 
          void helloWorld();
 
+
+
         virtual ~Image();
     };
 }
