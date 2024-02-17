@@ -3,9 +3,14 @@
 //
 
 #include "../../../DIPAL/include/Image/BinaryImage.hpp"
+namespace DIPAL {
+    BinaryImage::BinaryImage() {
+        std::cout << "Binary image Constructed\n";
 
-DIPAL::BinaryImage::BinaryImage()  {
-    BinaryImage::helloWorld();
+    }
+    std::string BinaryImage::imShow() const {
+        return "Hello from Factory class Binary Image\n";
+    }
 
 
 }
