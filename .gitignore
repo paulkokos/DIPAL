@@ -1,2 +1,9 @@
 # Project exclude paths
 /cmake-build-debug/
+/matplotplusplus/
+/opencv/
+/tests/CMakeFiles/
+/libs/CMakeFiles/
+/src/CMakeFiles/
+/matplotplusplus/
+/matplotplusplus/
