@@ -4,9 +4,16 @@
 
 #ifndef DIPAL_COLOR_HPP
 #define DIPAL_COLOR_HPP
-
+#include <iostream>
 
 class Color {
+    //constructor
+
+    //destructor
+public:
+
+private:
+uint8_t channels;
 
 };
 

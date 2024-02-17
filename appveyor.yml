@@ -1,0 +1,10 @@
+version: 1.0.{build}
+image: Ubuntu
+environment:
+  matrix:
+    - BUILD_CONFIGURATION: Debug
+    - BUILD_CONFIGURATION: Release
+
+build_script:
+  - cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Debug  .
+  - cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release .
