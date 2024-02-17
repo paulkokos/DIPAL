@@ -43,7 +43,6 @@ namespace DIPAL {
     private:
         Header& header =   Header::getHeaderInstance();    //Singleton Pattern
         uint8_t minimumIntensity;
-        uint8_t maximumIntensity;
         string imageClass;
         string format;
         string imageType;
@@ -58,6 +57,17 @@ namespace DIPAL {
 
     public:
         Image();
+        unsigned int getBitDepth() const;
+
+        void setBitDepth(int bitDepth);
+
+        unsigned int getHeight() const;
+
+        void setHeight(int height);
+
+        unsigned int getWidth() const;
+
+        void setWidth(int width);
 //        virtual void convert() =0;
 
 
@@ -65,22 +75,13 @@ namespace DIPAL {
 
 //        vector<int> getBitmapImageHeader();
 
-//        int getHeight() const;
-//
-//        void setHeight(int height);
-//
-//
-//        int getWidth() const;
-//
-//        void setWidth(int width);
+
 //
 //        const string &getName() const;
 //
 //        void setName(const string &name);
 //
-//        int getBitDepth() const;
-//
-//        void setBitDepth(int bitDepth);
+
 //
 //        unsigned int getFileSize() const;
 //
@@ -140,7 +141,7 @@ namespace DIPAL {
 
          virtual std::string imShow() const = 0;
 
-         virtual void helloWorld();
+//         virtual void helloWorld();
 
          virtual ~Image();
     };
