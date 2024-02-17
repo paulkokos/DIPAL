@@ -19,6 +19,7 @@ int main() {
 //    img4->build(ImageTypes::IM_Binary);
 //    img5->build(ImageTypes::IM_Binary);
     Image *i = new BinaryImage();
+    i->setHeight(100);
     i->imShow();
 //    i->helloWorld();
 
