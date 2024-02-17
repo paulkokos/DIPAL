@@ -3,7 +3,12 @@
 //
 
 #include "../../include/Image/ColorImage.hpp"
-
-DIPAL::ColorImage::ColorImage() {
+namespace DIPAL {
+    ColorImage::ColorImage() {
+        std::cout << "ColorImage Class Constructed\n";
+    }
+    std::string ColorImage::imShow() const {
+        return "Hello from Factory class Binary Image\n";
+    }
 
 }
