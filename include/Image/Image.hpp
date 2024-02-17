@@ -61,7 +61,7 @@ namespace DIPAL {
 //        virtual void convert() =0;
 
 
-//        void imageShow();
+        static void imageShow();
 
 //        vector<int> getBitmapImageHeader();
 
