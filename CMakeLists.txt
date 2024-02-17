@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(DIPAL)
 set(CMAKE_CXX_STANDARD 17)
-
 add_executable(DIPAL
         src/Image/Image.cpp
         src/Image/Header.cpp
@@ -21,4 +20,5 @@ add_executable(DIPAL
         include/Image/ImageFactory.h
         include/Image/ImageTypes.h
 )
+
 #add_executable(Main main.cpp)
