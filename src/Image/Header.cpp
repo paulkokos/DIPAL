@@ -2,38 +2,28 @@
 // Created by paulkokos on 1/27/2024.
 //
 
-#include "../../include/Image/Header.h"
+#include "../../include/Image/Header.hpp"
+namespace DIPAL {
+    Header &Header::getHeaderInstance() {
+        if (!headerPtr) {
+            headerPtr = new Header();
+        }
+        std::cout << "Header instance created\n";
+        return *headerPtr;
+    }
+
+    void DIPAL::Header::getHeader() {
+        std::cout << "Hello from modification method\n";
+    }
 
 
-void Header::print() {
+    Header::Header() {
+        std::cout << "Header Singleton created\n";
+    }
 
-}
+    Header::~Header() {
+        std::cout << "Header Singleton destroyed\n";
+        delete headerPtr;
+    }
 
-Header *Header::getInstance() {
-
-    return nullptr;
-}
-
-void Header::setValues() {
-
-}
-
-Header::Header() {
-
-}
-
-unsigned int Header::getWidth() const {
-    return width;
-}
-
-void Header::setWidth(unsigned int width) {
-    Header::width = width;
-}
-
-unsigned int Header::getHeight() const {
-    return height;
-}
-
-void Header::setHeight(unsigned int height) {
-    Header::height = height;
 }

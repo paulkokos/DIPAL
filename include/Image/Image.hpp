@@ -9,16 +9,31 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
-//#include "Image.hpp"
-#include "../../include/Calendar/CalendarDate.h"
-#include "../../include/Calendar/CalendarTime.h"
-#include "Header.h"
+//#include "../../include/Image/Header.hpp"
+//#include "../../include/Calendar/CalendarDate.h"
+//#include "../../include/Calendar/CalendarTime.h"
+#include "Header.hpp"
+#include "Image.hpp"
 
 ///TODO: Temporary global variables-> will change
+struct DefaultVariables {
+    unsigned char SIGNATURE_B = 'B';
+    unsigned char SIGNATURE_M = 'M';
+    uint8_t RESERVED1;
+    uint8_t RESERVED2;
+    const static unsigned int BITMAPINFOHEADER = 40;
+    const static unsigned int WIDTH = 512;
+    const static unsigned int HEIGHT = 512;
+    const static uint8_t PLAINS = 1;
+    const static unsigned int OFFSETIMAGESTART = 1024;
+    const static unsigned int BITDEPTH = 24;
+    const static unsigned int SIZEOFDATA=0;
+};
 
 const int COLOR_LAYERS = 3;         //red, green,blue
 const int FILE_HEADER_SIZE = 14;
 const int INFO_HEADER_SIZE = 40;
+
 
 using std::iterator;
 using std::vector;
@@ -26,8 +41,7 @@ using std::string;
 namespace DIPAL {
     class Image {
     private:
-        Header *header ;    //Singleton Pattern
-
+        Header& header =   Header::getHeaderInstance();    //Singleton Pattern
         uint8_t minimumIntensity;
         uint8_t maximumIntensity;
         string imageClass;
@@ -40,100 +54,95 @@ namespace DIPAL {
         vector<int>::iterator formatSignatureIterator;
         vector<int>::iterator colorMapIterator;
         vector<int>::iterator histogramIterator;
-        struct creationDate {
-            CalendarDate date;
-            CalendarTime time;
-        };
-//    struct header {
-//
-//    };
+
 
     public:
-        virtual void convert() =0;
         Image();
+//        virtual void convert() =0;
 
 
+//        void imageShow();
 
-        void imageShow();
+//        vector<int> getBitmapImageHeader();
 
-        vector<int> getBitmapImageHeader();
+//        int getHeight() const;
+//
+//        void setHeight(int height);
+//
+//
+//        int getWidth() const;
+//
+//        void setWidth(int width);
+//
+//        const string &getName() const;
+//
+//        void setName(const string &name);
+//
+//        int getBitDepth() const;
+//
+//        void setBitDepth(int bitDepth);
+//
+//        unsigned int getFileSize() const;
+//
+//        void setFileSize(unsigned int fileSize);
+//
+//        int getMinimumIntensity() const;
+//
+//        void setMinimumIntensity(int minimumIntensity);
+//
+//        int getMaximumIntensity() const;
+//
+//        void setMaximumIntensity(int maximumIntensity);
+//
+//        const string &getImageClass() const;
+//
+//        void setImageClass(const string &imageClass);
+//
+//        const string &getFormat() const;
+//
+//        void setFormat(const string &format);
+//
+//        const string &getImageType() const;
+//
+//        void setImageType(const string &imageType);
+//
+//        const string &getColorType() const;
+//
+//        void setColorType(const string &colorType);
+//
+//        const vector<int> &getFormatSignature() const;
+//
+//        void setFormatSignature(const vector<int> &formatSignature);
+//
+//        const vector<int> &getColorMap() const;
+//
+//        void setColorMap(const vector<int> &colorMap);
+//
+//        const vector<int> &getHistogram() const;
+//
+//        void setHistogram(const vector<int> &histogram);
+//
+//        const vector<int>::iterator &getFormatSignatureIterator() const;
+//
+//        void setFormatSignatureIterator(const vector<int>::iterator &formatSignatureIterator);
+//
+//        const vector<int>::iterator &getColorMapIterator() const;
+//
+//        void setColorMapIterator(const vector<int>::iterator &colorMapIterator);
+//
+//        const vector<int>::iterator &getHistogramIterator() const;
+//
+//        void setHistogramIterator(const vector<int>::iterator &histogramIterator);
+//
+//        FILE imageRead(std::string location, std::string fileType);
+//
+//        std::string imageWrite(std::string name, std::string location, std::string fileType);
 
-        int getHeight() const;
+         virtual std::string imShow() const = 0;
 
-        void setHeight(int height);
+         virtual void helloWorld();
 
-        int getWidth() const;
-
-        void setWidth(int width);
-
-        const string &getName() const;
-
-        void setName(const string &name);
-
-        int getBitDepth() const;
-
-        void setBitDepth(int bitDepth);
-
-        unsigned int getFileSize() const;
-
-        void setFileSize(unsigned int fileSize);
-
-        int getMinimumIntensity() const;
-
-        void setMinimumIntensity(int minimumIntensity);
-
-        int getMaximumIntensity() const;
-
-        void setMaximumIntensity(int maximumIntensity);
-
-        const string &getImageClass() const;
-
-        void setImageClass(const string &imageClass);
-
-        const string &getFormat() const;
-
-        void setFormat(const string &format);
-
-        const string &getImageType() const;
-
-        void setImageType(const string &imageType);
-
-        const string &getColorType() const;
-
-        void setColorType(const string &colorType);
-
-        const vector<int> &getFormatSignature() const;
-
-        void setFormatSignature(const vector<int> &formatSignature);
-
-        const vector<int> &getColorMap() const;
-
-        void setColorMap(const vector<int> &colorMap);
-
-        const vector<int> &getHistogram() const;
-
-        void setHistogram(const vector<int> &histogram);
-
-        const vector<int>::iterator &getFormatSignatureIterator() const;
-
-        void setFormatSignatureIterator(const vector<int>::iterator &formatSignatureIterator);
-
-        const vector<int>::iterator &getColorMapIterator() const;
-
-        void setColorMapIterator(const vector<int>::iterator &colorMapIterator);
-
-        const vector<int>::iterator &getHistogramIterator() const;
-
-        void setHistogramIterator(const vector<int>::iterator &histogramIterator);
-
-        FILE imageRead(std::string location, std::string fileType);
-
-        std::string imageWrite(std::string name, std::string location, std::string fileType);
-
-        void helloWorld();
-
-        FILE imShow(std::string path,std::string fileName,std::string fileExtention);
-
+         virtual ~Image();
     };
 }
 

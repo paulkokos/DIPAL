@@ -4,13 +4,16 @@
 
 #ifndef DIPAL_COLORIMAGE_HPP
 #define DIPAL_COLORIMAGE_HPP
-
-
 #include "Image.hpp"
 
-class ColorImage : public Image{
 
-};
+namespace DIPAL {
+    class ColorImage : public Image {
+    public:
+        ColorImage();
+        std::string imShow() const override;
+    };
+}
 
 
 #endif //DIPAL_COLORIMAGE_HPP
