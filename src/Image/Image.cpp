@@ -7,9 +7,9 @@
 #include "../../include/Image/Image.hpp"
 #include "../../include/Image/Header.hpp"
 
-namespace DIPAL{
+namespace DIPAL {
 
-    Header* Header::headerPtr = nullptr;
+    Header *Header::headerPtr = nullptr;
 
     Image::Image() {
         std::cout << "Hello world from the class image\n";
@@ -22,45 +22,20 @@ namespace DIPAL{
 
     }
 
-    void Image::helloWorld() {
-//    header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER,DefaultVariables::WIDTH,
-//                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
-//                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
 
-        std::cout << "Hello world from the class image\n";
-    }
 
-    //int DIPAL::Image::getHeight() const {
-//    return ;
-//}
+//    void Image::helloWorld() {
+//        header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER, DefaultVariables::WIDTH,
+//                                  DefaultVariables::HEIGHT, DefaultVariables::OFFSETIMAGESTART,
+//                                  DefaultVariables::BITDEPTH, DefaultVariables::SIZEOFDATA);
 //
-//void DIPAL::Image::setHeight(int height) {
-//    Image::height = height;
-//}
-//
-//int DIPAL::Image::getWidth() const {
-//    return width;
-//}
-//
-//void DIPAL::Image::setWidth(int width) {
-//    Image::width = width;
-//}
-//
-//const string &DIPAL::Image::getName() const {
-//    return name;
-//}
-//
-//void DIPAL::Image::setName(const string &name) {
-//    this->name = name;
-//}
-//
-//int DIPAL::Image::getBitDepth() const {
-//    return bitDepth;
-//}
-//
-//void DIPAL::Image::setBitDepth(int bitDepth) {
-//    Image::bitDepth = bitDepth;
-//}
+//        std::cout << "Hello world from the class image\n";
+//    }
+
+
+
+
+
 //
 //unsigned int DIPAL::Image::getFileSize() const {
 //    return fileSize;
