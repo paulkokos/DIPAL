@@ -1,24 +1,19 @@
 #include <iostream>
-#include "include/Image/Image.hpp"
+#include "include/image/Image.hpp"
+#include "include/image/GrayscaleImage.hpp"
 #include "include/Image/BinaryImage.hpp"
-#include "include/Image/ImageFactory.h"
-#include "include/Image/ImageTypes.h"
 using namespace DIPAL;
 //Header* Header::headerPtr = nullptr;
 int main() {
-//    Image *img = new BinaryImage();
-//    img->imShow();
-    ImageFactory* img1 ;
-    ImageFactory* img2 ;
-    ImageFactory* img3 ;
-    ImageFactory* img4 ;
-    ImageFactory* img5 ;
-    img1->build(ImageTypes::IM_Binary);
-    img2->build(ImageTypes::IM_Binary);
-    img3->build(ImageTypes::IM_Binary);
-    img4->build(ImageTypes::IM_Binary);
-    img5->build(ImageTypes::IM_Binary);
-
+    Image *image = new Image();
+    image->imageShow();
+//    image
+//      Header& header = Header::getHeaderInstance();
+//      GrayscaleImage *image1 = new Grayscale();
+//    auto *image = new GrayscaleImage();
+//    image->helloWorld();
+//    auto* img = new Image();
+//    img->helloWorld();
+//    Header *header = Header::getHeaderInstance();
     return 0;
-
 }
