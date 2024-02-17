@@ -204,3 +204,10 @@ void Image::imageShow() {
 
 
 }
+
+FILE DIPAL::Image::imShow(Header header,std::string location, std::string fileName, std::string fileExtention) {
+    File file;
+
+
+    return file;
+}
