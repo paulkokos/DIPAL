@@ -12,6 +12,10 @@ namespace DIPAL {
         return *headerPtr;
     }
 
+    void DIPAL::Header::getHeader() {
+        std::cout << "Hello from modification method\n";
+    }
+
 
     Header::Header() {
         std::cout << "Header Singleton created\n";

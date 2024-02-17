@@ -7,10 +7,12 @@
 
 
 #include "Image.hpp"
+#include "ColorImage.hpp"
 namespace DIPAL {
-    class GrayscaleImage :  Image {
+    class GrayscaleImage :  public Image {
     public:
         GrayscaleImage();
+        std::string imShow() const override;
 
     };
 }
