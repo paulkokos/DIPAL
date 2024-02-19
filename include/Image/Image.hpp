@@ -13,7 +13,6 @@
 //#include "../../include/Calendar/CalendarDate.h"
 //#include "../../include/Calendar/CalendarTime.h"
 #include "Header.hpp"
-#include "Image.hpp"
 
 ///TODO: Temporary global variables-> will change
 struct DefaultVariables {
