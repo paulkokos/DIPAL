@@ -12,8 +12,8 @@ int main() {
 //      GrayscaleImage *image1 = new Grayscale();
 //    auto *image = new GrayscaleImage();
 //    image->helloWorld();
-//    auto* img = new Image();
-//    img->helloWorld();
+    auto* img = new Image();
+    img->helloWorld();
 //    Header *header = Header::getHeaderInstance();
     return 0;
 }
