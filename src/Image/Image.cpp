@@ -135,6 +135,7 @@ void DIPAL::Image::imageShow() {
     std::string buffer;
     std::ifstream inStream;
 
+
     inStream.open("../.../../etc/sails.bmp",std::ios::binary |std::ios::in | std::ios::app);
     if (!inStream.is_open()) {
         std::cout << "\nOpening of the file is failed\n";
@@ -155,9 +156,11 @@ void DIPAL::Image::imageShow() {
 //    for (auto i : buffer) {
 //        bufferHeader[i];
 //    }
+    std::cout << "-----Beginning of header-----\n";
     for (int i =0; i < 54; i++) {
         std::cout <<std::hex << (int)bufferHeader[i]<< "\n";
     }
+    std:: cout << "------End of Header-----\n";
 
     reinterpret_cast<std::string *> (bufferHeader);
 
