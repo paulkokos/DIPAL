@@ -22,41 +22,12 @@ namespace DIPAL{
 
     }
 
-    void Image::helloWorld() {
-//    header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER,DefaultVariables::WIDTH,
-//                              DefaultVariables::HEIGHT,DefaultVariables::OFFSETIMAGESTART,
-//                              DefaultVariables::BITDEPTH,DefaultVariables::SIZEOFDATA);
 
-        std::cout << "Hello world from the class image\n";
-    }
 
-    //int DIPAL::Image::getHeight() const {
-//    return ;
-//}
-//
-//void DIPAL::Image::setHeight(int height) {
-//    Image::height = height;
-//}
-//
-//int DIPAL::Image::getWidth() const {
-//    return width;
-//}
-//
-//void DIPAL::Image::setWidth(int width) {
-//    Image::width = width;
-//}
-//
-//const string &DIPAL::Image::getName() const {
-//    return name;
-//}
-//
-//void DIPAL::Image::setName(const string &name) {
-//    this->name = name;
-//}
-//
-//int DIPAL::Image::getBitDepth() const {
-//    return bitDepth;
-//}
+//    void Image::helloWorld() {
+//        header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER, DefaultVariables::WIDTH,
+//                                  DefaultVariables::HEIGHT, DefaultVariables::OFFSETIMAGESTART,
+//                                  DefaultVariables::BITDEPTH, DefaultVariables::SIZEOFDATA);
 //
 //void DIPAL::Image::setBitDepth(int bitDepth) {
 //    Image::bitDepth = bitDepth;
@@ -151,7 +122,7 @@ namespace DIPAL{
 //    return std::string();
 //}
 
-void Image::imageShow() {
+void DIPAL::Image::imageShow() {
     //image header 54 bytes
     //image color table 1028 bytes
     unsigned char headerOfFile[54];
@@ -160,21 +131,32 @@ void Image::imageShow() {
     std::string buffer;
     std::ifstream inStream;
 
+
     inStream.open("../.../../etc/sails.bmp",std::ios::binary |std::ios::in | std::ios::app);
     if (!inStream.is_open()) {
         std::cout << "\nOpening of the file is failed\n";
     } else {
         std::cout << "Opening of the file is valid";
     }
+    int length =0;
     inStream.read(bufferHeader, 54);
-
+    if (inStream) {
+        inStream.seekg(0, inStream.end);
+        length = inStream.tellg();
+        inStream.seekg(0, inStream.beg);
+    } else {
+        std::cout << "File failed\n";
+    }
+    std::cout << "Length of file: " << length << "\n";
     //Testing and verifing
 //    for (auto i : buffer) {
 //        bufferHeader[i];
 //    }
+    std::cout << "-----Beginning of header-----\n";
     for (int i =0; i < 54; i++) {
-        std::cout <<std::hex << (int)bufferHeader[i]<< " ";
+        std::cout <<std::hex << (int)bufferHeader[i]<< "\n";
     }
+    std:: cout << "------End of Header-----\n";
 
     reinterpret_cast<std::string *> (bufferHeader);
 
@@ -203,11 +185,4 @@ void Image::imageShow() {
 //}
 
 
-}
-
-FILE DIPAL::Image::imShow(Header header,std::string location, std::string fileName, std::string fileExtention) {
-    File file;
-
-
-    return file;
 }
