@@ -26,4 +26,141 @@ namespace DIPAL {
         delete headerPtr;
     }
 
+
+    void Header::setVerticalResolution(unsigned int verticalResolution) {
+        headerPtr->verticalResolution = verticalResolution;
+    }
+
+    unsigned int Header::getVerticalResolution() const {
+        //unreliable
+        return headerPtr->verticalResolution;
+    }
+
+    void Header::setNumberOfColors(unsigned int numberOfColors) {
+        headerPtr->numberOfColors = numberOfColors;
+    }
+
+    unsigned int Header::getNumberOfColors() const {
+        return headerPtr->numberOfColors;
+    }
+
+    unsigned int Header::getNumberOfImportantColors() const {
+        return headerPtr->numberOfImportantColors;
+    }
+
+    void Header::setNumberOfImportantColors(unsigned int numberOfImportantColors) {
+        headerPtr->numberOfImportantColors = numberOfImportantColors;
+    }
+    unsigned int Header::getHorizontalResolution() const {
+        return headerPtr->horizontalResolution;
+    }
+
+    void Header::setHorizontalResolution(unsigned int horizontalResolution) {
+        headerPtr->horizontalResolution = horizontalResolution;
+    }
+
+    void Header::setSizeOfData(unsigned int sizeOfData) {
+        headerPtr->sizeOfData = sizeOfData;
+    }
+
+    unsigned int Header::getSizeOfData() const {
+        return headerPtr->sizeOfData;
+    }
+
+    void Header::setCompressionType(unsigned int compressionType) {
+        headerPtr->compressionType = compressionType;
+    }
+
+    unsigned int Header::getCompressionType() const {
+        return headerPtr->compressionType;
+    }
+
+    void Header::setFileSize(unsigned int fileSize) {
+        headerPtr->fileSize = fileSize;
+    }
+
+    unsigned char Header::getSignatureB() const {
+        return headerPtr->getSignatureB();
+    }
+
+    unsigned int Header::getFileSize() const {
+        return 0;
+    }
+
+    void Header::setBitDepth(uint8_t bitDepth) {
+
+    }
+
+    uint8_t Header::getBitDepth() const {
+        return 0;
+    }
+
+    void Header::setOffsetImageStart(unsigned int offsetImageStart) {
+
+    }
+
+    unsigned int Header::getOffsetImageStart() const {
+        return 0;
+    }
+
+    void Header::setPlanes(uint8_t planes) {
+
+    }
+
+    uint8_t Header::getPlanes() const {
+        return 0;
+    }
+
+    void Header::setHeight(unsigned int height) {
+
+    }
+
+    unsigned int Header::getHeight() const {
+        return 0;
+    }
+
+    void Header::setWidth(unsigned int width) {
+
+    }
+
+    unsigned int Header::getWidth() const {
+        return 0;
+    }
+
+    void Header::setBitmapInfoHeader(unsigned int bitmapInfoHeader) {
+
+    }
+
+    unsigned int Header::getBitmapInfoHeader() const {
+        return 0;
+    }
+
+    void Header::setReserved2(uint8_t reserved2) {
+
+    }
+
+    uint8_t Header::getReserved2() const {
+        return 0;
+    }
+
+    void Header::setReserved1(uint8_t reserved1) {
+
+    }
+
+    uint8_t Header::getReserved1() const {
+        return 0;
+    }
+
+    void Header::setSignatureM(unsigned char signatureM) {
+
+    }
+
+    unsigned char Header::getSignatureM() const {
+        return 0;
+    }
+
+    void Header::setSignatureB(unsigned char signatureB) {
+
+    }
+
 }
