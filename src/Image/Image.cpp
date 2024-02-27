@@ -105,22 +105,22 @@ namespace DIPAL{
 //    Image::colorMap = colorMap;
 //}
 //
-//const vector<int> &DIPAL::Image::getHistogram() const {
-//    return histogram;
-//}
-//
-//void DIPAL::Image::setHistogram(const vector<int> &histogram) {
-//    Image::histogram = histogram;
-//}
+const vector<int> &DIPAL::Image::getHistogram() const {
+    return histogram;
+}
 
-//FILE DIPAL::Image::imageRead(std::string location, std::string fileType) {
-//
-//    return FILE();
-//}
+void DIPAL::Image::setHistogram(const vector<int> &histogram) {
+    Image::histogram = histogram;
+}
 
-//std::string DIPAL::Image::imageWrite(std::string name, std::string location, std::string fileType) {
-//    return std::string();
-//}
+FILE DIPAL::Image::imageRead(std::string location, std::string fileType) {
+
+    return FILE();
+}
+
+std::string DIPAL::Image::imageWrite(std::string name, std::string location, std::string fileType) {
+    return std::string();
+}
 
 void DIPAL::Image::imageShow() {
     //image header 54 bytes
