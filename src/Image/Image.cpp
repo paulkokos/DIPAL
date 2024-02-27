@@ -105,65 +105,65 @@ namespace DIPAL{
 //    Image::colorMap = colorMap;
 //}
 //
-const vector<int> &DIPAL::Image::getHistogram() const {
-    return histogram;
-}
-
-void DIPAL::Image::setHistogram(const vector<int> &histogram) {
-    Image::histogram = histogram;
-}
-
-FILE DIPAL::Image::imageRead(std::string location, std::string fileType) {
-
-    return FILE();
-}
-
-std::string DIPAL::Image::imageWrite(std::string name, std::string location, std::string fileType) {
-    return std::string();
-}
-
-void DIPAL::Image::imageShow() {
-    //image header 54 bytes
-    //image color table 1028 bytes
-    unsigned char headerOfFile[54];
-    unsigned char colorTable[1024];
-    char bufferHeader[54];
-    std::string buffer;
-    std::ifstream inStream;
-
-
-    inStream.open("../.../../etc/sails.bmp",std::ios::binary |std::ios::in | std::ios::app);
-    if (!inStream.is_open()) {
-        std::cout << "\nOpening of the file is failed\n";
-    } else {
-        std::cout << "Opening of the file is valid";
-    }
-    int length =0;
-    inStream.read(bufferHeader, 54);
-    if (inStream) {
-        inStream.seekg(0, inStream.end);
-        length = inStream.tellg();
-        inStream.seekg(0, inStream.beg);
-    } else {
-        std::cout << "File failed\n";
-    }
-    std::cout << "Length of file: " << length << "\n";
-    //Testing and verifing
-//    for (auto i : buffer) {
-//        bufferHeader[i];
+//const vector<int> &DIPAL::Image::getHistogram() const {
+//    return histogram;
+//}
+//
+//void DIPAL::Image::setHistogram(const vector<int> &histogram) {
+//    Image::histogram = histogram;
+//}
+//
+//FILE DIPAL::Image::imageRead(std::string location, std::string fileType) {
+//
+//    return FILE();
+//}
+//
+//std::string DIPAL::Image::imageWrite(std::string name, std::string location, std::string fileType) {
+//    return std::string();
+//}
+//
+//void DIPAL::Image::imageShow() {
+//    //image header 54 bytes
+//    //image color table 1028 bytes
+//    unsigned char headerOfFile[54];
+//    unsigned char colorTable[1024];
+//    char bufferHeader[54];
+//    std::string buffer;
+//    std::ifstream inStream;
+//
+//
+//    inStream.open("../.../../etc/sails.bmp",std::ios::binary |std::ios::in | std::ios::app);
+//    if (!inStream.is_open()) {
+//        std::cout << "\nOpening of the file is failed\n";
+//    } else {
+//        std::cout << "Opening of the file is valid";
 //    }
-    std::cout << "-----Beginning of header-----\n";
-    for (int i =0; i < 54; i++) {
-        std::cout <<std::hex << (int)bufferHeader[i]<< "\n";
-    }
-    std:: cout << "------End of Header-----\n";
-
-    reinterpret_cast<std::string *> (bufferHeader);
-
-//    std::cout << "Length " <<  bufferHeader.size();
-    //End of testing and verifing
-    inStream.close();
-}
+//    int length =0;
+//    inStream.read(bufferHeader, 54);
+//    if (inStream) {
+//        inStream.seekg(0, inStream.end);
+//        length = inStream.tellg();
+//        inStream.seekg(0, inStream.beg);
+//    } else {
+//        std::cout << "File failed\n";
+//    }
+//    std::cout << "Length of file: " << length << "\n";
+//    //Testing and verifing
+////    for (auto i : buffer) {
+////        bufferHeader[i];
+////    }
+//    std::cout << "-----Beginning of header-----\n";
+//    for (int i =0; i < 54; i++) {
+//        std::cout <<std::hex << (int)bufferHeader[i]<< "\n";
+//    }
+//    std:: cout << "------End of Header-----\n";
+//
+//    reinterpret_cast<std::string *> (bufferHeader);
+//
+////    std::cout << "Length " <<  bufferHeader.size();
+//    //End of testing and verifing
+//    inStream.close();
+//}
 
 //DIPAL::Image::Image() {
 //    this->header =  Header::getInstance();
