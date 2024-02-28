@@ -13,6 +13,7 @@
 //#include "../../include/Calendar/CalendarDate.h"
 //#include "../../include/Calendar/CalendarTime.h"
 #include "Header.hpp"
+#include "Image.hpp"
 
 ///TODO: Temporary global variables-> will change
 struct DefaultVariables {
@@ -41,25 +42,19 @@ namespace DIPAL {
     class Image {
     private:
         Header& header =   Header::getHeaderInstance();    //Singleton Pattern
-//        uint8_t minimumIntensity;
-//        uint8_t maximumIntensity;
-//        string imageClass;
-//        string format;
-//        string imageType;
-//        string colorType;
-//        vector<int> formatSignature;
-//        vector<int> colorMap;
-//        vector<int> histogram;
-//        vector<int>::iterator formatSignatureIterator;
-//        vector<int>::iterator colorMapIterator;
-//        vector<int>::iterator histogramIterator;
-//        struct creationDate {
-//            CalendarDate date;
-//            CalendarTime time;
-//        };
-//    struct header {
-//
-//    };
+        uint8_t minimumIntensity;
+        uint8_t maximumIntensity;
+        string imageClass;
+        string format;
+        string imageType;
+        string colorType;
+        vector<int> formatSignature;
+        vector<int> colorMap;
+        vector<int> histogram;
+        vector<int>::iterator formatSignatureIterator;
+        vector<int>::iterator colorMapIterator;
+        vector<int>::iterator histogramIterator;
+
 
     public:
         Image();
@@ -143,9 +138,11 @@ namespace DIPAL {
 //
 //        std::string imageWrite(std::string name, std::string location, std::string fileType);
 
-         void helloWorld();
+         virtual std::string imShow() const = 0;
 
-        virtual ~Image();
+         virtual void helloWorld();
+
+         virtual ~Image();
     };
 }
 
