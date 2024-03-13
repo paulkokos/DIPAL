@@ -20,10 +20,4 @@ int main() {
     img5->build(ImageTypes::IM_Binary);
     img5->build(ImageTypes::IM_Grayscale);
     return 0;
-
-
-
-
-
-    
 }
