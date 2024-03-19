@@ -80,39 +80,39 @@ namespace DIPAL {
     }
 
     unsigned char Header::getSignatureB() const {
-        return headerPtr->getSignatureB();
+        return headerPtr->signature_B;
     }
 
     unsigned int Header::getFileSize() const {
-        return 0;
+        return this->fileSize;
     }
 
     void Header::setBitDepth(uint8_t bitDepth) {
-
+        headerPtr->bitDepth = bitDepth;
     }
 
     uint8_t Header::getBitDepth() const {
-        return 0;
+        return headerPtr->getBitDepth();
     }
 
     void Header::setOffsetImageStart(unsigned int offsetImageStart) {
-
+        headerPtr->offsetImageStart = offsetImageStart;
     }
 
     unsigned int Header::getOffsetImageStart() const {
-        return 0;
+        return headerPtr->offsetImageStart;
     }
 
     void Header::setPlanes(uint8_t planes) {
-
+        headerPtr->planes = planes;
     }
 
     uint8_t Header::getPlanes() const {
-        return 0;
+        return headerPtr->planes;
     }
 
     void Header::setHeight(unsigned int height) {
-
+        headerPtr->height = height;
     }
 
     unsigned int Header::getHeight() const {
