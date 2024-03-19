@@ -79,10 +79,6 @@ namespace DIPAL {
         headerPtr->fileSize = fileSize;
     }
 
-    unsigned char Header::getSignatureB() const {
-        return headerPtr->signature_B;
-    }
-
     unsigned int Header::getFileSize() const {
         return this->fileSize;
     }
@@ -92,7 +88,7 @@ namespace DIPAL {
     }
 
     uint8_t Header::getBitDepth() const {
-        return headerPtr->getBitDepth();
+        return headerPtr->bitDepth;
     }
 
     void Header::setOffsetImageStart(unsigned int offsetImageStart) {
@@ -116,51 +112,56 @@ namespace DIPAL {
     }
 
     unsigned int Header::getHeight() const {
-        return 0;
+        return headerPtr->height;
     }
 
-    void Header::setWidth(unsigned int width) {
 
+    void Header::setWidth(unsigned int width) {
+        headerPtr->width = width;
     }
 
     unsigned int Header::getWidth() const {
-        return 0;
+        return headerPtr->width;
     }
 
     void Header::setBitmapInfoHeader(unsigned int bitmapInfoHeader) {
-
+        headerPtr->bitmapInfoHeader= bitmapInfoHeader;
     }
 
     unsigned int Header::getBitmapInfoHeader() const {
-        return 0;
+        return headerPtr->bitmapInfoHeader;
     }
 
     void Header::setReserved2(uint8_t reserved2) {
-
+        headerPtr->reserved2 = reserved2;
     }
 
     uint8_t Header::getReserved2() const {
-        return 0;
+        return headerPtr->reserved2;
     }
 
     void Header::setReserved1(uint8_t reserved1) {
-
+        headerPtr->reserved1 = reserved1;
     }
 
     uint8_t Header::getReserved1() const {
-        return 0;
+        return headerPtr->reserved1;
     }
 
     void Header::setSignatureM(unsigned char signatureM) {
-
+        headerPtr->signature_M = signatureM;
     }
 
     unsigned char Header::getSignatureM() const {
-        return 0;
+        return headerPtr->signature_M;
     }
 
     void Header::setSignatureB(unsigned char signatureB) {
+        headerPtr->signature_B = signatureB;
+    }
 
+    unsigned char Header::getSignatureB() const {
+        return headerPtr->signature_B;
     }
 
 }
