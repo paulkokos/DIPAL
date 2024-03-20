@@ -42,6 +42,8 @@ namespace DIPAL {
         ~Header();
 
     public:
+        static void showHeaderInfo();
+
         unsigned char getSignatureB() const;
 
         void setSignatureB(unsigned char signatureB);

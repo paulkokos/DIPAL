@@ -4,6 +4,10 @@
 
 #include "../../include/Image/Header.hpp"
 namespace DIPAL {
+    void DIPAL::Header::showHeaderInfo(){
+        std::cout << "Hello i am static";
+    }
+
     Header &Header::getHeaderInstance() {
         if (!headerPtr) {
             headerPtr = new Header();
