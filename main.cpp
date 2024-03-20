@@ -10,9 +10,6 @@ int main() {
 
 
     Image *img = new BinaryImage();
-    Header *h;
-    h->showHeaderInfo();
-    Header::showHeaderInfo();
 //    img->imShow();
     ImageFactory* img1 ;
 //    ImageFactory* img2 ;
