@@ -79,6 +79,9 @@ unsigned char* createBitmapFileHeader (int height, int stride)
     return fileHeader;
 }
 
+
+
+
 unsigned char* createBitmapInfoHeader (int height, int width)
 {
     static unsigned char infoHeader[] = {
