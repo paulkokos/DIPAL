@@ -11,7 +11,7 @@ namespace DIPAL {
     class ColorImage : public Image {
     public:
         ColorImage();
-        std::string imShow() const override;
+//        std::string imShow() const override;
     };
 }
 

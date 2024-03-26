@@ -9,9 +9,9 @@ namespace DIPAL {
     GrayscaleImage::GrayscaleImage() {
         std::cout << "Hello world form GrayScale Class\n";
     }
-    std::string GrayscaleImage::imShow() const {
-        return "Hello from Factory class Binary Image\n";
-    }
+//    std::string GrayscaleImage::imShow() const {
+//        return "Hello from Factory class Binary Image\n";
+//    }
 
 
 //    DIPAL::Image DIPAL::GrayscaleImage::RGB2Gray(DIPAL::ColorImage image) {

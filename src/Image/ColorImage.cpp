@@ -7,8 +7,8 @@ namespace DIPAL {
     ColorImage::ColorImage() {
         std::cout << "ColorImage Class Constructed\n";
     }
-    std::string ColorImage::imShow() const {
-        return "Hello from Factory class Binary Image\n";
-    }
+//    std::string ColorImage::imShow() const {
+//        return "Hello from Factory class Binary Image\n";
+//    }
 
 }

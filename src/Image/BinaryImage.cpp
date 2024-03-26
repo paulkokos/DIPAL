@@ -8,9 +8,9 @@ namespace DIPAL {
         std::cout << "Binary image Constructed\n";
 
     }
-    std::string BinaryImage::imShow() const {
-        return "Hello from Factory class Binary Image\n";
-    }
+//    std::string BinaryImage::imShow() const {
+//        return "Hello from Factory class Binary Image\n";
+//    }
 
 
 }
