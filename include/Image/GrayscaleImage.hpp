@@ -12,7 +12,7 @@ namespace DIPAL {
     class GrayscaleImage :  public Image {
     public:
         GrayscaleImage();
-        std::string imShow() const override;
+//        std::string imShow() const override;
 
     };
 }

@@ -14,9 +14,9 @@ namespace DIPAL {
 
 
         BinaryImage();
-        std::string imShow() const override;
-        std::string imRead(std::string FileLocation) const override;
-        std::string imRead(std::string FileLocation std::string fileType) const override;
+//        std::string imShow() const override;
+//        std::string imRead(std::string FileLocation) const override;
+//        std::string imRead(std::string FileLocation std::string fileType) const override;
         
     };
 }
