@@ -185,12 +185,4 @@ namespace DIPAL{
 //    colorMap.clear();
 //    histogram.clear();
 //}
-
-
-
-
-
-
-
-
 }
