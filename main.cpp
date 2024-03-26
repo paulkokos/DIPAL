@@ -1,17 +1,15 @@
-#include <iostream>
 #include "include/Image/Image.hpp"
-#include "include/Image/BinaryImage.hpp"
-#include "include/Image/ImageFactory.h"
-#include "include/Image/ImageTypes.h"
 using namespace DIPAL;
 //Header* Header::headerPtr = nullptr;
 int main() {
+    Image img;
 
 
 
-    Image *img = new BinaryImage();
+
+//    Image *img = new BinaryImage();
 //    img->imShow();
-    ImageFactory* img1 ;
+//    ImageFactory* img1 ;
 //    ImageFactory* img2 ;
 //    ImageFactory* img3 ;
 //    ImageFactory* img4 ;
