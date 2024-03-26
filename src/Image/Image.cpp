@@ -13,6 +13,8 @@ namespace DIPAL{
 
     Image::Image() {
         std::cout << "Hello world from the class image\n";
+        Header *header1;
+        header1->getHeaderInstance();
 
     }
 
@@ -183,6 +185,12 @@ namespace DIPAL{
 //    colorMap.clear();
 //    histogram.clear();
 //}
+
+
+
+
+
+
 
 
 }
