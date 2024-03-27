@@ -8,25 +8,6 @@
 
 
 namespace DIPAL{
-
-
-
-    Image::Image() {
-        Header* header;
-        std::cout << "Hello world from the class image\n";
-
-    }
-
-    Image::~Image() {
-
-        std::cout << "Good bye world from the class image\n";
-
-    }
-
-
-
-
-
 //    void Image::helloWorld() {
 //        header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER, DefaultVariables::WIDTH,
 //                                  DefaultVariables::HEIGHT, DefaultVariables::OFFSETIMAGESTART,
@@ -193,4 +174,22 @@ namespace DIPAL{
     Image::Header::~Header() {
         std::cout << "Goodbye from Class Header\n";
     }
+
+    Image::Header &Image::Header::getInstance() {
+        static Image::Header header;
+        return header;
+    }
+    Image::Image() {
+        static Image::Header* header;
+        DIPAL::Image::Header::getInstance();
+        std::cout << "Hello world from the class image\n";
+
+    }
+    Image::~Image() {
+//        delete header;
+        std::cout << "Good bye world from the class image\n";
+
+    }
+
+
 }
