@@ -12,7 +12,7 @@ namespace DIPAL{
 
 
     Image::Image() {
-        Header header;
+        Header* header;
         std::cout << "Hello world from the class image\n";
 
     }
