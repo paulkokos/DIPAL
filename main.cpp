@@ -2,8 +2,9 @@
 using namespace DIPAL;
 //Header* Header::headerPtr = nullptr;
 int main() {
-    Image img;
-
+    Image *img;
+    img = new DIPAL::Image();
+    delete img;
 
 
 
