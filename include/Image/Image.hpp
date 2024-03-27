@@ -42,6 +42,8 @@ namespace DIPAL {
     private:
         class Header {
         private:
+            Header();
+
             unsigned char signature_B;              //'B' signature (1 byte)
             unsigned char signature_M;              //'M' signature (1 byte)
             uint8_t reserved1;
@@ -60,7 +62,8 @@ namespace DIPAL {
             unsigned int numberOfColors;            //number or zero
             unsigned int numberOfImportantColors;   //number or zero
         public:
-            Header();
+            static Header& getInstance();
+
             ~Header();
         };
     public:
