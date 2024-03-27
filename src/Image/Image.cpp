@@ -5,14 +5,16 @@
 #include <iostream>
 #include <fstream>
 #include "../../include/Image/Image.hpp"
-#include "../../include/Image/Header.hpp"
+
 
 namespace DIPAL{
 
-    Header* Header::headerPtr = nullptr;
+
 
     Image::Image() {
+        Header header;
         std::cout << "Hello world from the class image\n";
+
     }
 
     Image::~Image() {
@@ -20,6 +22,8 @@ namespace DIPAL{
         std::cout << "Good bye world from the class image\n";
 
     }
+
+
 
 
 
@@ -182,4 +186,11 @@ namespace DIPAL{
 //    colorMap.clear();
 //    histogram.clear();
 //}
+    Image::Header::Header() {
+        std::cout << "Hello from Class Header\n";
+    }
+
+    Image::Header::~Header() {
+        std::cout << "Goodbye from Class Header\n";
+    }
 }

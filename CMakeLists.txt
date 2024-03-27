@@ -3,13 +3,11 @@ project(DIPAL)
 set(CMAKE_CXX_STANDARD 17)
 add_executable(DIPAL
         src/Image/Image.cpp
-        src/Image/Header.cpp
         src/Image/BinaryImage.cpp
         src/Image/GrayscaleImage.cpp
         src/Image/ColorImage.cpp
 
         include/Image/Image.hpp
-        include/Image/Header.hpp
         include/Image/BinaryImage.hpp
         include/Image/GrayscaleImage.hpp
         include/Image/ColorImage.hpp
