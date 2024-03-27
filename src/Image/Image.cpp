@@ -320,7 +320,6 @@ namespace DIPAL{
     Image::~Image() {
         delete this->header;
         std::cout << "Good bye world from the class image\n";
-
     }
 
     Image::Image(std::string locationFoFile, std::string nameOfFile) {
