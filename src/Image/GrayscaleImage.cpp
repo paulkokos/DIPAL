@@ -3,6 +3,7 @@
 //
 
 #include "../../../DIPAL/include/Image/GrayscaleImage.hpp"
+#include <iostream>
 //constructors
 
 namespace DIPAL {
