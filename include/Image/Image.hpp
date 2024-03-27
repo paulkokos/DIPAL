@@ -33,14 +33,78 @@
 //const int FILE_HEADER_SIZE = 14;
 //const int INFO_HEADER_SIZE = 40;
 
-
-using std::iterator;
-using std::vector;
-using std::string;
 namespace DIPAL {
     class Image {
-    private:
         class Header {
+        public:
+            unsigned char getSignatureB() const;
+
+            void setSignatureB(unsigned char signatureB);
+
+            unsigned char getSignatureM() const;
+
+            void setSignatureM(unsigned char signatureM);
+
+            uint8_t getReserved1() const;
+
+            void setReserved1(uint8_t reserved1);
+
+            uint8_t getReserved2() const;
+
+            void setReserved2(uint8_t reserved2);
+
+            unsigned int getBitmapInfoHeader() const;
+
+            void setBitmapInfoHeader(unsigned int bitmapInfoHeader);
+
+            unsigned int getWidth() const;
+
+            void setWidth(unsigned int width);
+
+            unsigned int getHeight() const;
+
+            void setHeight(unsigned int height);
+
+            uint8_t getPlanes() const;
+
+            void setPlanes(uint8_t planes);
+
+            unsigned int getOffsetImageStart() const;
+
+            void setOffsetImageStart(unsigned int offsetImageStart);
+
+            uint8_t getBitDepth() const;
+
+            void setBitDepth(uint8_t bitDepth);
+
+            unsigned int getFileSize() const;
+
+            void setFileSize(unsigned int fileSize);
+
+            unsigned int getCompressionType() const;
+
+            void setCompressionType(unsigned int compressionType);
+
+            unsigned int getSizeOfData() const;
+
+            void setSizeOfData(unsigned int sizeOfData);
+
+            unsigned int getHorizontalResolution() const;
+
+            void setHorizontalResolution(unsigned int horizontalResolution);
+
+            unsigned int getVerticalResolution() const;
+
+            void setVerticalResolution(unsigned int verticalResolution);
+
+            unsigned int getNumberOfColors() const;
+
+            void setNumberOfColors(unsigned int numberOfColors);
+
+            unsigned int getNumberOfImportantColors() const;
+
+            void setNumberOfImportantColors(unsigned int numberOfImportantColors);
+
         private:
             unsigned char signature_B;              //'B' signature (1 byte)
             unsigned char signature_M;              //'M' signature (1 byte)
@@ -65,9 +129,12 @@ namespace DIPAL {
         };
     public:
         Image();
-
+        Image(std::string locationFoFile,std::string nameOfFile);
         ~Image();
-
+    private:
+        Header *header;
+        std::string nameOfFile;
+        std::string locationOfFile;
     };
 }
 #endif //DIPAL_IMAGE_H

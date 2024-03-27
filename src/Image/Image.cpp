@@ -175,20 +175,157 @@ namespace DIPAL{
         std::cout << "Goodbye from Class Header\n";
     }
 
-    Image::Header &Image::Header::getInstance() {
-        static Image::Header header;
-        return header;
+    unsigned char Image::Header::getSignatureB() const {
+        return signature_B;
     }
+
+    void Image::Header::setSignatureB(unsigned char signatureB) {
+        signature_B = signatureB;
+    }
+
+    unsigned char Image::Header::getSignatureM() const {
+        return signature_M;
+    }
+
+    void Image::Header::setSignatureM(unsigned char signatureM) {
+        signature_M = signatureM;
+    }
+
+    uint8_t Image::Header::getReserved1() const {
+        return reserved1;
+    }
+
+    void Image::Header::setReserved1(uint8_t reserved1) {
+        Header::reserved1 = reserved1;
+    }
+
+    uint8_t Image::Header::getReserved2() const {
+        return reserved2;
+    }
+
+    void Image::Header::setReserved2(uint8_t reserved2) {
+        Header::reserved2 = reserved2;
+    }
+
+    unsigned int Image::Header::getBitmapInfoHeader() const {
+        return bitmapInfoHeader;
+    }
+
+    void Image::Header::setBitmapInfoHeader(unsigned int bitmapInfoHeader) {
+        Header::bitmapInfoHeader = bitmapInfoHeader;
+    }
+
+    unsigned int Image::Header::getWidth() const {
+        return width;
+    }
+
+    void Image::Header::setWidth(unsigned int width) {
+        Header::width = width;
+    }
+
+    unsigned int Image::Header::getHeight() const {
+        return height;
+    }
+
+    void Image::Header::setHeight(unsigned int height) {
+        Header::height = height;
+    }
+
+    uint8_t Image::Header::getPlanes() const {
+        return planes;
+    }
+
+    void Image::Header::setPlanes(uint8_t planes) {
+        Header::planes = planes;
+    }
+
+    unsigned int Image::Header::getOffsetImageStart() const {
+        return offsetImageStart;
+    }
+
+    void Image::Header::setOffsetImageStart(unsigned int offsetImageStart) {
+        Header::offsetImageStart = offsetImageStart;
+    }
+
+    uint8_t Image::Header::getBitDepth() const {
+        return bitDepth;
+    }
+
+    void Image::Header::setBitDepth(uint8_t bitDepth) {
+        Header::bitDepth = bitDepth;
+    }
+
+    unsigned int Image::Header::getFileSize() const {
+        return fileSize;
+    }
+
+    void Image::Header::setFileSize(unsigned int fileSize) {
+        Header::fileSize = fileSize;
+    }
+
+    unsigned int Image::Header::getCompressionType() const {
+        return compressionType;
+    }
+
+    void Image::Header::setCompressionType(unsigned int compressionType) {
+        Header::compressionType = compressionType;
+    }
+
+    unsigned int Image::Header::getSizeOfData() const {
+        return sizeOfData;
+    }
+
+    void Image::Header::setSizeOfData(unsigned int sizeOfData) {
+        Header::sizeOfData = sizeOfData;
+    }
+
+    unsigned int Image::Header::getHorizontalResolution() const {
+        return horizontalResolution;
+    }
+
+    void Image::Header::setHorizontalResolution(unsigned int horizontalResolution) {
+        Header::horizontalResolution = horizontalResolution;
+    }
+
+    unsigned int Image::Header::getVerticalResolution() const {
+        return verticalResolution;
+    }
+
+    void Image::Header::setVerticalResolution(unsigned int verticalResolution) {
+        Header::verticalResolution = verticalResolution;
+    }
+
+    unsigned int Image::Header::getNumberOfColors() const {
+        return numberOfColors;
+    }
+
+    void Image::Header::setNumberOfColors(unsigned int numberOfColors) {
+        Header::numberOfColors = numberOfColors;
+    }
+
+    unsigned int Image::Header::getNumberOfImportantColors() const {
+        return numberOfImportantColors;
+    }
+
+    void Image::Header::setNumberOfImportantColors(unsigned int numberOfImportantColors) {
+        Header::numberOfImportantColors = numberOfImportantColors;
+    }
+
+
     Image::Image() {
-        static Image::Header* header;
-        DIPAL::Image::Header::getInstance();
+        this->header = new Image::Header();
         std::cout << "Hello world from the class image\n";
 
     }
     Image::~Image() {
-//        delete header;
+        delete this->header;
         std::cout << "Good bye world from the class image\n";
 
+    }
+
+    Image::Image(std::string locationFoFile, std::string nameOfFile) {
+        this->locationOfFile = locationFoFile;
+        this->nameOfFile = nameOfFile;
     }
 
 
