@@ -36,7 +36,7 @@
 namespace DIPAL {
     class Image {
         class Header {
-        public:
+        private:
             unsigned char getSignatureB() const;
 
             void setSignatureB(unsigned char signatureB);
