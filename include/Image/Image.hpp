@@ -130,11 +130,23 @@ namespace DIPAL {
     public:
         Image();
         Image(std::string locationFoFile,std::string nameOfFile);
+        const std::string &getNameOfFile() const;
+
+        void setNameOfFile(const std::string &nameOfFile);
+
+        const std::string &getLocationOfFile() const;
+
+        void setLocationOfFile(const std::string &locationOfFile);
+
+        const std::string &getTypeOfFile() const;
+
+        void setTypeOfFile(const std::string &typeOfFile);
         ~Image();
     private:
         Header *header;
         std::string nameOfFile;
         std::string locationOfFile;
+        std::string typeOfFile;
     };
 }
 #endif //DIPAL_IMAGE_H
