@@ -327,5 +327,29 @@ namespace DIPAL{
         this->nameOfFile = nameOfFile;
     }
 
+    const std::string &Image::getNameOfFile() const {
+        return nameOfFile;
+    }
+
+    void Image::setNameOfFile(const std::string &nameOfFile) {
+        Image::nameOfFile = nameOfFile;
+    }
+
+    const std::string &Image::getLocationOfFile() const {
+        return locationOfFile;
+    }
+
+    void Image::setLocationOfFile(const std::string &locationOfFile) {
+        Image::locationOfFile = locationOfFile;
+    }
+
+    const std::string &Image::getTypeOfFile() const {
+        return typeOfFile;
+    }
+
+    void Image::setTypeOfFile(const std::string &typeOfFile) {
+        Image::typeOfFile = typeOfFile;
+    }
+
 
 }
