@@ -8,11 +8,11 @@
 
 
 namespace DIPAL{
-//    void Image::helloWorld() {
-//        header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER, DefaultVariables::WIDTH,
-//                                  DefaultVariables::HEIGHT, DefaultVariables::OFFSETIMAGESTART,
-//                                  DefaultVariables::BITDEPTH, DefaultVariables::SIZEOFDATA);
-//
+    void Image::helloWorld() {
+        header->setHeaderInstance(DefaultVariables::BITMAPINFOHEADER, DefaultVariables::WIDTH,
+                                  DefaultVariables::HEIGHT, DefaultVariables::OFFSETIMAGESTART,
+                                  DefaultVariables::BITDEPTH, DefaultVariables::SIZEOFDATA);
+
 //void DIPAL::Image::setBitDepth(int bitDepth) {
 //    Image::bitDepth = bitDepth;
 //}

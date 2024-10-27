@@ -8,6 +8,8 @@
 #include "Color.hpp"
 class RGB :protected Color{
 
+
+
 };
 
 
