@@ -32,7 +32,7 @@
 //const int COLOR_LAYERS = 3;         //red, green,blue
 //const int FILE_HEADER_SIZE = 14;
 //const int INFO_HEADER_SIZE = 40;
-
+//TODO: Setters and getters
 namespace DIPAL {
     class Image {
         class Header {
