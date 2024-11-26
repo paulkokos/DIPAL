@@ -1,7 +1,3 @@
-//
-// Created by paulkokos on 11/27/2020.
-//
-
 #ifndef DIPAL_IMAGE_H
 #define DIPAL_IMAGE_H
 
@@ -9,29 +5,6 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
-
-//#include "../../include/Calendar/CalendarDate.h"
-//#include "../../include/Calendar/CalendarTime.h"
-
-
-
-//struct DefaultVariables {
-//    unsigned char SIGNATURE_B = 'B';
-//    unsigned char SIGNATURE_M = 'M';
-//    uint8_t RESERVED1;
-//    uint8_t RESERVED2;
-//    const static unsigned int BITMAPINFOHEADER = 40;
-//    const static unsigned int WIDTH = 512;
-//    const static unsigned int HEIGHT = 512;
-//    const static uint8_t PLAINS = 1;
-//    const static unsigned int OFFSETIMAGESTART = 1024;
-//    const static unsigned int BITDEPTH = 24;
-//    const static unsigned int SIZEOFDATA=0;
-//};
-
-//const int COLOR_LAYERS = 3;         //red, green,blue
-//const int FILE_HEADER_SIZE = 14;
-//const int INFO_HEADER_SIZE = 40;
 
 namespace DIPAL {
     class Image {
