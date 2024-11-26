@@ -9,17 +9,17 @@
 
 namespace DIPAL{
 
-    Image *ImageFactory::build(ImageTypes imgType){
-        if(imgType == IM_Binary) {
-            return new BinaryImage();
-        } else if (imgType == IM_Color){
-            return new ColorImage();
-        } else if (imgType == IM_Grayscale) {              //<<--- Not a good tactic
-            return new GrayscaleImage();
-        } else {
-            return nullptr;
-        }
+  Image *ImageFactory::build(ImageTypes imgType){
+    if(imgType == IM_Binary) {
+      return new BinaryImage();
+    } else if (imgType == IM_Color){
+      return new ColorImage();
+    } else if (imgType == IM_Grayscale) {              //<<--- Not a good tactic
+      return new GrayscaleImage();
+    } else {
+      return nullptr;
     }
+  }
 
 
 }
