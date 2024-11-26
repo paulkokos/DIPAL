@@ -1,7 +1,3 @@
-//
-// Created by paulk on 12/13/2022.
-//
-
 #ifndef DIPAL_BINARYIMAGE_HPP
 #define DIPAL_BINARYIMAGE_HPP
 #include <iostream>
