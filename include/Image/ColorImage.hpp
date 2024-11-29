@@ -4,10 +4,10 @@
 
 
 namespace DIPAL {
-    class ColorImage : public Image {
+  class ColorImage : public Image {
     public:
-        ColorImage();
-    };
+      ColorImage();
+  };
 }
 
 

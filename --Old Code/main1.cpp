@@ -3,8 +3,8 @@
 //#include "Image/Image.hpp"
 using namespace DIPAL;
 int main() {
-    auto image = new Image();
-//    image->imageRead("output.bmp","bmp");
-    image->imageShow();
-    return 0;
+  auto image = new Image();
+  //    image->imageRead("output.bmp","bmp");
+  image->imageShow();
+  return 0;
 }

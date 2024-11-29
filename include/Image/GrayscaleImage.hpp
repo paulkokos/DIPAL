@@ -4,12 +4,12 @@
 #include "Image.hpp"
 #include "ColorImage.hpp"
 namespace DIPAL {
-    class GrayscaleImage :  public Image {
+  class GrayscaleImage :  public Image {
     public:
-        GrayscaleImage();
-//        std::string imShow() const override;
+      GrayscaleImage();
+      //        std::string imShow() const override;
 
-    };
+  };
 }
 
 #endif //DIPAL_GRAYSCALEIMAGE_HPP
