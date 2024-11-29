@@ -5,10 +5,10 @@
 
 
 namespace DIPAL {
-    class ImageFactory {
+  class ImageFactory {
     public:
-        Image *build(ImageTypes imgType);
-    };
+      Image *build(ImageTypes imgType);
+  };
 }
 
 #endif //DIPAL_IMAGEFACTORY_H

@@ -2,9 +2,9 @@
 #define DIPAL_IMAGETYPES_H
 
 enum ImageTypes {
-    IM_Grayscale,
-    IM_Color,
-    IM_Binary
+  IM_Grayscale,
+  IM_Color,
+  IM_Binary
 };
 
 

@@ -4,7 +4,7 @@
 
 
 namespace DIPAL{
-//Properties of class Image
+  //Properties of class Image
   Image::Image(){
     std::cout << "Hello world from class Image\n";
     header = new Header();
@@ -16,14 +16,15 @@ namespace DIPAL{
   void Image::Header::helloWorld() {
     std::cout << "Hello world from header\n";
   }
-//Properties of class Header
+  //Properties of class Header
   Image::Header::Header() {
     std::cout << "Header just created\n";
     //Header header1;
     //std::cout << "Hello world from the class image\n";
   }
-  
+
   Image::Header::~Header() {
-  std::cout << "Good bye from Header\n";
+    std::cout << "Good bye from Header\n";
   }
+
 }
