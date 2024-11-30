@@ -20,6 +20,4 @@ namespace DIPAL{
       return nullptr;
     }
   }
-
-
 }
