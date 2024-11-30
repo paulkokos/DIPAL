@@ -32,7 +32,7 @@ namespace DIPAL {
       public:
         Header();
         ~Header();
-        static void helloWorld();
+        void helloWorld();
     };
     public:
     Image();
@@ -44,9 +44,13 @@ namespace DIPAL {
     const std::string &getLocationOfFile() const;
 
     void setLocationOfFile(const std::string &locationOfFile);
+    
+    void helloWorld();
 
+    void headerHelloWorld();
+    
     const std::string &getTypeOfFile() const;
-
+    
     void setTypeOfFile(const std::string &typeOfFile);
     ~Image();
     private:

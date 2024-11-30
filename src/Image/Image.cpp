@@ -9,12 +9,15 @@ namespace DIPAL{
     std::cout << "Hello world from class Image\n";
     header = new Header();
   }
+  void Image::helloWorld() {
+    std::cout << "Hello world from class Image\n";
+  }
   Image::~Image() {
     delete header;
     std::cout << "Good bye world from the class image\n";
   }
-  void Image::Header::helloWorld() {
-    std::cout << "Hello world from header\n";
+  void Image::headerHelloWorld() {
+    header->helloWorld();
   }
   //Properties of class Header
   Image::Header::Header() {
@@ -22,9 +25,10 @@ namespace DIPAL{
     //Header header1;
     //std::cout << "Hello world from the class image\n";
   }
-
+  void Image::Header::helloWorld(){
+    std::cout << "Hello world\n";
+  }
   Image::Header::~Header() {
     std::cout << "Good bye from Header\n";
   }
-
 }
