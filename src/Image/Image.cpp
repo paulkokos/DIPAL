@@ -9,9 +9,7 @@ namespace DIPAL{
     std::cout << "Hello world from class Image\n";
     header = new Header();
   }
-  void Image::helloWorld() {
-    std::cout << "Hello world from class Image\n";
-  }
+
   Image::~Image() {
     delete header;
     std::cout << "Good bye world from the class image\n";
