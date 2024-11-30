@@ -45,7 +45,6 @@ namespace DIPAL {
 
     void setLocationOfFile(const std::string &locationOfFile);
     
-    void helloWorld();
 
     void headerHelloWorld();
     
