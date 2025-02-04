@@ -25,6 +25,8 @@ steps:
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
     
 - script: |
+    mkdir build
+    cmake ..
     cd build
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
