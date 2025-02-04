@@ -13,15 +13,18 @@ variables:
   BUILD_TYPE: 'Release'
 
 steps:
+- script: |
+    rm -rf build  # Clean build directory
+  displayName: 'Clean Build Directory'
+  
 - task: CMake@1
   displayName: 'Configure CMake'
   inputs:
     cmakeListPath: 'CMakeLists.txt'
     buildType: '$(BUILD_TYPE)'
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
-
+    
 - script: |
-    rm -rf build # Remove the build directory
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
   env:
