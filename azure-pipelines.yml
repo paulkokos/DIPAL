@@ -8,8 +8,20 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+variables:
+  BUILD_TYPE: 'release'
 
 steps:
-- script: |
-    make
-  displayName: 'make'
+- task: CMake@1 # Use the CMake task
+  displayName: 'Configure CMake'
+  inputs:
+    cmakeListPath: 'CMakeLists.txt' # Path to your CMakeLists.txt
+    buildType: '$(BUILD_TYPE)'
+    cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Set install directory
+
+- task: PublishBuildArtifacts@1 # Publish build artifacts
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'pipeline'
