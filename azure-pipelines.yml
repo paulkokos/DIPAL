@@ -21,11 +21,14 @@ steps:
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
 
 - script: |
+  rm -rf build # Remove the build directory
+  displayName: 'Clean Build Directory'
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
   env:
     CC: gcc # Explicitly set the C compiler
     CXX: g++ # Explicitly set the C++ compiler
+    CXXFLAGS: -Wall -O2 # Example C++ compiler flags
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
@@ -33,3 +36,4 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'pipeline'
+  
