@@ -14,7 +14,7 @@ variables:
 
 steps:
 - script: |
-    rm -rf build  # Clean build directory
+    rm -rf Build  # Clean build directory
   displayName: 'Clean Build Directory'
   
 - task: CMake@1
