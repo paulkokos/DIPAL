@@ -22,7 +22,6 @@ steps:
 
 - script: |
     rm -rf build # Remove the build directory
-  displayName: 'Clean Build Directory'
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
   env:
