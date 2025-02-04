@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
 variables:
   BUILD_TYPE: 'release'
 
@@ -18,6 +18,13 @@ steps:
     cmakeListPath: 'CMakeLists.txt' # Path to your CMakeLists.txt
     buildType: '$(BUILD_TYPE)'
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Set install directory
+
+- task: VSBuild@1 # Use the Visual Studio Build task (for MSBuild, use MSBuild@1)
+  displayName: 'Build'
+  inputs:
+    #solution: '**/*.sln' # Path to your solution file (if using MSBuild)
+    platform: 'x64'
+    configuration: '$(BUILD_TYPE)'
 
 - task: PublishBuildArtifacts@1 # Publish build artifacts
   displayName: 'Publish Artifacts'
