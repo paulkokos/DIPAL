@@ -14,7 +14,7 @@ variables:
 
 steps:
 - script: |
-    rm -rf Build  # Clean build directory
+    rm -rf build  # Clean build directory
   displayName: 'Clean Build Directory'
   
 - task: CMake@1
@@ -25,6 +25,7 @@ steps:
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
     
 - script: |
+    cd build
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
   env:
