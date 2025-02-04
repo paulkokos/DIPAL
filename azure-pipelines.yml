@@ -21,7 +21,7 @@ steps:
     cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
 
 - script: |
-  rm -rf build # Remove the build directory
+    rm -rf build # Remove the build directory
   displayName: 'Clean Build Directory'
     cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
