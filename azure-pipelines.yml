@@ -7,26 +7,27 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest' # Use an Ubuntu agent
+
 variables:
-  BUILD_TYPE: 'release'
+  BUILD_TYPE: 'Release'
 
 steps:
-- task: CMake@1 # Use the CMake task
+- task: CMake@1
   displayName: 'Configure CMake'
   inputs:
-    cmakeListPath: 'CMakeLists.txt' # Path to your CMakeLists.txt
+    cmakeListPath: 'CMakeLists.txt'
     buildType: '$(BUILD_TYPE)'
-    cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Set install directory
+    cmakeOptions: '-DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory)' # Important for publishing
 
-- task: VSBuild@1 # Use the Visual Studio Build task (for MSBuild, use MSBuild@1)
+- script: |
+    cmake --build . --config $(BUILD_TYPE)
   displayName: 'Build'
-  inputs:
-    #solution: '**/*.sln' # Path to your solution file (if using MSBuild)
-    platform: 'x64'
-    configuration: '$(BUILD_TYPE)'
+  env:
+    CC: gcc # Explicitly set the C compiler
+    CXX: g++ # Explicitly set the C++ compiler
 
-- task: PublishBuildArtifacts@1 # Publish build artifacts
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
