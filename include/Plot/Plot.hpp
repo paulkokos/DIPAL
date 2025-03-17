@@ -4,7 +4,7 @@
 
 #ifndef DIPAL_PLOT_HPP
 #define DIPAL_PLOT_HPP
-
+//import matpllotlib
 
 class Plot {
 
