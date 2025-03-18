@@ -1,62 +1,72 @@
-#ifndef DIPAL_IMAGE_H
-#define DIPAL_IMAGE_H
-
+#ifndef DIPAL_HPP
+#define DIPAL_HPP
+#include <cstddef>
+#include <expected>
+#include <filesystem>
+#include <format>
+#include <memory>
+#include <optional>
+#include <span>
 #include <string>
-#include <chrono>
-#include <ctime>
+#include <string_view>
 #include <vector>
 
-
-//TODO: Setters and getters
 namespace DIPAL {
-  class Image {
-    class Header {
-      private:
-        unsigned char signature_B;              //'B' signature (1 byte)
-        unsigned char signature_M;              //'M' signature (1 byte)
-        uint8_t reserved1;
-        uint8_t reserved2;                      // reserved 2+2 bytes (plz ignore)
-        unsigned int bitmapInfoHeader;          //size of info header (must be 40)
-        unsigned int width;                     //4 bytes in header
-        unsigned int height;                    //4 bytes in header
-        uint8_t planes;                         //number of planes in the image (must be 1)
-        unsigned int offsetImageStart;          //4 bytes
-        uint8_t bitDepth;                       //in header 2 bytes
-        unsigned int fileSize;                  //in header 4 bytes (unreliable)
-        unsigned int compressionType;           //compression type (0=none,1=RLE-8,2=RLE-4)
-        unsigned int sizeOfData;                //Size of image data in bytes (including padding)
-        unsigned int horizontalResolution;      //Unreliable
-        unsigned int verticalResolution;        //Unreliable
-        unsigned int numberOfColors;            //number or zero
-        unsigned int numberOfImportantColors;   //number or zero
-      public:
-        Header();
-        ~Header();
-        void helloWorld();
-    };
-    public:
-    Image();
-    Image(std::string locationFoFile,std::string nameOfFile);
-    const std::string &getNameOfFile() const;
+class ImageData;
+struct ImageMetadata;
 
-    void setNameOfFile(const std::string &nameOfFile);
+/**
+ * @class Image
+ * @brief Base Class for all image types in the DIPAL Library
+ */
 
-    const std::string &getLocationOfFile() const;
+class Image {
+public:
+  // Modern contructor using std::filesystem
+  Image();
+  explicit Image(const std::filesystem::path &imagePath);
 
-    void setLocationOfFile(const std::string &locationOfFile);
-    
+  // Rule of five implementation
+  virtual ~Image() = default;
+  Image(const Image &other);
+  Image(Image &&other) noexcept;
+  Image &operator=(const Image &other);
+  Image &operator=(Image &&other) noexcept;
 
-    void headerHelloWorld();
-    
-    const std::string &getTypeOfFile() const;
-    
-    void setTypeOfFile(const std::string &typeOfFile);
-    ~Image();
-    private:
-    Header *header;
-    std::string nameOfFile;
-    std::string locationOfFile;
-    std::string typeOfFile;
-  };
-}
-#endif //DIPAL_IMAGE_H
+  // Image operations
+  virtual std::expected<bool, std::string>
+  load(const std::filesystem::path &path);
+  virtual std::expected<bool, std::string>
+  load(const std::filesystem::path &path) const;
+  virtual void display() const;
+
+  // Modern getters (potentialy using C++23s explicit object parameters)
+  [[nodiscard]] auto getWidth() const -> std::size_t;
+  [[nodiscard]] auto getHeight() const -> std::size_t;
+  [[nodiscard]] auto getChannels() const -> std::size_t;
+  [[nodiscard]] auto getBitDepth() const -> std::size_t;
+
+  // Create a view into the image data (using std::span)
+  [[nodiscard]] auto data() -> std::span<std::byte>;
+  [[nodiscard]] auto data() const -> std::span<const std::byte>;
+
+  // Image info and metadata
+  [[nodiscard]] auto getMetadata() const -> const ImageMetadata &;
+  [[nodiscard]] auto getFilePath() const -> const std::filesystem::path &;
+
+  // Factory method to create appropriate image type from file
+  static std::expected<std::unique_ptr<Image>, std::string>
+  create(const std::filesystem::path &path);
+
+protected:
+  // Implementation using the PIMPL idiom
+  std::unique_ptr<ImageData> m_data;
+  std::filesystem::path mm_filePath;
+
+  // protected utility methods
+
+  virtual void initializeData(std::size_t width, std::size_t height,
+                              std::size_t channels, std::size_t getBitDepth);
+};
+} // namespace DIPAL
+#endif
