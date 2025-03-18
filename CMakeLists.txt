@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.20)
 project(DIPAL VERSION 0.1.0 LANGUAGES CXX)
 
@@ -26,7 +25,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
 endif()
 
- Enable warnings
+# Enable warnings
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 elseif(MSVC)
