@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/DIPAL.dir/src/Image/Image.cpp.o CMakeFiles/DIPAL.dir/src/Image/BinaryImage.cpp.o CMakeFiles/DIPAL.dir/src/Image/GrayscaleImage.cpp.o CMakeFiles/DIPAL.dir/src/Image/ColorImage.cpp.o CMakeFiles/DIPAL.dir/main.cpp.o CMakeFiles/DIPAL.dir/src/Image/ImageFactory.cpp.o -o DIPAL 
