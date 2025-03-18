@@ -1,0 +1,4 @@
+/home/paulkokos/MyProjects/DIPAL/build/CMakeFiles/DIPAL.dir
+/home/paulkokos/MyProjects/DIPAL/build/CMakeFiles/test.dir
+/home/paulkokos/MyProjects/DIPAL/build/CMakeFiles/edit_cache.dir
+/home/paulkokos/MyProjects/DIPAL/build/CMakeFiles/rebuild_cache.dir
