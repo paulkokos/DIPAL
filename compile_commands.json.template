@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "BUILD_DIR_PATH",
+    "command": "c++ -std=c++23 -Iinclude -c -o src/example.o src/example.cpp",
+    "file": "src/example.cpp"
+  }
+]

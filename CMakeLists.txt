@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Generate compile_commands.json for LSP support
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Define build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -52,39 +55,16 @@ if(ENABLE_SANITIZERS AND CMAKE_BUILD_TYPE MATCHES "Debug")
   endif()
 endif()
 
-# Main library sources
-set(DIPAL_SOURCES
-    src/Image/Image.cpp
-    #src/Image/BinaryImage.cpp
-    #src/Image/GrayscaleImage.cpp
-    #src/Image/ColorImage.cpp
-    #src/Image/ImageFactory.cpp
-    #src/Filters/Filters.cpp
-    #src/Color/ColorConversions.cpp
-    #src/Transformation/Transformations.cpp
-    #src/DIPAL/DIPAL.cpp
-    #src/Observer/ProcessingObserver.cpp
-    #src/ImageProcessor/ImageProcssor.cpp
-)
+# Add CMake modules path
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-# Main library headers
-set(DIPAL_HEADERSs
-    include/Image/Image.hpp
-    #include/DIPAL/Image/BinaryImage.hpp
-    #include/DIPAL/Image/GrayscaleImage.hpp
-    #include/DIPAL/Image/ColorImage.hpp
-    #include/DIPAL/Image/ImageTypes.hpp
-    #include/DIPAL/Image/ImageFactory.hpp
-    #include/DIPAL/Filters/Filters.hpp
-    #include/DIPAL/Color/ColorConversions.hpp
-    #include/DIPAL/Transformation/Transformations.hpp
-    #include/DIPAL/Observer/ProcessingObserver.hpp
-    #include/DIPAL/ImageProcessor/ImageProcessor.hpp
-    #include/DIPAL/DIPAL.hpp
+# Main library sources (update as you add more files)
+file(GLOB_RECURSE DIPAL_SOURCES 
+     "src/*.cpp"
 )
 
 # Create the library target
-add_library(dipal ${DIPAL_SOURCES} ${DIPAL_HEADERS})
+add_library(dipal ${DIPAL_SOURCES})
 
 # Enable Link Time Optimization for release builds
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -100,34 +80,16 @@ target_include_directories(dipal
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Create demo application
+# Add examples if enabled
 if(BUILD_EXAMPLES)
-    # add_executable(dipal_demo examples/demo.cpp)
-    # target_link_libraries(dipal_demo PRIVATE dipal)
-    # replaced the above
-    add_executable (Main main.cpp)
+    add_subdirectory(examples)
 endif()
 
-# Testing
-# if(BUILD_TESTS)
-#    enable_testing()
-    
-    # Find Google Test
-    #    find_package(GTest REQUIRED)
-    
-    # Test executables
-    # add_executable(dipal_tests
-    #    tests/image_tests.cpp
-    #    tests/filter_tests.cpp
-    #    tests/transformation_tests.cpp
-    #    tests/color_tests.cpp
-    #)
-    
-    #target_link_libraries(dipal_tests PRIVATE dipal GTest::GTest GTest::Main)
-    
-    # Add tests to CTest
-    # add_test(NAME DIPAL_Tests COMMAND dipal_tests)
-    #sendif()
+# Add tests if enabled
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
 # Installation
 include(GNUInstallDirs)
@@ -151,28 +113,22 @@ install(DIRECTORY include/
 )
 
 # Generate and install package configuration files
-# include(CMakePackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 
-# configure_package_config_file(
-#    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/DIPAL-config.cmake.in
-#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config.cmake
-#    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DIPAL
-#)
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/dipal-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/dipal
+)
 
-# write_basic_package_version_file(
-#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config-version.cmake
-#    VERSION ${PROJECT_VERSION}
-#    COMPATIBILITY SameMajorVersion
-# )
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config-version.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
 
-# install(FILES
-#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config.cmake
-#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config-version.cmake
-#    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DIPAL
-# ) 
-
-# Export the package for use from the build tree
-# export(EXPORT dipal-targets
-#    FILE ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-targets.cmake
-#    NAMESPACE DIPAL::
-# )
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config-version.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/dipal
+)
