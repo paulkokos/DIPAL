@@ -1,0 +1,20 @@
+steps:
+- task: CMake@1
+  displayName: 'Configure CMake'
+  inputs:
+    cmakeListsPath: 'CMakeLists.txt'
+    buildType: '$(BUILD_TYPE)'
+    
+- script: |
+    mkdir -p build
+    cd build
+    cmake ..
+    cmake --build . --config $(BUILD_TYPE)
+  displayName: 'Build'
+  
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'pipeline'
