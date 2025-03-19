@@ -55,32 +55,32 @@ endif()
 # Main library sources
 set(DIPAL_SOURCES
     src/Image/Image.cpp
-    src/Image/BinaryImage.cpp
-    src/Image/GrayscaleImage.cpp
-    src/Image/ColorImage.cpp
-    src/Image/ImageFactory.cpp
-    src/Filters/Filters.cpp
-    src/Color/ColorConversions.cpp
-    src/Transformation/Transformations.cpp
-    src/DIPAL/DIPAL.cpp
-    src/Observer/ProcessingObserver.cpp
-    src/ImageProcessor/ImageProcessor.cpp
+    #src/Image/BinaryImage.cpp
+    #src/Image/GrayscaleImage.cpp
+    #src/Image/ColorImage.cpp
+    #src/Image/ImageFactory.cpp
+    #src/Filters/Filters.cpp
+    #src/Color/ColorConversions.cpp
+    #src/Transformation/Transformations.cpp
+    #src/DIPAL/DIPAL.cpp
+    #src/Observer/ProcessingObserver.cpp
+    #src/ImageProcessor/ImageProcessor.cpp
 )
 
 # Main library headers
 set(DIPAL_HEADERS
-    include/DIPAL/Image/Image.hpp
-    include/DIPAL/Image/BinaryImage.hpp
-    include/DIPAL/Image/GrayscaleImage.hpp
-    include/DIPAL/Image/ColorImage.hpp
-    include/DIPAL/Image/ImageTypes.hpp
-    include/DIPAL/Image/ImageFactory.hpp
-    include/DIPAL/Filters/Filters.hpp
-    include/DIPAL/Color/ColorConversions.hpp
-    include/DIPAL/Transformation/Transformations.hpp
-    include/DIPAL/Observer/ProcessingObserver.hpp
-    include/DIPAL/ImageProcessor/ImageProcessor.hpp
-    include/DIPAL/DIPAL.hpp
+    include/Image/Image.hpp
+    #include/DIPAL/Image/BinaryImage.hpp
+    #include/DIPAL/Image/GrayscaleImage.hpp
+    #include/DIPAL/Image/ColorImage.hpp
+    #include/DIPAL/Image/ImageTypes.hpp
+    #include/DIPAL/Image/ImageFactory.hpp
+    #include/DIPAL/Filters/Filters.hpp
+    #include/DIPAL/Color/ColorConversions.hpp
+    #include/DIPAL/Transformation/Transformations.hpp
+    #include/DIPAL/Observer/ProcessingObserver.hpp
+    #include/DIPAL/ImageProcessor/ImageProcessor.hpp
+    #include/DIPAL/DIPAL.hpp
 )
 
 # Create the library target
@@ -102,30 +102,32 @@ target_include_directories(dipal
 
 # Create demo application
 if(BUILD_EXAMPLES)
-    add_executable(dipal_demo examples/demo.cpp)
-    target_link_libraries(dipal_demo PRIVATE dipal)
+    # add_executable(dipal_demo examples/demo.cpp)
+    # target_link_libraries(dipal_demo PRIVATE dipal)
+    # replaced the above
+    add_executable (Main main.cpp)
 endif()
 
 # Testing
-if(BUILD_TESTS)
-    enable_testing()
+# if(BUILD_TESTS)
+#    enable_testing()
     
     # Find Google Test
-    find_package(GTest REQUIRED)
+    #    find_package(GTest REQUIRED)
     
     # Test executables
-    add_executable(dipal_tests
-        tests/image_tests.cpp
-        tests/filter_tests.cpp
-        tests/transformation_tests.cpp
-        tests/color_tests.cpp
-    )
+    # add_executable(dipal_tests
+    #    tests/image_tests.cpp
+    #    tests/filter_tests.cpp
+    #    tests/transformation_tests.cpp
+    #    tests/color_tests.cpp
+    #)
     
-    target_link_libraries(dipal_tests PRIVATE dipal GTest::GTest GTest::Main)
+    #target_link_libraries(dipal_tests PRIVATE dipal GTest::GTest GTest::Main)
     
     # Add tests to CTest
-    add_test(NAME DIPAL_Tests COMMAND dipal_tests)
-endif()
+    # add_test(NAME DIPAL_Tests COMMAND dipal_tests)
+    #sendif()
 
 # Installation
 include(GNUInstallDirs)
@@ -149,28 +151,28 @@ install(DIRECTORY include/
 )
 
 # Generate and install package configuration files
-include(CMakePackageConfigHelpers)
+# include(CMakePackageConfigHelpers)
 
-configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/dipal-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/dipal
-)
+# configure_package_config_file(
+#    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/DIPAL-config.cmake.in
+#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config.cmake
+#    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DIPAL
+#)
 
-write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config-version.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
+# write_basic_package_version_file(
+#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config-version.cmake
+#    VERSION ${PROJECT_VERSION}
+#    COMPATIBILITY SameMajorVersion
+# )
 
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/dipal-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/dipal
-)
+# install(FILES
+#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config.cmake
+#    ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-config-version.cmake
+#    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DIPAL
+# ) 
 
 # Export the package for use from the build tree
-export(EXPORT dipal-targets
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/dipal-targets.cmake
-    NAMESPACE DIPAL::
-)
+# export(EXPORT dipal-targets
+#    FILE ${CMAKE_CURRENT_BINARY_DIR}/DIPAL-targets.cmake
+#    NAMESPACE DIPAL::
+# )
