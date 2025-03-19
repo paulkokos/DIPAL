@@ -1,0 +1,191 @@
+version: 1.0.{build}
+
+# Specify which branches to build
+branches:
+  only:
+    - main
+    - master
+    - development
+
+# Do not build on tags
+skip_tags: true
+
+# Build matrix - multiple configurations
+environment:
+  matrix:
+    # Windows + MSVC
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      PLATFORM: Win32
+      CONFIGURATION: Debug
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      PLATFORM: Win32
+      CONFIGURATION: Release
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      PLATFORM: x64
+      CONFIGURATION: Debug
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      PLATFORM: x64
+      CONFIGURATION: Release
+
+    # Linux + GCC
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      CMAKE_GENERATOR: "Ninja"
+      CONFIGURATION: Debug
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      CMAKE_GENERATOR: "Ninja"
+      CONFIGURATION: Release
+
+    # macOS + Clang
+    - APPVEYOR_BUILD_WORKER_IMAGE: macOS
+      CMAKE_GENERATOR: "Ninja"
+      CONFIGURATION: Debug
+
+    - APPVEYOR_BUILD_WORKER_IMAGE: macOS
+      CMAKE_GENERATOR: "Ninja"
+      CONFIGURATION: Release
+
+# Cache dependencies to speed up builds
+cache:
+  - build/vcpkg -> vcpkg.json, vcpkg-configuration.json
+
+# Install dependencies
+install:
+  # Windows-specific
+  - cmd: |-
+      if "%PLATFORM%"=="x64" (
+        set ARCHITECTURE=x64
+      ) else (
+        set ARCHITECTURE=Win32
+      )
+      if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2022" (
+        call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
+      )
+      if not exist build mkdir build
+  
+  # Linux-specific
+  - sh: |-
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "Ubuntu" ]]; then
+        sudo apt-get update
+        sudo apt-get install -y ninja-build build-essential libgtk-3-dev
+        if [[ "${CONFIGURATION}" == "Debug" ]]; then
+          sudo apt-get install -y libgtest-dev
+          cd /usr/src/gtest
+          sudo cmake -E make_directory build
+          cd build
+          sudo cmake ..
+          sudo cmake --build . --config Debug
+          sudo cp lib/libgtest*.a /usr/lib
+          cd ${APPVEYOR_BUILD_FOLDER}
+        fi
+        mkdir -p build
+      fi
+  
+  # macOS-specific
+  - sh: |-
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "macOS" ]]; then
+        brew update
+        brew install ninja
+        if [[ "${CONFIGURATION}" == "Debug" ]]; then
+          brew install googletest
+        fi
+        mkdir -p build
+      fi
+
+# Configure the build
+before_build:
+  # Windows-specific
+  - cmd: |-
+      cd build
+      if "%PLATFORM%"=="x64" (
+        cmake .. -G "%CMAKE_GENERATOR%" -A x64 -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_TESTS=%BUILD_TESTS%
+      ) else (
+        cmake .. -G "%CMAKE_GENERATOR%" -A Win32 -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_TESTS=%BUILD_TESTS%
+      )
+      cd ..
+  
+  # Linux/macOS-specific
+  - sh: |-
+      BUILD_TESTS=OFF
+      if [[ "${CONFIGURATION}" == "Debug" ]]; then
+        BUILD_TESTS=ON
+      fi
+      cd build
+      cmake .. -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DBUILD_TESTS=${BUILD_TESTS}
+      cd ..
+
+# Build the project
+build_script:
+  # Windows-specific
+  - cmd: |-
+      cd build
+      cmake --build . --config %CONFIGURATION%
+      cd ..
+  
+  # Linux/macOS-specific
+  - sh: |-
+      cd build
+      cmake --build . --config ${CONFIGURATION}
+      cd ..
+
+# Run the tests
+test_script:
+  # Windows-specific - run tests only in Debug
+  - cmd: |-
+      if "%CONFIGURATION%"=="Debug" (
+        cd build
+        ctest -C %CONFIGURATION% --output-on-failure
+        cd ..
+      )
+  
+  # Linux/macOS-specific - run tests only in Debug
+  - sh: |-
+      if [[ "${CONFIGURATION}" == "Debug" && "${BUILD_TESTS}" == "ON" ]]; then
+        cd build
+        ctest -C ${CONFIGURATION} --output-on-failure
+        cd ..
+      fi
+
+# Package artifacts
+after_build:
+  # Windows-specific
+  - cmd: |-
+      cd build
+      cmake --install . --prefix ../install --config %CONFIGURATION%
+      cd ..
+      7z a DIPAL-%CONFIGURATION%-%PLATFORM%.zip ./install/*
+  
+  # Linux/macOS-specific
+  - sh: |-
+      cd build
+      cmake --install . --prefix ../install --config ${CONFIGURATION}
+      cd ..
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "Ubuntu" ]]; then
+        tar czf DIPAL-${CONFIGURATION}-Linux.tar.gz ./install/*
+      elif [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "macOS" ]]; then
+        tar czf DIPAL-${CONFIGURATION}-macOS.tar.gz ./install/*
+      fi
+
+# Define artifacts
+artifacts:
+  - path: '*.zip'
+    name: Windows
+  - path: '*.tar.gz'
+    name: Linux_macOS
+
+# Deploy settings
+deploy:
+  provider: GitHub
+  artifact: Windows, Linux_macOS
+  draft: true
+  prerelease: true
+  on:
+    branch: main
+    APPVEYOR_REPO_TAG: true # Deploy only on tags
