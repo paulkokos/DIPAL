@@ -114,6 +114,7 @@ protected:
     int m_bytesPerPixel;
 
     // Protected constructor for derived classes
+    Image();
 };
 }  // namespace DIPAL
 
