@@ -64,11 +64,11 @@ set(DIPAL_SOURCES
     #src/Transformation/Transformations.cpp
     #src/DIPAL/DIPAL.cpp
     #src/Observer/ProcessingObserver.cpp
-    #src/ImageProcessor/ImageProcessor.cpp
+    #src/ImageProcessor/ImageProcssor.cpp
 )
 
 # Main library headers
-set(DIPAL_HEADERS
+set(DIPAL_HEADERSs
     include/Image/Image.hpp
     #include/DIPAL/Image/BinaryImage.hpp
     #include/DIPAL/Image/GrayscaleImage.hpp
