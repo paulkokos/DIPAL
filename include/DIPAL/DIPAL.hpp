@@ -1,16 +1,29 @@
+// include/DIPAL/DIPAL.hpp
 #ifndef DIPAL_HPP
 #define DIPAL_HPP
 
-// Main include file for DIPAL library
-// Include all public API headers here
-
+// Core includes
 #include "Core/Core.hpp"
+
+// Image includes
+#include "Image/ColorImage.hpp"
+#include "Image/GrayscaleImage.hpp"
 #include "Image/Image.hpp"
-#include "Filters/Filters.hpp"
-#include "Transformation/Transformations.hpp"
-#include "Color/ColorConversions.hpp"
+#include "Image/ImageFactory.hpp"
+
+
+// Filter includes
+
+#include "Filters/FilterStrategy.hpp"
+#include "Filters/GaussianFilter.hpp"
+
+// I/O Includes
 #include "IO/ImageIO.hpp"
-#include "Utils/Utils.hpp"
+#include "IO/PPMImageIO.hpp"
+#include "IO/BMPImageIO.hpp"
+
+// Processing includes
+#include "ImageProcessor/ProcessingCommand.hpp"
 
 // Version information
 #define DIPAL_VERSION_MAJOR 0
@@ -18,17 +31,17 @@
 #define DIPAL_VERSION_PATCH 0
 
 namespace DIPAL {
-    // Core library class
-    class DIPAL {
-    public:
-        DIPAL();
-        ~DIPAL();
-        
-        // Add main library functionality here
-        
-    private:
-        // Implementation details
-    };
-}
+// Main library class
+class DIPAL {
+public:
+    DIPAL();
+    ~DIPAL();
 
-#endif // DIPAL_HPP
+    // Add main library functionality here
+
+private:
+    // Implementation details
+};
+}  // namespace DIPAL
+
+#endif  // DIPAL_HPP
