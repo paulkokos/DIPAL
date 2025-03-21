@@ -1,5 +1,5 @@
 # examples/CMakeLists.txt
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.18)
 
 # Basic examples
 add_executable(hello_dipal basic/hello_dipal.cpp)
