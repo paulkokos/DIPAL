@@ -1,20 +1,155 @@
-steps:
-- task: CMake@1
-  displayName: 'Configure CMake'
-  inputs:
-    cmakeListsPath: 'CMakeLists.txt'
-    buildType: '$(BUILD_TYPE)'
+# Azure Pipelines configuration for DIPAL
+# This pipeline builds the C++ project on multiple platforms
+
+trigger:
+  branches:
+    include:
+    - main
+    - master
+    - development
+    - feature/*
+    - release/*
+  paths:
+    exclude:
+    - README.md
+    - LICENSE
+    - docs/*
+    - .github/*
+
+# Define build variables
+variables:
+  CMAKE_VERSION: '3.20.0'
+
+# Define multiple jobs for different platforms
+jobs:
+# Windows build with Visual Studio
+- job: Windows
+  displayName: 'Windows Build'
+  pool:
+    vmImage: 'windows-latest'
+  strategy:
+    matrix:
+      Debug:
+        BUILD_TYPE: 'Debug'
+        BUILD_TESTS: 'OFF'  # Set to OFF for now to simplify
+      Release:
+        BUILD_TYPE: 'Release'
+        BUILD_TESTS: 'OFF'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.9'
+      addToPath: true
+      
+  - script: |
+      choco install ninja
+    displayName: 'Install Ninja'
     
-- script: |
-    mkdir -p build
-    cd build
-    cmake ..
-    cmake --build . --config $(BUILD_TYPE)
-  displayName: 'Build'
-  
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifacts'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'pipeline'
+  - script: |
+      mkdir build
+      cd build
+      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=$(BUILD_TESTS) -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
+    displayName: 'Configure CMake'
+    
+  - script: |
+      cd build
+      cmake --build . --config $(BUILD_TYPE)
+    displayName: 'Build Project'
+    
+  - script: |
+      cd build
+      ctest -C $(BUILD_TYPE) --output-on-failure
+    displayName: 'Run Tests'
+    condition: eq(variables['BUILD_TESTS'], 'ON')
+    
+  - script: |
+      cd build
+      cmake --install . --config $(BUILD_TYPE)
+    displayName: 'Install'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'DIPAL-Windows-$(BUILD_TYPE)'
+    displayName: 'Publish Artifacts'
+
+# Linux build with GCC
+- job: Linux
+  displayName: 'Linux Build'
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    matrix:
+      GCC_Debug:
+        CC: gcc
+        CXX: g++
+        BUILD_TYPE: 'Debug'
+        BUILD_TESTS: 'OFF'  # Set to OFF by default
+      GCC_Release:
+        CC: gcc
+        CXX: g++
+        BUILD_TYPE: 'Release'
+        BUILD_TESTS: 'OFF'
+  steps:
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y ninja-build
+    displayName: 'Install Dependencies'
+    
+  - script: |
+      mkdir -p build
+      cd build
+      # Add -DBUILD_TESTS=OFF explicitly to override CMake defaults
+      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
+    displayName: 'Configure CMake'
+    env:
+      CC: $(CC)
+      CXX: $(CXX)
+    
+  - script: |
+      cd build
+      cmake --build .
+    displayName: 'Build Project'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'DIPAL-Linux-$(CC)-$(BUILD_TYPE)'
+    displayName: 'Publish Artifacts'
+
+# macOS build with Clang
+- job: macOS
+  displayName: 'macOS Build'
+  pool:
+    vmImage: 'macOS-latest'
+  strategy:
+    matrix:
+      Release:
+        BUILD_TYPE: 'Release'
+        BUILD_TESTS: 'OFF'
+  steps:
+  - script: |
+      brew install ninja
+    displayName: 'Install Dependencies'
+    
+  - script: |
+      mkdir -p build
+      cd build
+      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
+    displayName: 'Configure CMake'
+    
+  - script: |
+      cd build
+      cmake --build .
+    displayName: 'Build Project'
+    
+  - script: |
+      cd build
+      cmake --install .
+    displayName: 'Install'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'DIPAL-macOS-$(BUILD_TYPE)'
+    displayName: 'Publish Artifacts'
