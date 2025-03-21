@@ -11,6 +11,20 @@
 #include "Image/Image.hpp"
 #include "Image/ImageFactory.hpp"
 
+
+// Filter includes
+
+#include "Filters/FilterStrategy.hpp"
+#include "Filters/GaussianFilter.hpp"
+
+// I/O Includes
+#include "IO/ImageIO.hpp"
+#include "IO/PPMImageIO.hpp"
+#include "IO/BMPImageIO.hpp"
+
+// Processing includes
+#include "ImageProcessor/ProcessingCommand.hpp"
+
 // Version information
 #define DIPAL_VERSION_MAJOR 0
 #define DIPAL_VERSION_MINOR 1
