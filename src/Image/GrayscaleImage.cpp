@@ -1,6 +1,7 @@
 // src/Image/GrayscaleImage.cpp
 #include "../../include/DIPAL/Image/GrayscaleImage.hpp"
 
+#include <stdexcept>
 namespace DIPAL {
 
 GrayscaleImage::GrayscaleImage(int width, int height) : Image(width, height, Type::Grayscale) {}
