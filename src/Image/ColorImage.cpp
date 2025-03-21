@@ -1,6 +1,8 @@
 // src/Image/ColorImage.cpp
 #include "../../include/DIPAL/Image/ColorImage.hpp"
 
+#include <iostream>
+#include <stdexcept>
 namespace DIPAL {
 
 ColorImage::ColorImage(int width, int height, bool hasAlpha)
