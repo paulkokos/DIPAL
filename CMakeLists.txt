@@ -132,12 +132,3 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/dipal-config-version.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/dipal
 )
-
-
-
-
-
-
-
-
-
