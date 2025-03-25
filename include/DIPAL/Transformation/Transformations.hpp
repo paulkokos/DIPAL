@@ -1,5 +1,5 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
-#define DIPAL_HPP  
+#ifndef TRANSFORMATIONS_HPP
+#define TRANSFORMATIONS_HPP  
 
-#endif // 0
+#endif // TRANSFORMATIONS_HPP

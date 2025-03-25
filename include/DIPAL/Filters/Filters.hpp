@@ -1,6 +1,6 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
-#define DIPAL_HPP
+#ifndef FILTERS_HPP
+#define FILTERS_HPP
 
 
-#endif  // DIPAL_FILTER_STRATEGY_HPP
+#endif  // FILTERS_HPP

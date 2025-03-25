@@ -1,6 +1,6 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
-#define DIPAL_HPP
+#ifndef IMAGEIO_HPP
+#define IMAGEIO_HPP
 
 
-#endif // 0
+#endif // IMAGEIO_HPP

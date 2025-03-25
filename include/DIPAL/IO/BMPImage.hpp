@@ -1,5 +1,5 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
-#define 
-#endif  // DIPAL_FILTER_STRATEGY_HPP
+#ifndef BMPIMAGE_HPP
+#define BMPIMAGE_HPP
+#endif  // BMPIMAGE_HPP
 
