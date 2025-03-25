@@ -1,5 +1,5 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
-#define DIPAL_HPP 
+#ifndef PPMIMAGEIO_HPP
+#define PPMIMAGEIO_HPP 
 
-#endif // 0
+#endif // PPMIMAGEIO_HPP

@@ -1,4 +1,7 @@
 
-#ifndef DIPAL_FILTER_STRATEGY_HPP
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
-#define DIPAL_HPP
+
+
+#endif // UTILS_HPP
