@@ -15,7 +15,7 @@
 // Filter includes
 
 #include "Filters/FilterStrategy.hpp"
-#include "Filters/GaussianFilter.hpp"
+#include "Filters/GaussianBlurFilter.hpp"
 
 // I/O Includes
 #include "IO/ImageIO.hpp"
@@ -31,6 +31,9 @@
 #define DIPAL_VERSION_PATCH 0
 
 namespace DIPAL {
+    inline const char* getVersion(){
+        return "0.1.0";
+    }
 // Main library class
 class DIPAL {
 public:
