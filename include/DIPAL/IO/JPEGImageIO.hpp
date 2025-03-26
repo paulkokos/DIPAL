@@ -1,0 +1,4 @@
+
+#ifndef JPEGIMAGE_HPP
+#define JPEGIMAGE_HPP
+#endif  // JPEGIMAGE_HPP
