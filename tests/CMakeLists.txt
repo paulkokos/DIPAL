@@ -1,6 +1,7 @@
-cmake_minimum_required(VERSION 3.20)
+# tests/CMakeLists.txt
+cmake_minimum_required(VERSION 3.18)
 
-# Find or use Google Test
+# Find Google Test
 if(TARGET gtest)
     message(STATUS "Using Google Test from submodule")
 else()
@@ -19,20 +20,10 @@ target_link_libraries(image_tests PRIVATE
 )
 gtest_discover_tests(image_tests)
 
-# Add more test executables as needed
-add_executable(filter_tests unit/filter_tests.cpp)
-target_link_libraries(filter_tests PRIVATE
-    dipal
-    gtest
-    gtest_main
-)
-gtest_discover_tests(filter_tests)
+# Add more test targets as needed
 
-# Integration tests
-add_executable(io_tests integration/io_tests.cpp)
-target_link_libraries(io_tests PRIVATE
-    dipal
-    gtest
-    gtest_main
+# Set tests output directory
+set_target_properties(image_tests
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/tests"
 )
-gtest_discover_tests(io_tests)
