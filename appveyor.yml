@@ -16,16 +16,6 @@ environment:
     # Windows + MSVC
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       CMAKE_GENERATOR: "Visual Studio 17 2022"
-      PLATFORM: Win32
-      CONFIGURATION: Debug
-
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      CMAKE_GENERATOR: "Visual Studio 17 2022"
-      PLATFORM: Win32
-      CONFIGURATION: Release
-
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      CMAKE_GENERATOR: "Visual Studio 17 2022"
       PLATFORM: x64
       CONFIGURATION: Debug
 
@@ -44,10 +34,6 @@ environment:
       CONFIGURATION: Release
 
     # macOS + Clang
-    - APPVEYOR_BUILD_WORKER_IMAGE: macOS
-      CMAKE_GENERATOR: "Ninja"
-      CONFIGURATION: Debug
-
     - APPVEYOR_BUILD_WORKER_IMAGE: macOS
       CMAKE_GENERATOR: "Ninja"
       CONFIGURATION: Release
@@ -104,11 +90,7 @@ before_build:
   # Windows-specific
   - cmd: |-
       cd build
-      if "%PLATFORM%"=="x64" (
-        cmake .. -G "%CMAKE_GENERATOR%" -A x64 -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_TESTS=%BUILD_TESTS%
-      ) else (
-        cmake .. -G "%CMAKE_GENERATOR%" -A Win32 -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_TESTS=%BUILD_TESTS%
-      )
+      cmake .. -G "%CMAKE_GENERATOR%" -A x64 -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DBUILD_TESTS=%BUILD_TESTS%
       cd ..
   
   # Linux/macOS-specific
