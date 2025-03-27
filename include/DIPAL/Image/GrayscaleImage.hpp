@@ -34,7 +34,7 @@ public:
      * @param value Pixel value (0-255)
      * @return VoidResult indicating success or error
      */
-    [[nodiscard]] VoidResult setPixel(int x, int y, uint8_t value);
+    [[maybe_unused]] VoidResult setPixel(int x, int y, uint8_t value);
 
     /**
      * @brief Clone the grayscale image

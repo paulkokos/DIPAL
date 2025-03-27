@@ -3,11 +3,12 @@
 
 #include <iomanip>
 #include <iostream>
+#include <format>
 
 namespace DIPAL {
 
-void ConsoleObserver::onProcessingStarted(const std::string& operationName) {
-    std::cout << "Started: " << operationName << std::endl;
+void ConsoleObserver::onProcessingStarted(std::string_view operationName) {
+    std::cout << std::format("Started: {}\n", operationName);
 }
 
 void ConsoleObserver::onProgressUpdated(float progress) {
@@ -16,15 +17,16 @@ void ConsoleObserver::onProgressUpdated(float progress) {
 
     std::cout << "[";
     for (int i = 0; i < barWidth; ++i) {
-        if (i < pos)
+        if (i < pos) {
             std::cout << "=";
-        else if (i == pos)
+        } else if (i == pos) {
             std::cout << ">";
-        else
+        } else {
             std::cout << " ";
+        }
     }
 
-    std::cout << "] " << std::fixed << std::setprecision(1) << (progress * 100.0) << "%\r";
+    std::cout << std::format("] {:.1f}%\r", progress * 100.0f);
     std::cout.flush();
 
     if (progress >= 1.0f) {
@@ -32,12 +34,14 @@ void ConsoleObserver::onProgressUpdated(float progress) {
     }
 }
 
-void ConsoleObserver::onProcessingCompleted(const std::string& operationName, bool success) {
-    std::cout << (success ? "Completed: " : "Failed: ") << operationName << std::endl;
+void ConsoleObserver::onProcessingCompleted(std::string_view operationName, bool success) {
+    std::cout << std::format("{}: {}\n", 
+                          success ? "Completed" : "Failed", 
+                          operationName);
 }
 
-void ConsoleObserver::onError(const std::string& errorMessage) {
-    std::cerr << "Error: " << errorMessage << std::endl;
+void ConsoleObserver::onError(std::string_view errorMessage) {
+    std::cerr << std::format("Error: {}\n", errorMessage);
 }
 
-}  // namespace DIPAL
+} // namespace DIPAL
