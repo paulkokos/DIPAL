@@ -1,4 +1,5 @@
+// include/DIPAL/Observer/ProcessObserver.hpp
+#ifndef DIPAL_PROCESS_OBSERVER_HPP
+#define DIPAL_PROCESS_OBSERVER_HPP
 
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+#endif // DIPAL_PROCESS_OBSERVER_HPP

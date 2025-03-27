@@ -1,5 +1,5 @@
+// include/DIPAL/IO/PPMImageIO.hpp
+#ifndef DIPAL_PPM_IMAGE_IO_HPP
+#define DIPAL_PPM_IMAGE_IO_HPP 
 
-#ifndef PPMIMAGEIO_HPP
-#define PPMIMAGEIO_HPP 
-
-#endif // PPMIMAGEIO_HPP
+#endif // PPM_IMAGE_IO_HPP

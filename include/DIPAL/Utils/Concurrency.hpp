@@ -1,4 +1,4 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+// include/DIPAL/Utils/Concurrency.hpp
+#ifndef DIPAL_CONCURRENCY_HPP
+#define DIPAL_CONCURRENCY_HPP
+#endif  // DIPAL_CONCURRENCY_HPP

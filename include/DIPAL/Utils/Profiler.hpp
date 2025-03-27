@@ -1,4 +1,4 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+// include/DIPAL/Utils/Profiler.hpp
+#ifndef DIPAL_PROFILER_HPP
+#define DIPAL_PROFILER_HPP
+#endif  // DIPAL_PROFILER_HPP
