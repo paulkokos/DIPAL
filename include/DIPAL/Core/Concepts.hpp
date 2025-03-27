@@ -25,18 +25,19 @@ concept ImageType = requires(T t, int x, int y) {
 
 // Concept for filter types
 template <typename T>
-concept Filter = requires(T t, const ImageType auto& img) {
-    { t.apply(img) } -> std::convertible_to<std::unique_ptr<ImageType>>;
+concept Filter = ImageType<T> && requires(T t, const T& img) {
+    { t.apply(img) } -> std::convertible_to<std::unique_ptr<T>>;
     { t.getName() } -> std::convertible_to<std::string>;
 };
 
 // Concept for processing commands
 template <typename T>
-concept Command = requires(T t, const ImageType auto& img) {
-    { t.execute(img) } -> std::convertible_to<std::unique_ptr<ImageType>>;
+concept Command = ImageType<T> && requires(T t, const T& img) {
+    { t.execute(img) } -> std::convertible_to<std::unique_ptr<T>>;
     { t.getName() } -> std::convertible_to<std::string>;
     { t.isUndoable() } -> std::convertible_to<bool>;
 };
+
 
 // Concept for range of data
 template <typename T>
@@ -46,8 +47,8 @@ concept DataRange = std::ranges::contiguous_range<T> &&
 
 // Concept for transformations
 template <typename T>
-concept Transformation = requires(T t, const ImageType auto& img) {
-    { t.apply(img) } -> std::convertible_to<std::unique_ptr<ImageType>>;
+concept Transformation = ImageType<T> && requires(T t, const T& img) {
+    { t.apply(img) } -> std::convertible_to<std::unique_ptr<T>>;
     { t.getName() } -> std::convertible_to<std::string>;
 };
 
