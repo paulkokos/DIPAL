@@ -4,8 +4,10 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
 
 #include "../Image/Image.hpp"
+#include "../Core/Error.hpp"
 
 namespace DIPAL {
 
@@ -21,17 +23,23 @@ public:
     /**
      * @brief Apply the filter to an image
      * @param image The image to process
-     * @return A new image with the filter applied
+     * @return Result containing the filtered image or error
      */
-    virtual std::unique_ptr<Image> apply(const Image& image) const = 0;
+    [[nodiscard]] virtual Result<std::unique_ptr<Image>> apply(const Image& image) const = 0;
 
     /**
      * @brief Get the name of the filter
      * @return Filter name
      */
-    virtual std::string getName() const = 0;
+    [[nodiscard]] virtual std::string_view getName() const = 0;
+    
+    /**
+     * @brief Clone the filter
+     * @return A new filter that is a copy of this one
+     */
+    [[nodiscard]] virtual std::unique_ptr<FilterStrategy> clone() const = 0;
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_FILTER_STRATEGY_HPP
+#endif // DIPAL_FILTER_STRATEGY_HPP
