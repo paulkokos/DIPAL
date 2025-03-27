@@ -7,6 +7,7 @@
 #include <memory>
 #include <stdexcept>
 #include <format>
+#include <span>
 
 namespace DIPAL {
 
@@ -44,47 +45,47 @@ Image::Image(int width, int height, Type type) : m_width(width), m_height(height
     m_data.resize(static_cast<size_t>(width) * height * m_bytesPerPixel);
 }
 
-int Image::getWidth() const noexcept {
+int Image::getWidth() const {
     return m_width;
 }
 
-int Image::getHeight() const noexcept {
+int Image::getHeight()  const{
     return m_height;
 }
 
-Image::Type Image::getType() const noexcept {
+Image::Type Image::getType() const  {
     return m_type;
 }
 
-bool Image::isEmpty() const noexcept {
+bool Image::isEmpty() const  {
     return m_data.empty() || m_width <= 0 || m_height <= 0;
 }
 
-std::span<const std::uint8_t> Image::getDataSpan() const noexcept {
+std::span<const std::uint8_t> Image::getDataSpan() const noexcept{
     return std::span<const std::uint8_t>(m_data);
 }
 
-std::span<std::uint8_t> Image::getDataSpan() noexcept {
+std::span<std::uint8_t> Image::getDataSpan()  {
     return std::span<std::uint8_t>(m_data);
 }
 
-const std::uint8_t* Image::getData() const noexcept {
+const std::uint8_t* Image::getData() const  {
     return m_data.data();
 }
 
-std::uint8_t* Image::getData() noexcept {
+std::uint8_t* Image::getData() {
     return m_data.data();
 }
 
-int Image::getChannels() const noexcept {
+int Image::getChannels() const  {
     return m_channels;
 }
 
-int Image::getBytesPerPixel() const noexcept {
+int Image::getBytesPerPixel() const  {
     return m_bytesPerPixel;
 }
 
-std::size_t Image::getDataSize() const noexcept {
+size_t Image::getDataSize() const  {
     return m_data.size();
 }
 
@@ -117,7 +118,7 @@ std::unique_ptr<Image> Image::clone() const {
     return cloned;
 }
 
-bool Image::isValidCoordinate(int x, int y) const noexcept {
+bool Image::isValidCoordinate(int x, int y) const  {
     return x >= 0 && x < m_width && y >= 0 && y < m_height;
 }
 
