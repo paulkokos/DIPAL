@@ -1,25 +1,32 @@
 // src/Image/GrayscaleImage.cpp
 #include "../../include/DIPAL/Image/GrayscaleImage.hpp"
 
+#include <algorithm>
 #include <stdexcept>
+
 namespace DIPAL {
 
-GrayscaleImage::GrayscaleImage(int width, int height) : Image(width, height, Type::Grayscale) {}
+GrayscaleImage::GrayscaleImage(int width, int height) 
+    : Image(width, height, Type::Grayscale) {}
 
-uint8_t GrayscaleImage::getPixel(int x, int y) const {
-    if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
-        throw std::out_of_range("Pixel coordinates out of range");
+Result<uint8_t> GrayscaleImage::getPixel(int x, int y) const {
+    if (!isValidCoordinate(x, y)) {
+        return makeErrorResult<uint8_t>(ErrorCode::OutOfRange, "Pixel coordinates out of range");
     }
 
-    return m_data[y * m_width + x];
+    size_t idx = static_cast<size_t>(y) * m_width + static_cast<size_t>(x);
+    return makeSuccessResult(m_data[idx]);
 }
 
-void GrayscaleImage::setPixel(int x, int y, uint8_t value) {
-    if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
-        throw std::out_of_range("Pixel coordinates out of range");
+VoidResult GrayscaleImage::setPixel(int x, int y, uint8_t value) {
+    if (!isValidCoordinate(x, y)) {
+        return makeVoidErrorResult(ErrorCode::OutOfRange, "Pixel coordinates out of range");
     }
 
-    m_data[y * m_width + x] = value;
+    size_t idx = static_cast<size_t>(y) * m_width + static_cast<size_t>(x);
+    m_data[idx] = value;
+    
+    return makeVoidSuccessResult();
 }
 
 std::unique_ptr<Image> GrayscaleImage::clone() const {
@@ -28,4 +35,22 @@ std::unique_ptr<Image> GrayscaleImage::clone() const {
     return cloned;
 }
 
-}  // namespace DIPAL
+std::span<const uint8_t> GrayscaleImage::getRow(int y) const {
+    if (y < 0 || y >= m_height) {
+        return std::span<const uint8_t>();  // Return empty span for invalid row
+    }
+    
+    const uint8_t* rowStart = m_data.data() + static_cast<size_t>(y) * m_width;
+    return std::span<const uint8_t>(rowStart, m_width);
+}
+
+std::span<uint8_t> GrayscaleImage::getRow(int y) {
+    if (y < 0 || y >= m_height) {
+        return std::span<uint8_t>();  // Return empty span for invalid row
+    }
+    
+    uint8_t* rowStart = m_data.data() + static_cast<size_t>(y) * m_width;
+    return std::span<uint8_t>(rowStart, m_width);
+}
+
+} // namespace DIPAL
