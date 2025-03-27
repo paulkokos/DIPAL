@@ -1,69 +1,57 @@
+## README.md
+
+```markdown
 # DIPAL
 
-Digital Image Processing and Analysis Library
+<p align="center">
+  <img src="docs/img/logo.png" alt="DIPAL Logo" width="200"/>
+</p>
 
-## Description
+**Digital Image Processing and Analysis Library**
 
-A lightweight, simple, easy to use/understand, C++ image processing and analysis library. 
-Built with modern C++ (C++23) techniques and designed to be independent of external libraries.
+[![Build Status](https://dev.azure.com/yourproject/DIPAL/_apis/build/status/DIPAL-CI?branchName=main)](https://dev.azure.com/yourproject/DIPAL/_build/latest?definitionId=1&branchName=main)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/yourusername/DIPAL?branch=main&svg=true)](https://ci.appveyor.com/project/yourusername/DIPAL)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
+A lightweight, simple to use, and powerful C++23 image processing and analysis library. Built with modern C++ techniques and designed to be independent of external libraries while providing high performance.
 
 ## Features
 
-- Image loading and saving
-- Image filtering and transformations
-- Color space conversions
-- Modern C++ design
+- **Modern C++23 Design**: Utilizing the latest C++ features for safety and expressiveness
+- **Image Processing**: Rich set of filters and transformations
+- **Easy to Use API**: Intuitive interfaces with strong type safety
+- **Extensible Architecture**: Easy to add new algorithms and processing steps
+- **Thread-Safe**: Proper concurrency support for parallel processing
+- **Zero Dependencies**: Standalone library with no external dependencies
+- **Cross-Platform**: Works on Windows, Linux, and macOS
 
-## Installation
-
-### Prerequisites
-
-- C++23 compatible compiler (GCC 11+, Clang 14+, MSVC 19.30+)
-- CMake 3.20 or higher
-
-### Building from Source
-
-```bash
-git clone https://github.com/yourusername/DIPAL.git
-cd DIPAL
-mkdir build && cd build
-cmake ..
-cmake --build .
-```
-
-## Development with AstroNvim
-
-This project includes configuration for AstroNvim:
-
-1. Run the LSP setup script to generate compile_commands.json:
-   ```bash
-   ./tools/scripts/update_compile_commands.sh
-   ```
-
-2. Open the project in Neovim:
-   ```bash
-   nvim .
-   ```
-
-## Usage
+## Quick Start
 
 ```cpp
 #include <DIPAL/DIPAL.hpp>
+#include <iostream>
 
 int main() {
-    // TODO: Add usage example
+    // Load an image
+    auto result = DIPAL::ImageFactory::loadImage("input.png");
+    if (!result) {
+        std::cerr << "Error loading image: " << result.error() << std::endl;
+        return 1;
+    }
+
+    auto image = std::move(result.value());
+
+    // Apply a Gaussian blur filter
+    auto filter = DIPAL::GaussianBlurFilter(1.5, 5);
+    auto blurred = filter.apply(*image);
+
+    // Save the result
+    auto saveResult = DIPAL::ImageFactory::saveImage(*blurred, "output.png");
+    if (!saveResult) {
+        std::cerr << "Error saving image: " << saveResult.error() << std::endl;
+        return 1;
+    }
+
+    std::cout << "Image processed successfully!" << std::endl;
     return 0;
 }
-```
-
-## Documentation
-
-See the [documentation](docs/README.md) for detailed API reference and examples.
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.

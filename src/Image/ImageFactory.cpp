@@ -1,6 +1,5 @@
 // src/Image/ImageFactory.cpp
 #include "../../include/DIPAL/Image/ImageFactory.hpp"
-
 #include <memory>
 #include <stdexcept>
 
