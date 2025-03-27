@@ -10,7 +10,7 @@ ColorImage::ColorImage(int width, int height, bool hasAlpha)
     : Image(width, height, hasAlpha ? Type::RGBA : Type::RGB) {}
 
 VoidResult ColorImage::getPixel(int x, int y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a) const {
-    if (!isValidCoordinate(x, y)) {
+    if (!Image::isValidCoordinate(x, y)) {
         return makeVoidErrorResult(ErrorCode::OutOfRange, "Pixel coordinates out of range");
     }
 
@@ -31,7 +31,7 @@ VoidResult ColorImage::getPixel(int x, int y, uint8_t& r, uint8_t& g, uint8_t& b
 }
 
 VoidResult ColorImage::setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-    if (!isValidCoordinate(x, y)) {
+    if (!Image::isValidCoordinate(x, y)) {
         return makeVoidErrorResult(ErrorCode::OutOfRange, "Pixel coordinates out of range");
     }
 
@@ -86,5 +86,6 @@ std::unique_ptr<Image> ColorImage::clone() const {
     std::copy(m_data.begin(), m_data.end(), cloned->m_data.begin());
     return cloned;
 }
+
 
 } // namespace DIPAL
