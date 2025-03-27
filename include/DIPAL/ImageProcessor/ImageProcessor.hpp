@@ -9,11 +9,12 @@
 
 #include "../Image/Image.hpp"
 #include "../Observer/ProcessingObserver.hpp"
+#include "../Filters/FilterStrategy.hpp"
 #include "ProcessingCommand.hpp"
 #include "../Core/Error.hpp"
 
 namespace DIPAL {
-
+class FilterStrategy;
 /**
  * @brief Main class for processing images
  *
@@ -67,7 +68,7 @@ public:
      * @param filter The filter to apply
      * @return Result containing the processed image or error
      */
-    [[nodiscard]] Result<std::unique_ptr<Image>> applyFilter(
+    [[nodiscard]] virtual Result<std::unique_ptr<Image>> applyFilter(
         const Image& image, 
         const FilterStrategy& filter
     );
@@ -94,6 +95,8 @@ public:
 private:
     std::vector<std::shared_ptr<ProcessingObserver>> m_observers;
     std::deque<std::unique_ptr<ProcessingCommand>> m_undoStack;
+
+protected:
 
     /**
      * @brief Notify observers that processing has started

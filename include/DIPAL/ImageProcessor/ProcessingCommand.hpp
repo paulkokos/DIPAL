@@ -4,8 +4,10 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
 
-#include "../Image/Image.hpp"
+#include "../../../include/DIPAL/Image/Image.hpp"
+#include "../../../include/DIPAL/Core/Error.hpp"
 
 namespace DIPAL {
 
@@ -19,15 +21,15 @@ public:
     /**
      * @brief Execute the command on an image
      * @param image The image to process
-     * @return A new processed image
+     * @return Result containing the processed image or error
      */
-    virtual std::unique_ptr<Image> execute(const Image& image) = 0;
+    virtual Result<std::unique_ptr<Image>> execute(const Image& image) = 0;
 
     /**
      * @brief Get the name of the command
      * @return Command name
      */
-    virtual std::string getName() const = 0;
+    virtual std::string_view getName() const = 0;
 
     /**
      * @brief Whether the command can be undone
@@ -38,11 +40,11 @@ public:
     /**
      * @brief Undo the command (if supported)
      * @param image The processed image
-     * @return The original image before processing
+     * @return Result containing the original image before processing or error
      */
-    virtual std::unique_ptr<Image> undo(const Image& image);
+//    virtual std::unique_ptr<Image> undo(const Image& image) =0;
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_PROCESSING_COMMAND_HPP
+#endif // DIPAL_PROCESSING_COMMAND_HPP
