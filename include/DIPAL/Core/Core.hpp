@@ -1,3 +1,4 @@
+// include/DIPAL/Color/Core.hpp
 #ifndef DIPAL_CORE_HPP
 #define DIPAL_CORE_HPP
 

@@ -1,0 +1,4 @@
+// include/DIPAL/Color/ColorTransform.hpp
+#ifndef DIPAL_COLOR_TRANSFORM_HPP
+#define DIPAL_COLOR_TRANSFORM_HPP
+#endif  // DIPAL_COLOR_TRANSFORM_HPP

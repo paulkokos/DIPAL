@@ -3,6 +3,7 @@
 #define DIPAL_PROCESSING_OBSERVER_HPP
 
 #include <string>
+#include <string_view>
 
 namespace DIPAL {
 
@@ -17,7 +18,7 @@ public:
      * @brief Called when processing starts
      * @param operationName Name of the operation
      */
-    virtual void onProcessingStarted(const std::string& operationName) = 0;
+    virtual void onProcessingStarted(std::string_view operationName) = 0;
 
     /**
      * @brief Called to update progress
@@ -30,13 +31,13 @@ public:
      * @param operationName Name of the operation
      * @param success Whether the operation was successful
      */
-    virtual void onProcessingCompleted(const std::string& operationName, bool success) = 0;
+    virtual void onProcessingCompleted(std::string_view operationName, bool success) = 0;
 
     /**
      * @brief Called when an error occurs
      * @param errorMessage Description of the error
      */
-    virtual void onError(const std::string& errorMessage) = 0;
+    virtual void onError(std::string_view errorMessage) = 0;
 };
 
 /**
@@ -44,12 +45,12 @@ public:
  */
 class ConsoleObserver : public ProcessingObserver {
 public:
-    void onProcessingStarted(const std::string& operationName) override;
+    void onProcessingStarted(std::string_view operationName) override;
     void onProgressUpdated(float progress) override;
-    void onProcessingCompleted(const std::string& operationName, bool success) override;
-    void onError(const std::string& errorMessage) override;
+    void onProcessingCompleted(std::string_view operationName, bool success) override;
+    void onError(std::string_view errorMessage) override;
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_PROCESSING_OBSERVER_HPP
+#endif // DIPAL_PROCESSING_OBSERVER_HPP

@@ -1,0 +1,4 @@
+// include/DIPAL/IO/JPEGImageIO.hpp
+#ifndef DIPAL_JPEG_IMAGE_IO_HPP
+#define DIPAL_JPEG_IMAGE_IO_HPP
+#endif  // DIPAL_JPEG_IMAGE_IO_HPP

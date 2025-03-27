@@ -3,6 +3,7 @@
 #define DIPAL_COLOR_IMAGE_HPP
 
 #include "Image.hpp"
+#include "../Core/Error.hpp"
 
 namespace DIPAL {
 
@@ -27,8 +28,9 @@ public:
      * @param g Reference to store green value (0-255)
      * @param b Reference to store blue value (0-255)
      * @param a Reference to store alpha value (0-255), if applicable
+     * @return VoidResult indicating success or error
      */
-    void getPixel(int x, int y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a) const;
+    [[nodiscard]] VoidResult getPixel(int x, int y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a) const;
 
     /**
      * @brief Set RGB pixel value at specific coordinates
@@ -38,22 +40,30 @@ public:
      * @param g Green value (0-255)
      * @param b Blue value (0-255)
      * @param a Alpha value (0-255), ignored if image doesn't have alpha
+     * @return VoidResult indicating success or error
      */
-    void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+    [[nodiscard]] VoidResult setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
 
     /**
      * @brief Check if the image has an alpha channel
      * @return true if the image has an alpha channel, false otherwise
      */
-    bool hasAlpha() const;
+    [[nodiscard]] bool hasAlpha() const noexcept;
+
+    /**
+     * @brief Get a specific channel as a grayscale image
+     * @param channel Channel index (0=R, 1=G, 2=B, 3=Alpha if available)
+     * @return Result containing the channel image or error
+     */
+    [[nodiscard]] Result<std::unique_ptr<class GrayscaleImage>> getChannel(int channel) const;
 
     /**
      * @brief Clone the color image
      * @return A new color image that is a deep copy of this image
      */
-    std::unique_ptr<Image> clone() const override;
+    [[nodiscard]] std::unique_ptr<Image> clone() const override;
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_COLOR_IMAGE_HPP
+#endif // DIPAL_COLOR_IMAGE_HPP
