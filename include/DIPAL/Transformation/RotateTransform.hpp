@@ -1,4 +1,4 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+// include/DIPAL/Transformation/RotateTransform.hpp
+#ifndef DIPAL_ROTATE_TRANSFORM_HPP
+#define DIPAL_ROTATE_TRANSFORM_HPP
+#endif  // DIPAL_ROTATE_TRANSFORM_HPP

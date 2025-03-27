@@ -1,4 +1,4 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+//include/DIPAL/Utils/MemoryUtils.hpp
+#ifndef DIPAL_MEMORY_UTILS_HPP
+#define DIPAL_MEMORY_UTILS_HPP
+#endif  // DIPAL_MEMORY_UTILS_HPP

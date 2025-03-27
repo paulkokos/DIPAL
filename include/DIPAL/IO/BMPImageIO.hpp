@@ -1,5 +1,5 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+//  /include/DIPAL/IO/BMPImageIO.hpp
+#ifndef DIPAL_BMP_IMAGE_IO_HPP
+#define DIPAL_BMP_IMAGE_IO_HPP
+#endif  // DIPAL_BMP_IMAGE_IO_HPP
 

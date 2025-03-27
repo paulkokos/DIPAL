@@ -1,5 +1,5 @@
+// include/DIPAL/Transformation/Transformations.hpp
+#ifndef DIPAL_TRANSFORMATIONS_HPP
+#define DIPAL_TRANSFORMATIONS_HPP  
 
-#ifndef TRANSFORMATIONS_HPP
-#define TRANSFORMATIONS_HPP  
-
-#endif // TRANSFORMATIONS_HPP
+#endif // DIPAL_TRANSFORMATIONS_HPP

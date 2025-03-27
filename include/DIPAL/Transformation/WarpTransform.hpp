@@ -1,4 +1,4 @@
-
-#ifndef BMPIMAGE_HPP
-#define BMPIMAGE_HPP
-#endif  // BMPIMAGE_HPP
+// include/DIPAL/Transformation/WarpTransform.hpp
+#ifndef DIPAL_WARP_TRANSFORM_HPP
+#define DIPAL_WARP_TRANSFORM_HPP
+#endif  // DIPAL_WARP_TRANSFORM_HPP
