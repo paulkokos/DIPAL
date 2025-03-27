@@ -13,6 +13,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Define build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel")
 
+# Option to build tests
+option(BUILD_TESTS "Build test programs" ON)
+
+# Add Google Test if tests are enabled
+if(BUILD_TESTS)
+    # Only build googletest when building tests
+    set(BUILD_GMOCK ON CACHE BOOL "Build gmock")
+    set(INSTALL_GTEST OFF CACHE BOOL "Disable gtest installation")
+    # Prevent overriding the parent project's compiler/linker settings on Windows
+    set(gtest_force_shared_crt ON CACHE BOOL "Use shared CRT" FORCE)
+    add_subdirectory(third_party/googletest)
+endif()
+
 # Set default build type to Release if not specified
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)

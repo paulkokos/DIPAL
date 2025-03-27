@@ -118,4 +118,5 @@ protected:
 };
 }  // namespace DIPAL
 
+
 #endif  // DIPAL_IMAGE_HPP
