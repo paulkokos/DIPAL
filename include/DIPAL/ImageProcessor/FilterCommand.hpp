@@ -23,15 +23,15 @@ public:
     /**
      * @brief Apply the filter to an image
      * @param image The image to process
-     * @return A new filtered image
+     * @return Result containing the filtered image or error
      */
-    std::unique_ptr<Image> execute(const Image& image) override;
+    Result<std::unique_ptr<Image>> execute(const Image& image) override;
 
     /**
      * @brief Get the name of the command
      * @return Filter name
      */
-    std::string getName() const override;
+    std::string_view getName() const override;
 
     /**
      * @brief Whether the filter can be undone
@@ -43,6 +43,6 @@ private:
     std::unique_ptr<FilterStrategy> m_filter;
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_FILTER_COMMAND_HPP
+#endif // DIPAL_FILTER_COMMAND_HPP
