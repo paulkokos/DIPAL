@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <span>
 
 namespace DIPAL {
 // Forward declarations
@@ -49,54 +50,54 @@ public:
      * @brief get the Height if the image
      * @return Height in pixels
      */
-    int getHeight() const;
+    int getHeight() const ;
 
     /**
      * @brief Get the type of the image
      * @return Image type
      */
 
-    Type getType() const;
+    [[nodiscard]] Type getType() const;
 
     /**
      * @brief Check if the image is empty
      * @return true if the image is empty, false otherwise
      */
 
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /**
      * @brief Get a pointer to the image data
      * @return Raw pointer to the beginning of the image
      */
 
-    const uint8_t* getData() const;
+    [[nodiscard]] const uint8_t* getData() const;
     /*
      * @brief Get a modifiable pointer to the image data
      * return Raw pointer to the beginning of the image
      */
 
-    uint8_t* getData();
+    [[nodiscard]] uint8_t* getData();
     /**
      * @brief Get the number of channels in the image
      * @return number of channels (1 for Grayscale,3 for RGB, 4 for RGBA)
      */
 
-    int getChannels() const;
+    [[nodiscard]] int getChannels() const;
 
     /**
      * @brief Get the number of bytes per pixel
      * @return Bytes per pixel
      */
 
-    int getBytesPerPixel() const;
+    [[nodiscard]] int getBytesPerPixel() const;
 
     /**
      * @brief Get the total size of the image data in bytes
      * @return Size in bytes
      */
 
-    size_t getDataSize() const;
+    [[nodiscard]] size_t getDataSize() const;
 
     /**
      * @brief Clone the image
@@ -105,6 +106,21 @@ public:
 
     virtual std::unique_ptr<Image> clone() const;
 
+        /**
+     * @brief Check if a pixel coordinate is valid
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return true if the coordinate is valid, false otherwise
+     */
+    [[nodiscard]] bool isValidCoordinate(int x, int y) const ;
+    
+    [[nodiscard]] std::span<const std::uint8_t> getDataSpan() const noexcept;
+    
+    [[nodiscard]] std::span<std::uint8_t> getDataSpan();
+
+    std::string toString() const; 
+    
+    std::size_t getPixelIndex(int x, int y) const;
 protected:
     int m_width;
     int m_height;
@@ -117,5 +133,6 @@ protected:
     Image();
 };
 }  // namespace DIPAL
+
 
 #endif  // DIPAL_IMAGE_HPP

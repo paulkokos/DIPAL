@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.18)
+
+cmake_minimum_required(VERSION 3.20)
 project(DIPAL VERSION 0.1.0 LANGUAGES CXX)
 
 # Set C++23 as the required standard
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -11,6 +12,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Define build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel")
+
+# Option to build tests
+option(BUILD_TESTS "Build test programs" ON)
+
+# Add Google Test if tests are enabled
+if(BUILD_TESTS)
+    # Only build googletest when building tests
+    set(BUILD_GMOCK ON CACHE BOOL "Build gmock")
+    set(INSTALL_GTEST OFF CACHE BOOL "Disable gtest installation")
+    # Prevent overriding the parent project's compiler/linker settings on Windows
+    set(gtest_force_shared_crt ON CACHE BOOL "Use shared CRT" FORCE)
+    add_subdirectory(third_party/googletest)
+endif()
 
 # Set default build type to Release if not specified
 if(NOT CMAKE_BUILD_TYPE)
@@ -32,7 +46,9 @@ endif()
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 elseif(MSVC)
-  add_compile_options(/W4 /WX)
+  add_compile_options(/W4 /WX /EHsc)
+  # Disable specific MSVC warnings
+  add_compile_options(/wd4251) # needs to have dll-interface to be used by clients of class
 endif()
 
 # Option to build shared or static library
@@ -43,6 +59,9 @@ option(BUILD_TESTS "Build test programs" ON)
 
 # Option to build examples
 option(BUILD_EXAMPLES "Build example programs" ON)
+
+# Option to build documentation
+option(BUILD_DOCUMENTATION "Build documentation" OFF)
 
 # Option to enable sanitizers in debug mode
 option(ENABLE_SANITIZERS "Enable Address and UB sanitizers in Debug mode" OFF)
@@ -58,7 +77,7 @@ endif()
 # Add CMake modules path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-# Main library sources (update as you add more files)
+# Main library sources
 file(GLOB_RECURSE DIPAL_SOURCES 
      "src/*.cpp"
 )
@@ -80,16 +99,39 @@ target_include_directories(dipal
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
+# Add compiler feature flags
+target_compile_features(dipal PUBLIC cxx_std_23)
+
 # Add examples if enabled
 if(BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
 # Add tests if enabled
-# if(BUILD_TESTS)
-    # enable_testing()
-    # add_subdirectory(tests)
-    # endif()
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
+
+# Documentation
+if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+        configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+        
+        add_custom_target(doc
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM
+        )
+    else()
+        message(STATUS "Doxygen not found, documentation will not be built")
+    endif()
+endif()
 
 # Installation
 include(GNUInstallDirs)

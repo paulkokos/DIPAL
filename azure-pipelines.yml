@@ -18,7 +18,7 @@ trigger:
 
 # Define build variables
 variables:
-  CMAKE_VERSION: '3.20.0'
+  CMAKE_VERSION: '3.25.0'
 
 # Define multiple jobs for different platforms
 jobs:
@@ -31,7 +31,7 @@ jobs:
     matrix:
       Debug:
         BUILD_TYPE: 'Debug'
-        BUILD_TESTS: 'OFF'  # Set to OFF for now to simplify
+        BUILD_TESTS: 'ON'
       Release:
         BUILD_TYPE: 'Release'
         BUILD_TESTS: 'OFF'
@@ -43,7 +43,8 @@ jobs:
       
   - script: |
       choco install ninja
-    displayName: 'Install Ninja'
+      choco install doxygen.install
+    displayName: 'Install Build Tools'
     
   - script: |
       mkdir build
@@ -81,26 +82,45 @@ jobs:
   strategy:
     matrix:
       GCC_Debug:
-        CC: gcc
-        CXX: g++
+        CC: gcc-12
+        CXX: g++-12
         BUILD_TYPE: 'Debug'
-        BUILD_TESTS: 'OFF'  # Set to OFF by default
+        BUILD_TESTS: 'ON'
       GCC_Release:
-        CC: gcc
-        CXX: g++
+        CC: gcc-12
+        CXX: g++-12
+        BUILD_TYPE: 'Release'
+        BUILD_TESTS: 'OFF'
+      Clang_Release:
+        CC: clang-15
+        CXX: clang++-15
         BUILD_TYPE: 'Release'
         BUILD_TESTS: 'OFF'
   steps:
   - script: |
       sudo apt-get update
-      sudo apt-get install -y ninja-build
+      sudo apt-get install -y ninja-build doxygen
+      if [[ "${CC}" == "gcc-12" ]]; then
+        sudo apt-get install -y gcc-12 g++-12
+      else
+        sudo apt-get install -y clang-15
+      fi
+      if [[ "${BUILD_TESTS}" == "ON" ]]; then
+        sudo apt-get install -y libgtest-dev
+        cd /usr/src/gtest
+        sudo cmake -E make_directory build
+        cd build
+        sudo cmake ..
+        sudo cmake --build .
+        sudo cp lib/*.a /usr/lib
+        cd $(Build.SourcesDirectory)
+      fi
     displayName: 'Install Dependencies'
     
   - script: |
       mkdir -p build
       cd build
-      # Add -DBUILD_TESTS=OFF explicitly to override CMake defaults
-      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
+      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=$(BUILD_TESTS) -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
     displayName: 'Configure CMake'
     env:
       CC: $(CC)
@@ -110,6 +130,17 @@ jobs:
       cd build
       cmake --build .
     displayName: 'Build Project'
+    
+  - script: |
+      cd build
+      ctest --output-on-failure
+    displayName: 'Run Tests'
+    condition: eq(variables['BUILD_TESTS'], 'ON')
+    
+  - script: |
+      cd build
+      cmake --install .
+    displayName: 'Install'
     
   - task: PublishBuildArtifacts@1
     inputs:
@@ -129,13 +160,13 @@ jobs:
         BUILD_TESTS: 'OFF'
   steps:
   - script: |
-      brew install ninja
+      brew install ninja doxygen
     displayName: 'Install Dependencies'
     
   - script: |
       mkdir -p build
       cd build
-      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
+      cmake -G "Ninja" -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DBUILD_TESTS=$(BUILD_TESTS) -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) ..
     displayName: 'Configure CMake'
     
   - script: |

@@ -2,6 +2,7 @@
 #ifndef DIPAL_GAUSSIAN_BLUR_FILTER_HPP
 #define DIPAL_GAUSSIAN_BLUR_FILTER_HPP
 
+#include <vector>
 #include "FilterStrategy.hpp"
 
 namespace DIPAL {
@@ -21,15 +22,39 @@ public:
     /**
      * @brief Apply Gaussian blur to an image
      * @param image The image to process
-     * @return A new blurred image
+     * @return Result containing the blurred image or error
      */
-    std::unique_ptr<Image> apply(const Image& image) const override;
+    [[nodiscard]] Result<std::unique_ptr<Image>> apply(const Image& image) const override;
 
     /**
      * @brief Get the name of the filter
-     * @return "Gaussian Blur"
+     * @return "GaussianBlur"
      */
-    std::string getName() const override;
+    [[nodiscard]] std::string_view getName() const override;
+    
+    /**
+     * @brief Clone the filter
+     * @return A new Gaussian blur filter with the same parameters
+     */
+    [[nodiscard]] std::unique_ptr<FilterStrategy> clone() const override;
+    
+    /**
+     * @brief Get the sigma parameter
+     * @return Sigma value
+     */
+    [[nodiscard]] float getSigma() const noexcept;
+    
+    /**
+     * @brief Get the kernel size
+     * @return Kernel size
+     */
+    [[nodiscard]] int getKernelSize() const noexcept;
+    
+    /**
+     * @brief Get the kernel values
+     * @return Span containing the kernel values
+     */
+    [[nodiscard]] std::span<const float> getKernel() const noexcept;
 
 private:
     float m_sigma;
@@ -42,6 +67,6 @@ private:
     void generateKernel();
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_GAUSSIAN_BLUR_FILTER_HPP
+#endif // DIPAL_GAUSSIAN_BLUR_FILTER_HPP
