@@ -5,10 +5,12 @@
 #include <deque>
 #include <memory>
 #include <vector>
+#include <span>
 
 #include "../Image/Image.hpp"
 #include "../Observer/ProcessingObserver.hpp"
 #include "ProcessingCommand.hpp"
+#include "../Core/Error.hpp"
 
 namespace DIPAL {
 
@@ -41,31 +43,53 @@ public:
      * @brief Process an image with a command
      * @param image The image to process
      * @param command The command to apply
-     * @return A new processed image
+     * @return Result containing the processed image or error
      */
-    std::unique_ptr<Image> process(const Image& image, std::unique_ptr<ProcessingCommand> command);
+    [[nodiscard]] Result<std::unique_ptr<Image>> process(
+        const Image& image, 
+        std::unique_ptr<ProcessingCommand> command
+    );
 
     /**
      * @brief Process an image with multiple commands in sequence
      * @param image The image to process
-     * @param commands The commands to apply in order
-     * @return A new processed image
+     * @param commands Span of commands to apply in order
+     * @return Result containing the processed image or error
      */
-    std::unique_ptr<Image> processAll(const Image& image,
-                                      std::vector<std::unique_ptr<ProcessingCommand>> commands);
+    [[nodiscard]] Result<std::unique_ptr<Image>> processAll(
+        const Image& image,
+        std::span<std::unique_ptr<ProcessingCommand>> commands
+    );
+
+    /**
+     * @brief Process an image with a filter
+     * @param image The image to process
+     * @param filter The filter to apply
+     * @return Result containing the processed image or error
+     */
+    [[nodiscard]] Result<std::unique_ptr<Image>> applyFilter(
+        const Image& image, 
+        const FilterStrategy& filter
+    );
 
     /**
      * @brief Undo the last command if possible
      * @param image The current image
-     * @return The image before the last command, or nullptr if undo is not possible
+     * @return Result containing the image before the last command, or error
      */
-    std::unique_ptr<Image> undo(const Image& image);
+    [[nodiscard]] Result<std::unique_ptr<Image>> undo(const Image& image);
 
     /**
      * @brief Check if undo is available
      * @return true if undo is available, false otherwise
      */
-    bool canUndo() const;
+    [[nodiscard]] bool canUndo() const noexcept;
+    
+    /**
+     * @brief Get the number of commands in the undo stack
+     * @return Number of undoable commands
+     */
+    [[nodiscard]] size_t getUndoCount() const noexcept;
 
 private:
     std::vector<std::shared_ptr<ProcessingObserver>> m_observers;
@@ -75,7 +99,7 @@ private:
      * @brief Notify observers that processing has started
      * @param operationName Name of the operation
      */
-    void notifyProcessingStarted(const std::string& operationName);
+    void notifyProcessingStarted(std::string_view operationName);
 
     /**
      * @brief Notify observers of progress update
@@ -88,15 +112,15 @@ private:
      * @param operationName Name of the operation
      * @param success Whether the operation was successful
      */
-    void notifyProcessingCompleted(const std::string& operationName, bool success);
+    void notifyProcessingCompleted(std::string_view operationName, bool success);
 
     /**
      * @brief Notify observers of an error
      * @param errorMessage Description of the error
      */
-    void notifyError(const std::string& errorMessage);
+    void notifyError(std::string_view errorMessage);
 };
 
-}  // namespace DIPAL
+} // namespace DIPAL
 
-#endif  // DIPAL_IMAGE_PROCESSOR_HPP
+#endif // DIPAL_IMAGE_PROCESSOR_HPP
