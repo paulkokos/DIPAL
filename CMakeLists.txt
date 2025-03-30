@@ -12,9 +12,22 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Define build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel")
+# Add fmt library for format support
+include(FetchContent)
+FetchContent_Declare(
+    fmt
+    GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+    GIT_TAG 9.1.0  # Use a specific version
+)
+FetchContent_MakeAvailable(fmt)
 
 # Option to build tests
 option(BUILD_TESTS "Build test programs" ON)
+
+target_link_libraries(dipal
+    PRIVATE
+        fmt::fmt
+)
 
 # Add Google Test if tests are enabled
 if(BUILD_TESTS)

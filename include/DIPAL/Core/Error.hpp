@@ -6,7 +6,9 @@
 #include <string_view>
 #include <expected>
 #include <system_error>
-#include <format>
+
+#include <fnt/core.h>
+#include <fnt/format>
 
 namespace DIPAL {
 
