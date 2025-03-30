@@ -18,41 +18,51 @@ option(BUILD_TESTS "Build test programs" ON)
 
 # Add Google Test if tests are enabled
 if(BUILD_TESTS)
-    # First try to find the installed GTest
-    find_package(GTest QUIET)
-
-    if(NOT GTEST_FOUND)
-        message(STATUS "GTest not found. Downloading and building from source...")
-        
-        # Include the FetchContent module
-        include(FetchContent)
-        
-        # Declare the GTest dependency
-        FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG v1.14.0  # Use a specific version
-        )
-        
-        # Configure GTest build options
-        set(BUILD_GMOCK ON CACHE BOOL "Build gmock" FORCE)
-        set(INSTALL_GTEST OFF CACHE BOOL "Disable gtest installation" FORCE)
-        
-        # Prevent overriding the parent project's compiler/linker settings on Windows
+    # First check if the googletest directory exists as a submodule
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest/CMakeLists.txt")
+        # Use the existing submodule
+        message(STATUS "Using googletest submodule in third_party/googletest")
+        set(BUILD_GMOCK ON CACHE BOOL "Build gmock")
+        set(INSTALL_GTEST OFF CACHE BOOL "Disable gtest installation")
         set(gtest_force_shared_crt ON CACHE BOOL "Use shared CRT" FORCE)
-        
-        # Make the dependency available
-        FetchContent_MakeAvailable(googletest)
-        
-        # Set variables to mimic what find_package would set
-        set(GTEST_INCLUDE_DIRS "${googletest_SOURCE_DIR}/googletest/include")
-        set(GTEST_LIBRARIES gtest)
-        set(GTEST_MAIN_LIBRARIES gtest_main)
+        add_subdirectory(third_party/googletest)
+    else()
+        # Try to find the installed GTest
+        find_package(GTest QUIET)
+
+        if(NOT GTEST_FOUND)
+            message(STATUS "Googletest submodule not found and GTest not installed. Downloading from source...")
+            
+            # Include the FetchContent module
+            include(FetchContent)
+            
+            # Declare the GTest dependency
+            FetchContent_Declare(
+                googletest
+                GIT_REPOSITORY https://github.com/google/googletest.git
+                GIT_TAG v1.14.0  # Use a specific version
+            )
+            
+            # Configure GTest build options
+            set(BUILD_GMOCK ON CACHE BOOL "Build gmock" FORCE)
+            set(INSTALL_GTEST OFF CACHE BOOL "Disable gtest installation" FORCE)
+            
+            # Prevent overriding the parent project's compiler/linker settings on Windows
+            set(gtest_force_shared_crt ON CACHE BOOL "Use shared CRT" FORCE)
+            
+            # Make the dependency available
+            FetchContent_MakeAvailable(googletest)
+            
+            # Set variables to mimic what find_package would set
+            set(GTEST_INCLUDE_DIRS "${googletest_SOURCE_DIR}/googletest/include")
+            set(GTEST_LIBRARIES gtest)
+            set(GTEST_MAIN_LIBRARIES gtest_main)
+        endif()
     endif()
     
-    # Now proceed with tests as usual
+    # Now proceed with tests
     enable_testing()
-    add_subdirectory(third_party/googletest)
+    add_subdirectory(tests)
 endif()
 
 # Set default build type to Release if not specified
