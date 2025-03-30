@@ -24,7 +24,7 @@ FetchContent_MakeAvailable(fmt)
 # Option to build tests
 option(BUILD_TESTS "Build test programs" ON)
 
-target_link_libraries(dipal
+target_link_libraries(DIPAL
     PRIVATE
         fmt::fmt
 )
