@@ -20,6 +20,13 @@ Result<std::unique_ptr<Image>> ImageFactory::create(int width, int height, Image
 
     try {
         switch (type) {
+            case Image::Type::Binary: {
+                auto result = createBinary(width, height);
+                if (!result) {
+                    return makeErrorResult<std::unique_ptr<Image>>(result.error().code(), result.error().message());
+                }
+                return makeSuccessResult<std::unique_ptr<Image>>(std::move(result.value()));
+            }
             case Image::Type::Grayscale: {
                 auto result = createGrayscale(width, height);
                 if (!result) {
