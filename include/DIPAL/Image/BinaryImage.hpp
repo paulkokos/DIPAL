@@ -1,51 +1,51 @@
 // include/DIPAL/Image/BinaryImage.hpp
 #ifndef DIPAL_BINARY_IMAGE_HPP
 #define DIPAL_BINARY_IMAGE_HPP
+
 #include "Image.hpp"
 #include "../Core/Error.hpp"
 
 namespace DIPAL {
-  /**
+
+class GrayscaleImage;  // Forward declaration
+
+/**
  * @brief Specialized class for binary (black and white) images
  * 
  * Binary images store each pixel as a single bit (0 for black, 1 for white).
  * They are stored efficiently with 8 pixels per byte.
  */
-
-  class BinaryImage : public Image {
-    public:
-      /**
+class BinaryImage : public Image {
+public:
+    /**
      * @brief Create a new empty binary image
      * @param width Image width in pixels
      * @param height Image height in pixels
      */
+    BinaryImage(int width, int height);
 
-      BinaryImage(int height, int weight);
-
-      /**
+    /**
      * @brief Get pixel value at specific coordinates
      * @param x X coordinate
      * @param y Y coordinate
      * @return Result containing pixel value (true for white, false for black) or error
      */
-      [[nodiscard]] Result<bool> getPixels(int x, int y) const;
-      
-      /**
+    [[nodiscard]] Result<bool> getPixel(int x, int y) const;
+
+    /**
      * @brief Set pixel value at specific coordinates
      * @param x X coordinate
      * @param y Y coordinate
      * @param value Pixel value (true for white, false for black)
      * @return VoidResult indicating success or error
      */
+    [[nodiscard]] VoidResult setPixel(int x, int y, bool value);
 
-      [[maybe_unused]] VoidResult setPixel(int x, int y, bool value);
-     
-      /**
+    /**
      * @brief Clone the binary image
      * @return A new binary image that is a deep copy of this image
      */
-
-          [[nodiscard]] std::unique_ptr<Image> clone() const override;
+    [[nodiscard]] std::unique_ptr<Image> clone() const override;
 
     /**
      * @brief Get a span of a specific row in bit-packed format
@@ -94,7 +94,7 @@ namespace DIPAL {
      * @return Result containing a binary image or error
      */
     [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> fromGrayscale(
-        const class GrayscaleImage& image, 
+        const GrayscaleImage& image, 
         uint8_t threshold = 128, 
         bool invert = false
     );
@@ -105,6 +105,7 @@ private:
     [[nodiscard]] int getByteIndex(int x, int y) const;
     [[nodiscard]] uint8_t getBitMask(int x) const;
 };
-}
 
-#endif  // BINARY_IMAGE_HPP
+} // namespace DIPAL
+
+#endif // DIPAL_BINARY_IMAGE_HPP
