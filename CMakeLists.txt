@@ -24,7 +24,16 @@ FetchContent_MakeAvailable(fmt)
 # Option to build tests
 option(BUILD_TESTS "Build test programs" ON)
 
-target_link_libraries(DIPAL
+# Main library sources
+file(GLOB_RECURSE DIPAL_SOURCES 
+     "src/*.cpp"
+)
+
+# Create the library target
+add_library(dipal ${DIPAL_SOURCES})
+
+# Link libraries to the dipal target
+target_link_libraries(dipal
     PRIVATE
         fmt::fmt
 )
@@ -106,9 +115,6 @@ endif()
 # Option to build shared or static library
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
-# Option to build tests
-option(BUILD_TESTS "Build test programs" ON)
-
 # Option to build examples
 option(BUILD_EXAMPLES "Build example programs" ON)
 
@@ -128,14 +134,6 @@ endif()
 
 # Add CMake modules path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
-
-# Main library sources
-file(GLOB_RECURSE DIPAL_SOURCES 
-     "src/*.cpp"
-)
-
-# Create the library target
-add_library(dipal ${DIPAL_SOURCES})
 
 # Enable Link Time Optimization for release builds
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -157,12 +155,6 @@ target_compile_features(dipal PUBLIC cxx_std_23)
 # Add examples if enabled
 if(BUILD_EXAMPLES)
     add_subdirectory(examples)
-endif()
-
-# Add tests if enabled
-if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
 endif()
 
 # Documentation
