@@ -9,11 +9,11 @@
 #include "Core/Result.hpp"
 #include "Core/Types.hpp"
 
-// Image includes
-#include "Image/BinaryImage.hpp"
-#include "Image/ColorImage.hpp"
-#include "Image/GrayscaleImage.hpp"
+// Image includes - note the order to handle dependencies
 #include "Image/Image.hpp"
+#include "Image/BinaryImage.hpp"
+#include "Image/GrayscaleImage.hpp"
+#include "Image/ColorImage.hpp"
 #include "Image/ImageFactory.hpp"
 #include "Image/ImageView.hpp"
 #include "Image/PixelIterator.hpp"
