@@ -77,7 +77,13 @@ Result<std::unique_ptr<BinaryImage>> ImageFactory::createBinary(int width, int h
         auto image = std::make_unique<BinaryImage>(width, height);
         
         // Initialize all pixels to black (false)
-        image->fill(false);
+        auto fillResult = image->fill(false);
+        if (!fillResult) {
+            return makeErrorResult<std::unique_ptr<BinaryImage>>(
+                fillResult.error().code(),
+                std::format("Failed to initialize binary image: {}", fillResult.error().message())
+            );
+        }
         
         return makeSuccessResult(std::move(image));
     } catch (const std::exception& e) {
@@ -87,6 +93,7 @@ Result<std::unique_ptr<BinaryImage>> ImageFactory::createBinary(int width, int h
         );
     }
 }
+
 
 Result<std::unique_ptr<GrayscaleImage>> ImageFactory::createGrayscale(int width, int height) {
     if (width <= 0 || height <= 0) {

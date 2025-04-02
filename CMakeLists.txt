@@ -1,9 +1,8 @@
-
 cmake_minimum_required(VERSION 3.20)
 project(DIPAL VERSION 0.1.0 LANGUAGES CXX)
 
-# Set C++23 as the required standard
-set(CMAKE_CXX_STANDARD 20)
+# Set C++20 as the required standard
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -24,10 +23,37 @@ FetchContent_MakeAvailable(fmt)
 # Option to build tests
 option(BUILD_TESTS "Build test programs" ON)
 
-# Main library sources
-file(GLOB_RECURSE DIPAL_SOURCES 
-     "src/*.cpp"
+# Main library sources - explicitly list core files to ensure they're included
+set(DIPAL_CORE_SOURCES
+    src/Image/Image.cpp
+    src/Core/Core.cpp
+    src/Core/Error.cpp
 )
+
+# Use glob for the rest of the files
+file(GLOB_RECURSE DIPAL_OTHER_SOURCES 
+    src/Color/*.cpp
+    src/Filters/*.cpp
+    src/IO/*.cpp
+    src/Image/BinaryImage.cpp
+    src/Image/ColorImage.cpp
+    src/Image/GrayscaleImage.cpp
+    src/Image/ImageFactory.cpp
+    src/Image/PixelIterator.cpp
+    src/ImageProcessor/*.cpp
+    src/Observer/*.cpp
+    src/Transformation/*.cpp
+    src/Utils/*.cpp
+)
+
+# Combine the core sources with the other sources
+set(DIPAL_SOURCES ${DIPAL_CORE_SOURCES} ${DIPAL_OTHER_SOURCES})
+
+# For debugging - print out all source files
+message(STATUS "Building DIPAL with these source files:")
+foreach(SOURCE_FILE ${DIPAL_SOURCES})
+    message(STATUS "  ${SOURCE_FILE}")
+endforeach()
 
 # Create the library target
 add_library(dipal ${DIPAL_SOURCES})
@@ -150,7 +176,7 @@ target_include_directories(dipal
 )
 
 # Add compiler feature flags
-target_compile_features(dipal PUBLIC cxx_std_23)
+target_compile_features(dipal PUBLIC cxx_std_20)
 
 # Add examples if enabled
 if(BUILD_EXAMPLES)
@@ -180,7 +206,7 @@ endif()
 # Installation
 include(GNUInstallDirs)
 
-install(TARGETS dipal
+install(TARGETS dipal fmt
     EXPORT dipal-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
