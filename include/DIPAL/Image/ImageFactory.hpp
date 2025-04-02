@@ -28,6 +28,14 @@ public:
     [[nodiscard]] static Result<std::unique_ptr<Image>> create(int width, int height, Image::Type type);
 
     /**
+     * @brief Create a new binary image
+     * @param width Image width in pixels
+     * @param height Image height in pixels
+     * @return Result containing the created binary image or error
+     */
+    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> createBinary(int width, int height);
+
+    /**
      * @brief Create a new grayscale image
      * @param width Image width in pixels
      * @param height Image height in pixels
@@ -58,6 +66,27 @@ public:
      * @return Result containing the color image or error
      */
     [[nodiscard]] static Result<std::unique_ptr<ColorImage>> toColor(const GrayscaleImage& image, bool hasAlpha = false);
+
+    /**
+     * @brief Create a new binary image
+     * @param width Image width in pixels
+     * @param height Image height in pixels
+     * @return Result containing the created binary image or error
+     */
+    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> createBinary(int width, int height);
+    
+    /**
+     * @brief Convert a binary image to grayscale
+     * @param image The binary image to convert
+     * @param whiteValue The gray value to use for white pixels (default: 255)
+     * @param blackValue The gray value to use for black pixels (default: 0)
+     * @return Result containing the grayscale image or error
+     */
+    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> fromBinary(
+        const BinaryImage& image,
+        uint8_t whiteValue = 255,
+        uint8_t blackValue = 0
+    );
 
     /**
      * @brief Load an image from a file
