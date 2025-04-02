@@ -5,13 +5,15 @@
 #include <memory>
 #include <string>
 #include <string_view>
-
-#include "ColorImage.hpp"
-#include "GrayscaleImage.hpp"
-#include "Image.hpp"
 #include "../Core/Error.hpp"
+#include "Image.hpp"
 
 namespace DIPAL {
+
+// Forward declarations
+class BinaryImage;
+class GrayscaleImage;
+class ColorImage;
 
 /**
  * @brief Factory class for creating and converting images
@@ -68,13 +70,18 @@ public:
     [[nodiscard]] static Result<std::unique_ptr<ColorImage>> toColor(const GrayscaleImage& image, bool hasAlpha = false);
 
     /**
-     * @brief Create a new binary image
-     * @param width Image width in pixels
-     * @param height Image height in pixels
-     * @return Result containing the created binary image or error
+     * @brief Convert a grayscale image to binary using thresholding
+     * @param image The grayscale image to convert
+     * @param threshold The threshold value (0-255)
+     * @param invert Whether to invert the result (default: false)
+     * @return Result containing the binary image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> createBinary(int width, int height);
-    
+    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> toBinary(
+        const GrayscaleImage& image, 
+        uint8_t threshold = 128, 
+        bool invert = false
+    );
+
     /**
      * @brief Convert a binary image to grayscale
      * @param image The binary image to convert

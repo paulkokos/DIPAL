@@ -1,5 +1,8 @@
 // src/Image/ImageFactory.cpp
 #include "../../include/DIPAL/Image/ImageFactory.hpp"
+#include "../../include/DIPAL/Image/BinaryImage.hpp"
+#include "../../include/DIPAL/Image/GrayscaleImage.hpp"
+#include "../../include/DIPAL/Image/ColorImage.hpp"
 #include "../../include/DIPAL/IO/ImageIO.hpp"
 
 #include <filesystem>
@@ -58,6 +61,29 @@ Result<std::unique_ptr<Image>> ImageFactory::create(int width, int height, Image
         return makeErrorResult<std::unique_ptr<Image>>(
             ErrorCode::InternalError,
             std::format("Failed to create image: {}", e.what())
+        );
+    }
+}
+
+Result<std::unique_ptr<BinaryImage>> ImageFactory::createBinary(int width, int height) {
+    if (width <= 0 || height <= 0) {
+        return makeErrorResult<std::unique_ptr<BinaryImage>>(
+            ErrorCode::InvalidParameter,
+            std::format("Invalid dimensions: {}x{}", width, height)
+        );
+    }
+
+    try {
+        auto image = std::make_unique<BinaryImage>(width, height);
+        
+        // Initialize all pixels to black (false)
+        image->fill(false);
+        
+        return makeSuccessResult(std::move(image));
+    } catch (const std::exception& e) {
+        return makeErrorResult<std::unique_ptr<BinaryImage>>(
+            ErrorCode::InternalError,
+            std::format("Failed to create binary image: {}", e.what())
         );
     }
 }
@@ -180,6 +206,54 @@ Result<std::unique_ptr<ColorImage>> ImageFactory::toColor(const GrayscaleImage& 
         return makeErrorResult<std::unique_ptr<ColorImage>>(
             ErrorCode::InternalError,
             std::format("Failed to convert to color: {}", e.what())
+        );
+    }
+}
+
+Result<std::unique_ptr<BinaryImage>> ImageFactory::toBinary(
+    const GrayscaleImage& image,
+    uint8_t threshold,
+    bool invert
+) {
+    return BinaryImage::fromGrayscale(image, threshold, invert);
+}
+
+Result<std::unique_ptr<GrayscaleImage>> ImageFactory::fromBinary(
+    const BinaryImage& image,
+    uint8_t whiteValue,
+    uint8_t blackValue
+) {
+    try {
+        auto result = std::make_unique<GrayscaleImage>(image.getWidth(), image.getHeight());
+        
+        for (int y = 0; y < image.getHeight(); ++y) {
+            for (int x = 0; x < image.getWidth(); ++x) {
+                auto pixelResult = image.getPixel(x, y);
+                if (!pixelResult) {
+                    return makeErrorResult<std::unique_ptr<GrayscaleImage>>(
+                        pixelResult.error().code(),
+                        pixelResult.error().message()
+                    );
+                }
+                
+                bool isWhite = pixelResult.value();
+                uint8_t grayValue = isWhite ? whiteValue : blackValue;
+                
+                auto setResult = result->setPixel(x, y, grayValue);
+                if (!setResult) {
+                    return makeErrorResult<std::unique_ptr<GrayscaleImage>>(
+                        setResult.error().code(),
+                        setResult.error().message()
+                    );
+                }
+            }
+        }
+        
+        return makeSuccessResult(std::move(result));
+    } catch (const std::exception& e) {
+        return makeErrorResult<std::unique_ptr<GrayscaleImage>>(
+            ErrorCode::ProcessingFailed,
+            std::format("Failed to create grayscale image from binary: {}", e.what())
         );
     }
 }
