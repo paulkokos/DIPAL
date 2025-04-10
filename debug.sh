@@ -1,9 +1,9 @@
 #!/bin/bash
 
-rm -rf Debug
+rm -rf build
 
-mkdir Debug
-cd Debug
+mkdir build
+cd build
 
 cmake -S .. -DCMAKE_BUILD_TYPE=Debug
 
