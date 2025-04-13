@@ -51,6 +51,6 @@ public:
     void onError(std::string_view errorMessage) override;
 };
 
-} // namespace DIPAL
+}  // namespace DIPAL
 
-#endif // DIPAL_PROCESSING_OBSERVER_HPP
+#endif  // DIPAL_PROCESSING_OBSERVER_HPP
