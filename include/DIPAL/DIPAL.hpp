@@ -3,17 +3,17 @@
 #define DIPAL_HPP
 
 // Core includes
-#include "Core/Core.hpp"
 #include "Core/Concepts.hpp"
+#include "Core/Core.hpp"
 #include "Core/Error.hpp"
 #include "Core/Result.hpp"
 #include "Core/Types.hpp"
 
 // Image includes - note the order to handle dependencies
-#include "Image/Image.hpp"
 #include "Image/BinaryImage.hpp"
-#include "Image/GrayscaleImage.hpp"
 #include "Image/ColorImage.hpp"
+#include "Image/GrayscaleImage.hpp"
+#include "Image/Image.hpp"
 #include "Image/ImageFactory.hpp"
 #include "Image/ImageView.hpp"
 #include "Image/PixelIterator.hpp"
@@ -26,9 +26,9 @@
 #include "Filters/UnsharpMaskFilter.hpp"
 
 // I/O Includes
+#include "IO/BMPImageIO.hpp"
 #include "IO/ImageIO.hpp"
 #include "IO/PPMImageIO.hpp"
-#include "IO/BMPImageIO.hpp"
 
 // Processing includes
 #include "ImageProcessor/FilterCommand.hpp"
@@ -46,7 +46,7 @@
 #include "Transformation/Interpolation.hpp"
 #include "Transformation/ResizeTransform.hpp"
 #include "Transformation/RotateTransform.hpp"
-#include "Transformation/Transformations.hpp"
+#include "Transformation/Transformations.hpp"  // Must come first for common definitions
 #include "Transformation/WarpTransform.hpp"
 
 // Utility includes
@@ -67,13 +67,13 @@
 #define DIPAL_VERSION_PATCH 0
 
 namespace DIPAL {
-    /**
-     * @brief Get the library version string
-     * @return Version string in format "MAJOR.MINOR.PATCH"
-     */
-    inline const char* getVersion() {
-        return "0.1.0";
-    }
+/**
+ * @brief Get the library version string
+ * @return Version string in format "MAJOR.MINOR.PATCH"
+ */
+inline const char* getVersion() {
+    return "0.1.0";
+}
 }  // namespace DIPAL
 
 #endif  // DIPAL_HPP

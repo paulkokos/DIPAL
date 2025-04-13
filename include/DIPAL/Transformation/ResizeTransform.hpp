@@ -2,27 +2,19 @@
 #ifndef DIPAL_RESIZE_TRANSFORM_HPP
 #define DIPAL_RESIZE_TRANSFORM_HPP
 
-#include <string_view>
-#include <memory>
-
 #include "../Core/Error.hpp"
 #include "../Image/Image.hpp"
+#include "Transformations.hpp"  // Include for InterpolationMethod and ImageTransform
+
+#include <memory>
+#include <string_view>
 
 namespace DIPAL {
 
 /**
- * @brief Interpolation method for resizing
- */
-enum class InterpolationMethod {
-    NearestNeighbor,  ///< Nearest neighbor interpolation (fastest, lowest quality)
-    Bilinear,         ///< Bilinear interpolation (good balance)
-    Bicubic           ///< Bicubic interpolation (slower, highest quality)
-};
-
-/**
  * @brief Image resizing transformation
  */
-class ResizeTransform {
+class ResizeTransform : public ImageTransform {
 public:
     /**
      * @brief Create a resize transformation
@@ -30,20 +22,22 @@ public:
      * @param newHeight New height in pixels
      * @param method Interpolation method
      */
-    ResizeTransform(int newWidth, int newHeight, InterpolationMethod method = InterpolationMethod::Bilinear);
+    ResizeTransform(int newWidth,
+                    int newHeight,
+                    InterpolationMethod method = InterpolationMethod::Bilinear);
 
     /**
      * @brief Apply the resize transformation
      * @param image Input image
      * @return Result containing the resized image or error
      */
-    [[nodiscard]] Result<std::unique_ptr<Image>> apply(const Image& image) const;
+    [[nodiscard]] Result<std::unique_ptr<Image>> apply(const Image& image) const override;
 
     /**
      * @brief Get the transformation name
      * @return "ResizeTransform"
      */
-    [[nodiscard]] std::string_view getName() const;
+    [[nodiscard]] std::string_view getName() const override;
 
     /**
      * @brief Get target width
@@ -74,6 +68,6 @@ private:
     [[nodiscard]] Result<std::unique_ptr<Image>> resizeBicubic(const Image& image) const;
 };
 
-} // namespace DIPAL
+}  // namespace DIPAL
 
-#endif // DIPAL_RESIZE_TRANSFORM_HPP
+#endif  // DIPAL_RESIZE_TRANSFORM_HPP
