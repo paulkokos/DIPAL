@@ -6,21 +6,13 @@
 #include "../Image/ColorImage.hpp"
 #include "../Image/GrayscaleImage.hpp"
 #include "../Image/Image.hpp"
+#include "Transformations.hpp"  // Include for InterpolationMethod enum
 
 #include <array>
 #include <cstdint>
 #include <functional>
 
 namespace DIPAL {
-
-/**
- * @brief Interpolation method for image transformations
- */
-enum class InterpolationMethod {
-    NearestNeighbor,  ///< Nearest neighbor interpolation (fastest, lowest quality)
-    Bilinear,         ///< Bilinear interpolation (good balance)
-    Bicubic           ///< Bicubic interpolation (slower, highest quality)
-};
 
 /**
  * @brief Static class providing interpolation functions for image transformations
