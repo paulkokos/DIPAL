@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(DIPAL VERSION 0.1.0 LANGUAGES CXX)
 
-# Set C++20 as the required standard
+# Set C++23 as the required standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -11,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Define build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel")
+
 # Add fmt library for format support
 include(FetchContent)
 FetchContent_Declare(
@@ -22,6 +23,70 @@ FetchContent_MakeAvailable(fmt)
 
 # Option to build tests
 option(BUILD_TESTS "Build test programs" ON)
+
+# Option to build shared or static library
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
+# Option to build examples
+option(BUILD_EXAMPLES "Build example programs" ON)
+
+# Option to build documentation
+option(BUILD_DOCUMENTATION "Build documentation" OFF)
+
+# Option to enable sanitizers in debug mode
+option(ENABLE_SANITIZERS "Enable Address and UB sanitizers in Debug mode" OFF)
+
+# Options for image format support
+option(DIPAL_ENABLE_JPEG "Enable JPEG image format support" ON)
+option(DIPAL_ENABLE_PNG "Enable PNG image format support" OFF)
+option(DIPAL_ENABLE_TIFF "Enable TIFF image format support" OFF)
+
+# Handle JPEG support
+if(DIPAL_ENABLE_JPEG)
+    find_package(JPEG)
+    
+    if(JPEG_FOUND)
+        message(STATUS "Found system libjpeg: ${JPEG_LIBRARIES}")
+        add_definitions(-DDIPAL_HAS_JPEG)
+    else()
+        message(STATUS "System libjpeg not found, downloading via FetchContent")
+        FetchContent_Declare(
+            libjpeg
+            URL https://ijg.org/files/jpegsrc.v9e.tar.gz
+            URL_HASH SHA256=4077d6a6a75aeb01884f708919d25934c93305e49f7e3f36db9129320e6f4f3d
+        )
+        FetchContent_MakeAvailable(libjpeg)
+        add_definitions(-DDIPAL_HAS_JPEG)
+    endif()
+endif()
+
+# Handle PNG support
+if(DIPAL_ENABLE_PNG)
+    find_package(PNG)
+    
+    if(PNG_FOUND)
+        message(STATUS "Found system libpng: ${PNG_LIBRARIES}")
+        add_definitions(-DDIPAL_HAS_PNG)
+    else()
+        message(STATUS "PNG support requested but libpng not found")
+        message(STATUS "PNG support will be disabled")
+        set(DIPAL_ENABLE_PNG OFF)
+    endif()
+endif()
+
+# Handle TIFF support
+if(DIPAL_ENABLE_TIFF)
+    find_package(TIFF)
+    
+    if(TIFF_FOUND)
+        message(STATUS "Found system libtiff: ${TIFF_LIBRARIES}")
+        add_definitions(-DDIPAL_HAS_TIFF)
+    else()
+        message(STATUS "TIFF support requested but libtiff not found")
+        message(STATUS "TIFF support will be disabled")
+        set(DIPAL_ENABLE_TIFF OFF)
+    endif()
+endif()
 
 # Main library sources - explicitly list core files to ensure they're included
 set(DIPAL_CORE_SOURCES
@@ -63,6 +128,26 @@ target_link_libraries(dipal
     PRIVATE
         fmt::fmt
 )
+
+# Add image format libraries if enabled
+if(DIPAL_ENABLE_JPEG)
+    if(JPEG_FOUND)
+        target_link_libraries(dipal PRIVATE ${JPEG_LIBRARIES})
+        target_include_directories(dipal PRIVATE ${JPEG_INCLUDE_DIR})
+    else()
+        target_link_libraries(dipal PRIVATE jpeg)
+    endif()
+endif()
+
+if(DIPAL_ENABLE_PNG AND PNG_FOUND)
+    target_link_libraries(dipal PRIVATE ${PNG_LIBRARIES})
+    target_include_directories(dipal PRIVATE ${PNG_INCLUDE_DIRS})
+endif()
+
+if(DIPAL_ENABLE_TIFF AND TIFF_FOUND)
+    target_link_libraries(dipal PRIVATE ${TIFF_LIBRARIES})
+    target_include_directories(dipal PRIVATE ${TIFF_INCLUDE_DIR})
+endif()
 
 # Add Google Test if tests are enabled
 if(BUILD_TESTS)
@@ -137,18 +222,6 @@ elseif(MSVC)
   # Disable specific MSVC warnings
   add_compile_options(/wd4251) # needs to have dll-interface to be used by clients of class
 endif()
-
-# Option to build shared or static library
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-
-# Option to build examples
-option(BUILD_EXAMPLES "Build example programs" ON)
-
-# Option to build documentation
-option(BUILD_DOCUMENTATION "Build documentation" OFF)
-
-# Option to enable sanitizers in debug mode
-option(ENABLE_SANITIZERS "Enable Address and UB sanitizers in Debug mode" OFF)
 
 # Configure compiler flags for sanitizers
 if(ENABLE_SANITIZERS AND CMAKE_BUILD_TYPE MATCHES "Debug")
