@@ -2,11 +2,12 @@
 #ifndef DIPAL_IMAGE_FACTORY_HPP
 #define DIPAL_IMAGE_FACTORY_HPP
 
+#include "../Core/Error.hpp"
+#include "Image.hpp"
+
 #include <memory>
 #include <string>
 #include <string_view>
-#include "../Core/Error.hpp"
-#include "Image.hpp"
 
 namespace DIPAL {
 
@@ -27,7 +28,9 @@ public:
      * @param type Image type
      * @return Result containing the created image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<Image>> create(int width, int height, Image::Type type);
+    [[nodiscard]] static Result<std::unique_ptr<Image>> create(int width,
+                                                               int height,
+                                                               Image::Type type);
 
     /**
      * @brief Create a new binary image
@@ -43,7 +46,8 @@ public:
      * @param height Image height in pixels
      * @return Result containing the created grayscale image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> createGrayscale(int width, int height);
+    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> createGrayscale(int width,
+                                                                                 int height);
 
     /**
      * @brief Create a new color image
@@ -52,14 +56,17 @@ public:
      * @param hasAlpha Whether to include an alpha channel
      * @return Result containing the created color image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<ColorImage>> createColor(int width, int height, bool hasAlpha = false);
+    [[nodiscard]] static Result<std::unique_ptr<ColorImage>> createColor(int width,
+                                                                         int height,
+                                                                         bool hasAlpha = false);
 
     /**
      * @brief Convert a color image to grayscale
      * @param image The color image to convert
      * @return Result containing the grayscale image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> toGrayscale(const ColorImage& image);
+    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> toGrayscale(
+        const ColorImage& image);
 
     /**
      * @brief Convert a grayscale image to color
@@ -67,7 +74,8 @@ public:
      * @param hasAlpha Whether to include an alpha channel
      * @return Result containing the color image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<ColorImage>> toColor(const GrayscaleImage& image, bool hasAlpha = false);
+    [[nodiscard]] static Result<std::unique_ptr<ColorImage>> toColor(const GrayscaleImage& image,
+                                                                     bool hasAlpha = false);
 
     /**
      * @brief Convert a grayscale image to binary using thresholding
@@ -76,11 +84,9 @@ public:
      * @param invert Whether to invert the result (default: false)
      * @return Result containing the binary image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> toBinary(
-        const GrayscaleImage& image, 
-        uint8_t threshold = 128, 
-        bool invert = false
-    );
+    [[nodiscard]] static Result<std::unique_ptr<BinaryImage>> toBinary(const GrayscaleImage& image,
+                                                                       uint8_t threshold = 128,
+                                                                       bool invert = false);
 
     /**
      * @brief Convert a binary image to grayscale
@@ -89,11 +95,8 @@ public:
      * @param blackValue The gray value to use for black pixels (default: 0)
      * @return Result containing the grayscale image or error
      */
-    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>> fromBinary(
-        const BinaryImage& image,
-        uint8_t whiteValue = 255,
-        uint8_t blackValue = 0
-    );
+    [[nodiscard]] static Result<std::unique_ptr<GrayscaleImage>>
+    fromBinary(const BinaryImage& image, uint8_t whiteValue = 255, uint8_t blackValue = 0);
 
     /**
      * @brief Load an image from a file
@@ -109,8 +112,19 @@ public:
      * @return VoidResult indicating success or error
      */
     [[nodiscard]] static VoidResult saveImage(const Image& image, std::string_view filename);
+
+    /**
+     * @brief Save an image to a file with quality setting
+     * @param image The image to save
+     * @param filename Path to the destination file
+     * @param quality Quality setting (0-100, only applies to formats that support it like JPEG)
+     * @return VoidResult indicating success or error
+     */
+    [[nodiscard]] static VoidResult saveImage(const Image& image,
+                                              std::string_view filename,
+                                              int quality);
 };
 
-} // namespace DIPAL
+}  // namespace DIPAL
 
-#endif // DIPAL_IMAGE_FACTORY_HPP
+#endif  // DIPAL_IMAGE_FACTORY_HPP

@@ -2,12 +2,12 @@
 #ifndef DIPAL_IMAGE_IO_HPP
 #define DIPAL_IMAGE_IO_HPP
 
-#include <string>
-#include <string_view>
-#include <memory>
-
 #include "../Core/Error.hpp"
 #include "../Image/Image.hpp"
+
+#include <memory>
+#include <string>
+#include <string_view>
 
 namespace DIPAL {
 
@@ -31,11 +31,22 @@ public:
      */
     [[nodiscard]] static VoidResult save(const Image& image, std::string_view filename);
 
+    /**
+     * @brief Save an image to a file with quality setting
+     * @param image The image to save
+     * @param filename Path to the destination file
+     * @param quality Quality setting (0-100, only applies to formats that support it like JPEG)
+     * @return VoidResult indicating success or error
+     */
+    [[nodiscard]] static VoidResult save(const Image& image,
+                                         std::string_view filename,
+                                         int quality);
+
 private:
     // Helper method to determine file format from extension
     [[nodiscard]] static std::string_view getFormatFromExtension(std::string_view filename);
 };
 
-} // namespace DIPAL
+}  // namespace DIPAL
 
-#endif // DIPAL_IMAGE_IO_HPP
+#endif  // DIPAL_IMAGE_IO_HPP
