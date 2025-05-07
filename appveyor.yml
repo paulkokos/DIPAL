@@ -14,6 +14,8 @@ skip_tags: true
 
 # Build matrix - multiple OS and configuration combinations
 environment:
+  # Define the GitHub token as an encrypted environment variable in AppVeyor project settings
+  # DO NOT add the actual token here
   matrix:
     # Windows + MSVC
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
@@ -221,8 +223,9 @@ artifacts:
 # Deploy settings
 deploy:
   provider: GitHub
-  auth_token:
-    secure: $(GITHUB_API_KEY) # Replace with your encrypted GitHub token
+  # Use environment variable for token - configure in AppVeyor project settings
+  # DO NOT set the actual token here
+  auth_token: $(GITHUB_TOKEN)
   artifact: Windows, Linux_macOS
   draft: true
   prerelease: true
@@ -234,7 +237,7 @@ deploy:
 notifications:
   - provider: Email
     to:
-      - your-email@example.com # Replace with your email
+      - paulkokos@yahoo.gr # Replace with actual email
     on_build_success: false
     on_build_failure: true
     on_build_status_changed: true
