@@ -1,4 +1,5 @@
 // include/DIPAL/Filters/UnsharpMaskFilter.hpp
 #ifndef DIPAL_UNSHARP_MASK_FILTER_HPP
 #define DIPAL_UNSHARP_MASK_FILTER_HPP
+
 #endif  // DIPAL_UNSHARP_MASK_FILTER_HPP
