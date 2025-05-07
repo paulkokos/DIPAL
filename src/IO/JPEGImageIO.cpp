@@ -5,6 +5,7 @@
 #include "../../include/DIPAL/Image/GrayscaleImage.hpp"
 #include "../../include/DIPAL/Image/ImageFactory.hpp"
 
+#include <algorithm>
 #include <csetjmp>
 #include <cstring>
 #include <format>

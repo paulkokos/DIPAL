@@ -260,18 +260,6 @@ VoidResult ImageFactory::saveImage(const Image& image, std::string_view filename
     }
 }
 
-// Updated saveImage function for ImageFactory (excerpt)
-
-VoidResult ImageFactory::saveImage(const Image& image, std::string_view filename) {
-    try {
-        // Use ImageIO to save the image based on file extension
-        return ImageIO::save(image, filename);
-    } catch (const std::exception& e) {
-        return makeVoidErrorResult(ErrorCode::InternalError,
-                                   std::format("Failed to save image: {}", e.what()));
-    }
-}
-
 // Add an overload for quality-based saving
 VoidResult ImageFactory::saveImage(const Image& image, std::string_view filename, int quality) {
     try {
