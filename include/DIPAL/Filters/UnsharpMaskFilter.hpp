@@ -2,24 +2,22 @@
 #ifndef DIPAL_UNSHARP_MASK_FILTER_HPP
 #define DIPAL_UNSHARP_MASK_FILTER_HPP
 
-#include "FilterStrategy.hpp"  // Fixed the typo here (was "FilterStategy.hpp")
-#include "GaussianBlurFilter.hpp"
-
-#include <cstdint>  // For uint8_t, uint16_t, etc.
+#include "FilterStrategy.hpp"
 
 namespace DIPAL {
 
 /**
- * @brief Unsharp mask filter implementation
+ * @brief Unsharp Mask filter implementation
  *
- * Enhances image details by subtracting a blurred version from the original image
+ * Enhances edges by subtracting a blurred version of the image from the original.
+ * The formula is: result = original + amount * (original - blurred)
  */
 class UnsharpMaskFilter : public FilterStrategy {
 public:
     /**
      * @brief Create an unsharp mask filter
-     * @param amount Strength of the effect (1.0 is normal, higher values increase sharpness)
-     * @param radius Radius of the Gaussian blur (sigma value)
+     * @param amount Strength of the sharpening effect (typically 0.5-2.0)
+     * @param radius Blur radius for the mask
      * @param threshold Minimum brightness difference to apply sharpening
      */
     UnsharpMaskFilter(float amount = 1.0f, float radius = 1.0f, uint8_t threshold = 0);
@@ -33,7 +31,7 @@ public:
 
     /**
      * @brief Get the name of the filter
-     * @return "UnsharpMask"
+     * @return "UnsharpMaskFilter"
      */
     [[nodiscard]] std::string_view getName() const override;
 
@@ -62,9 +60,9 @@ public:
     [[nodiscard]] uint8_t getThreshold() const noexcept;
 
 private:
-    float m_amount;       ///< Strength of the effect
-    float m_radius;       ///< Radius of the Gaussian blur
-    uint8_t m_threshold;  ///< Minimum brightness difference
+    float m_amount;       ///< Strength of the sharpening effect
+    float m_radius;       ///< Blur radius for the mask
+    uint8_t m_threshold;  ///< Minimum brightness difference to apply sharpening
 };
 
 }  // namespace DIPAL
