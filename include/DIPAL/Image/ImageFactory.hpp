@@ -1,7 +1,6 @@
 // include/DIPAL/Image/ImageFactory.hpp
 #ifndef DIPAL_IMAGE_FACTORY_HPP
 #define DIPAL_IMAGE_FACTORY_HPP
-
 #include "../Core/Error.hpp"
 #include "Image.hpp"
 
