@@ -7,6 +7,7 @@
 #include "Transformations.hpp"
 
 #include <cmath>
+#include <functional>
 #include <memory>
 #include <string_view>
 
