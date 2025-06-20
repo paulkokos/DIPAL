@@ -97,7 +97,11 @@ vendor/
 *.map
 *.gch
 *.pch
-
+*.nvim
+.cache
+.config
+.nvim
+.idea
 # Generated documentation
 docs/generated/
 html/
