@@ -1,3 +1,4 @@
+
 # DIPAL
 
 <p align="center">
@@ -299,4 +300,3 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 - All contributors who have helped improve this library
 
 <p align="center">Made with ❤️ for the computer vision and image processing community</p>
-
