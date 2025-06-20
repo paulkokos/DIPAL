@@ -3,7 +3,16 @@ project(
   DIPAL
   VERSION 0.1.0
   LANGUAGES CXX)
+  
+  # Include the FetchContent module
+  include(FetchContent)
 
+  # Declare the GTest dependency
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0 # Use a specific version
+  )
 # Set C++20 as the required standard set(CMAKE_CXX_STANDARD 20) Set C++23 as the
 # required standard
 set(CMAKE_CXX_STANDARD 23)
@@ -163,16 +172,6 @@ if(BUILD_TESTS)
         STATUS
           "Googletest submodule not found and GTest not installed. Downloading from source..."
       )
-
-      # Include the FetchContent module
-      include(FetchContent)
-
-      # Declare the GTest dependency
-      # FetchContent_Declare(
-      #   googletest
-      #   GIT_REPOSITORY https://github.com/google/googletest.git
-      #   GIT_TAG v1.14.0 # Use a specific version
-      # )
 
       # Configure GTest build options
       set(BUILD_GMOCK
