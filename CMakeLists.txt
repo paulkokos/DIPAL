@@ -57,8 +57,7 @@ if(DIPAL_ENABLE_JPEG)
     FetchContent_Declare(
       libjpeg
       URL https://ijg.org/files/jpegsrc.v9e.tar.gz
-      URL_HASH
-        SHA256=4077d6a6a75aeb01884f708919d25934c93305e49f7e3f36db9129320e6f4f3d)
+      URL_HASH SHA256=4077d6a6a75aeb01884f708919d25934c93305e49f7e3f36db9129320e6f4f3d)
     FetchContent_MakeAvailable(libjpeg)
     add_definitions(-DDIPAL_HAS_JPEG)
   endif()
