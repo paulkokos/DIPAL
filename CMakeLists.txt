@@ -168,11 +168,11 @@ if(BUILD_TESTS)
       include(FetchContent)
 
       # Declare the GTest dependency
-      FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG v1.14.0 # Use a specific version
-      )
+      # FetchContent_Declare(
+      #   googletest
+      #   GIT_REPOSITORY https://github.com/google/googletest.git
+      #   GIT_TAG v1.14.0 # Use a specific version
+      # )
 
       # Configure GTest build options
       set(BUILD_GMOCK
