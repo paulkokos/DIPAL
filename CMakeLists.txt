@@ -4,13 +4,9 @@ project(
   VERSION 0.1.0
   LANGUAGES CXX)
 
-<<<<<<< HEAD
-# Set C++20 as the required standard
-set(CMAKE_CXX_STANDARD 20)
-=======
-# Set C++23 as the required standard
+# Set C++20 as the required standard set(CMAKE_CXX_STANDARD 20) Set C++23 as the
+# required standard
 set(CMAKE_CXX_STANDARD 23)
->>>>>>> 45d5e03dc8310b6b7f72188035a69245fd2fc4dd
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
