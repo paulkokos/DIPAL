@@ -1,8 +1,3 @@
-
- 
-  
-
-  
 // src/Core/Concepts.cpp
 namespace DIPAL {
 
