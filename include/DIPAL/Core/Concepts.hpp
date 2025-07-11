@@ -7,6 +7,7 @@
 #include <type_traits>
 #include <span>
 #include <ranges>
+#include <string>
 
 namespace DIPAL {
 
