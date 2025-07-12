@@ -48,9 +48,11 @@ echo =============================
 echo Building DIPAL library
 echo =============================
 
-REM Create fresh build directory
+REM Create fresh build allow-unrelated-historiesrectory
 echo Configuring CMake ...
-cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF DBUILD_TESTS= ON -DBUILD_EXAMPLES=ON
+mkdir build
+cd build
+cmake ..
 
 if %errorlevel% neq 0 (
   echo ERROR: CMake configuration failed !
@@ -60,7 +62,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Build the project
-cmake --build . --config Release 
+cmake --build .
 
 if %errorlevel% neq 0 (
   echo ERROR: Build failed!
