@@ -24,6 +24,17 @@ std::string getPixelTypeName(const std::type_info& type) {
   if (type == typeid(bool)) return "bool";
   return type.name;
 }
+
+/*
+* @brief Get information about Transformation concept
+*/
+std::string getTransformationConceptInfo() {
+  return R"(Transformation concept Requirements:
+- Must satisfy ImageType concept
+- apply(const T& img) -> convertible to std::string
+)";
+}
+
 //Explicit template instantiations for common types
 
 template bool isPixelType<std::uint8_t>();
