@@ -24,4 +24,15 @@ std::string getPixelTypeName(const std::type_info& type) {
   if (type == typeid(bool)) return "bool";
   return type.name;
 }
+//Explicit template instantiations for common types
+
+template bool isPixelType<std::uint8_t>();
+template bool isPixelType<std::uint16_t>();
+template bool isPixelType<std::uint32_t>();
+template bool isPixelType<std::int8_t>();
+template bool isPixelType<std::int16_t>();
+template bool isPixelType<std::int32_t>();
+template bool isPixelType<float>();
+template bool isPixelType<double>();
+template bool isPixelType<bool>();
 } //namespace DIPAL
