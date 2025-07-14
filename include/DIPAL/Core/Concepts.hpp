@@ -2,8 +2,8 @@
 #ifndef DIPAL_CONCEPTS_HPP
 #define DIPAL_CONCEPTS_HPP
 
-#include <concepts>
 #include <cstdint>
+#include <iostream>
 #include <memory>
 #include <ranges>
 #include <span>
