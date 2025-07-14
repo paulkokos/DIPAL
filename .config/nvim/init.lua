@@ -33,6 +33,9 @@ local config = {
           "--suggest-missing-includes",
           "--clang-tidy",
           "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=llvm",
         },
       },
     },
@@ -62,6 +65,24 @@ local config = {
       "lua",
       "markdown",
       "markdown_inline",
+    },
+   init_options = {
+      usePlaceholders = true,
+      completeUnimported = true,
+      clangdFileStatus = true,
+    },
+  },
+{
+    "p00f/clangd_extensions.nvim",
+    ft = { "c", "cpp" },
+    opts = {},
+  },
+  
+  -- Better syntax highlighting
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = { "c", "cpp", "cmake" },
     },
   },
 }
