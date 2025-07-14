@@ -7,7 +7,7 @@ project(DIPAL
 )
 
 # C++23 standard requirement
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -20,10 +20,14 @@ option(ENABLE_SANITIZERS "Enable sanitizers in Debug" OFF)
 
 # Global compiler warnings
 if(MSVC)
-  add_compile_options(/W4 /WX /permissive- /std:c++23 /Zc:__cplusplus /EHsc)
-  add_compile_definitions(_SILENCE_ALL_CXX23_DEPRECATION_WARNINGS NOMINMAX)
+  add_compile_options(/W4 /WX /permissive- /std:c++20 /Zc:__cplusplus /EHsc)
+  add_compile_definitions(_SILENCE_ALL_CXX20_DEPRECATION_WARNINGS NOMINMAX WIN32_LEAN_AND_MEAN)
+  # Explicitly enable exceptions for MSVC
+  add_compile_options(/EHsc)  # Enable C++ exceptions
 else()
-  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++23)
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++20)
+  # Explicitly enable exceptions for GCC/Clang (this is default, but let's be explicit)
+  add_compile_options(-fexceptions)
 endif()
 
 # FetchContent for dependencies
@@ -40,12 +44,12 @@ if(BUILD_TESTS)
 endif()
 
 # Expected library for C++23 (until full compiler support)
-FetchContent_Declare(
-        expected
-        GIT_REPOSITORY https://github.com/TartanLlama/expected.git
-        GIT_TAG v1.1.0
-)
-FetchContent_MakeAvailable(expected)
+# FetchContent_Declare(
+#        expected
+#        GIT_REPOSITORY https://github.com/TartanLlama/expected.git
+#        GIT_TAG v1.1.0
+# )
+# FetchContent_MakeAvailable(expected)
 
 # Source files
 file(GLOB_RECURSE DIPAL_SOURCES
@@ -70,14 +74,9 @@ target_include_directories(dipal
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Link libraries
-target_link_libraries(dipal
-        PUBLIC
-        tl::expected
-)
 
 # Compiler features and additional target-specific options
-target_compile_features(dipal PUBLIC cxx_std_23)
+target_compile_features(dipal PUBLIC cxx_std_20)
 
 # Additional MSVC-specific options for the target
 if(MSVC)
