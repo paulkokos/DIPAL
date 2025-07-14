@@ -5,6 +5,7 @@
 #include "../../include/DIPAL/Image/GrayscaleImage.hpp"
 #include "../../include/DIPAL/Image/ImageFactory.hpp"
 #include "../../include/DIPAL/Transformation/Interpolation.hpp"
+#include "DIPAL/Core/Error.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -175,7 +176,11 @@ Result<std::unique_ptr<Image>> AffineTransform::apply(const Image& image) const 
                         if (srcX < 0 || srcX >= srcWidth || srcY < 0 || srcY >= srcHeight) {
                             // For transparent images, set fully transparent
                             if (hasAlpha) {
-                                output.setPixel(x, y, 0, 0, 0, 0);
+                                auto setResult = output.setPixel(x, y, 0, 0, 0, 0);
+                                if (!setResult) {
+                                    return makeErrorResult<std::unique_ptr<Image>>(
+                                        setResult.error().code(), setResult.error().message());
+                                }
                             }
                             continue;
                         }
