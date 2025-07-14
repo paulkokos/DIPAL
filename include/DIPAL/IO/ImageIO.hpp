@@ -40,11 +40,11 @@ public:
      */
     [[nodiscard]] static VoidResult save(const Image& image,
                                          std::string_view filename,
-                                         int quality);
+                                         [[maybe_unused]] int quality);
 
 private:
     // Helper method to determine file format from extension
-    [[nodiscard]] static std::string_view getFormatFromExtension(std::string_view filename);
+    [[nodiscard]] static std::string getFormatFromExtension(std::string_view filename);
 };
 
 }  // namespace DIPAL

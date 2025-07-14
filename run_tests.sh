@@ -4,11 +4,15 @@
 BUILD_DIR="build"
 
 # Change directory to the build directory
-cd "$BUILD_DIR" || { echo "Failed to change directory to $BUILD_DIR"; exit 1; }
+cd "$BUILD_DIR" || {
+  echo "Failed to change directory to $BUILD_DIR"
+  exit 1
+}
 
 # Run the tests (assuming your test executable is named binary_image_tests)
 echo "Running tests..."
-./binary_image_tests
+ctest -j4
+# ./binary_image_tests
 
 # Check the test results
 TEST_RESULT=$?
