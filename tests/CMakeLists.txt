@@ -1,51 +1,23 @@
 # tests/CMakeLists.txt
 cmake_minimum_required(VERSION 3.28)
 
-find_package(GTest REQUIRED)
-include(GoogleTest)
-
-# Test utilities library (if you have the utils)
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/utils/test_utils.cpp)
-    add_library(dipal_test_utils STATIC
-        utils/test_utils.cpp
-        utils/image_test_utils.cpp
-        utils/mock_observers.cpp
-        utils/test_image_generator.cpp
-    )
-    
-    target_link_libraries(dipal_test_utils
-        PUBLIC
-            dipal
-            GTest::gtest
-    )
-    
-    target_include_directories(dipal_test_utils
-        PUBLIC
-            ${CMAKE_CURRENT_SOURCE_DIR}/utils
-    )
-    set(TEST_UTILS_LIB dipal_test_utils)
-else()
-    set(TEST_UTILS_LIB "")
-endif()
-
-# Function to add tests
-function(add_dipal_test test_name test_type)
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${test_type}/${test_name}.cpp)
-        add_executable(${test_name} ${test_type}/${test_name}.cpp)
-        target_link_libraries(${test_name}
+function(add_dipal_test test_name)
+    add_executable(${test_name} unit/${test_name}.cpp)
+    target_link_libraries(${test_name}
             PRIVATE
-                dipal
-                ${TEST_UTILS_LIB}
-                GTest::gtest_main
-        )
-        add_test(NAME ${test_name} COMMAND ${test_name})
-        set_tests_properties(${test_name} PROPERTIES LABELS "${test_type}")
-        message(STATUS "Added test: ${test_name}")
-    else()
-        message(STATUS "Test file not found: ${test_type}/${test_name}.cpp")
-    endif()
+            dipal
+            gtest_main  # Use gtest_main instead of GTest::gtest_main
+    )
+    # Use add_test instead of gtest_discover_tests for simplicity
+    add_test(NAME ${test_name} COMMAND ${test_name})
+    set_tests_properties(${test_name} PROPERTIES LABELS "unit")
 endfunction()
-
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/fixtures)
+    file(COPY fixtures/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/fixtures/)
+else()
+    # Create empty fixtures directory
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/fixtures)
+endif()
 # Add all unit tests
 add_dipal_test(core_tests unit)
 add_dipal_test(result_tests unit)
