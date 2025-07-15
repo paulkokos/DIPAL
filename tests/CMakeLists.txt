@@ -1,5 +1,5 @@
 # tests/CMakeLists.txt
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.16.3)
 
 function(add_dipal_test test_name)
     add_executable(${test_name} unit/${test_name}.cpp)
