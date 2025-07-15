@@ -2,9 +2,11 @@
 // Common test utilities for DIPAL Library
 
 #include "test_utils.hpp"
+
 #include <DIPAL/DIPAL.hpp>
-#include <random>
+
 #include <chrono>
+#include <random>
 
 namespace DIPAL {
 namespace TestUtils {
@@ -18,21 +20,20 @@ std::vector<uint8_t> generateRandomData(size_t size) {
     std::vector<uint8_t> data(size);
     std::uniform_int_distribution<uint8_t> dist(0, 255);
     auto& gen = getRandomGenerator();
-    
+
     for (auto& byte : data) {
         byte = dist(gen);
     }
-    
+
     return data;
 }
 
-bool compareImages(const Image& img1, const Image& img2, double tolerance) {
-    if (img1.getWidth() != img2.getWidth() || 
-        img1.getHeight() != img2.getHeight() ||
+bool compareImages(const Image& img1, const Image& img2, [[maybe_unused]] double tolerance) {
+    if (img1.getWidth() != img2.getWidth() || img1.getHeight() != img2.getHeight() ||
         img1.getType() != img2.getType()) {
         return false;
     }
-    
+
     // TODO: Implement pixel-by-pixel comparison with tolerance
     return true;
 }
@@ -41,5 +42,5 @@ std::filesystem::path getTestDataPath() {
     return std::filesystem::current_path() / "fixtures";
 }
 
-} // namespace TestUtils
-} // namespace DIPAL
+}  // namespace TestUtils
+}  // namespace DIPAL

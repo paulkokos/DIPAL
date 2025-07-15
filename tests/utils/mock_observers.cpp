@@ -2,22 +2,27 @@
 // Mock observer implementations for testing
 
 #include "mock_observers.hpp"
+
 #include <iostream>
+#include <string_view>
+#include <vector>
 
 namespace DIPAL {
 namespace MockObservers {
 
-void MockProcessingObserver::onProcessingStarted(const std::string& operationName) {
-    events.push_back({EventType::ProcessingStarted, operationName, 0.0f, ""});
+void MockProcessingObserver::onProcessingStarted(const std::string_view operationName) {
+    events.push_back({EventType::ProcessingStarted, std::string(operationName), 0.0f, ""});
     if (verbose) {
         std::cout << "[MOCK] Processing started: " << operationName << std::endl;
     }
 }
 
-void MockProcessingObserver::onProcessingCompleted(const std::string& operationName, bool success) {
-    events.push_back({EventType::ProcessingCompleted, operationName, success ? 1.0f : 0.0f, ""});
+void MockProcessingObserver::onProcessingCompleted(const std::string_view operationName,
+                                                   bool success) {
+    events.push_back(
+        {EventType::ProcessingCompleted, std::string(operationName), success ? 1.0f : 0.0f, ""});
     if (verbose) {
-        std::cout << "[MOCK] Processing completed: " << operationName 
+        std::cout << "[MOCK] Processing completed: " << operationName
                   << " (success: " << (success ? "true" : "false") << ")" << std::endl;
     }
 }
@@ -29,12 +34,12 @@ void MockProcessingObserver::onProgressUpdated(float progress) {
     }
 }
 
-void MockProcessingObserver::onError(const std::string& errorMessage) {
-    events.push_back({EventType::Error, "", 0.0f, errorMessage});
+void MockProcessingObserver::onError(const std::string_view errorMessage) {
+    events.push_back({EventType::Error, "", 0.0f, std::string(errorMessage)});
     if (verbose) {
         std::cout << "[MOCK] Error: " << errorMessage << std::endl;
     }
 }
 
-} // namespace MockObservers
-} // namespace DIPAL
+}  // namespace MockObservers
+}  // namespace DIPAL
