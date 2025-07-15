@@ -106,3 +106,5 @@ add_dipal_test(boundary_condition_tests stress)
 add_dipal_test(platform_compatibility_tests compatibility)
 add_dipal_test(compiler_compatibility_tests compatibility)
 add_dipal_test(cpp23_features_tests compatibility)
+
+
