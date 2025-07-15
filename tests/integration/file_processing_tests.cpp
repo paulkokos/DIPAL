@@ -2,10 +2,12 @@
 // Priority: 🔧 HIGH
 // Integration test for DIPAL Library
 
-#include <gtest/gtest.h>
 #include <DIPAL/DIPAL.hpp>
+
 #include <memory>
 #include <vector>
+
+#include <gtest/gtest.h>
 
 using namespace DIPAL;
 
@@ -18,13 +20,14 @@ protected:
         // Setup for integration tests
         // Initialize multiple components that will interact
     }
-    
+
     void TearDown() override {
         // Cleanup after integration tests
     }
-    
+
     // Helper methods for creating test scenarios
-    std::unique_ptr<Image> createTestImage(int width = 100, int height = 100) {
+    std::unique_ptr<Image> createTestImage([[maybe_unused]] int width = 100,
+                                           [[maybe_unused]] int height = 100) {
         // TODO: Implement test image creation
         return nullptr;
     }
@@ -59,4 +62,3 @@ TEST_F(FileProcessingTest, ErrorPropagation) {
     // TODO: Implement error propagation tests
     EXPECT_TRUE(true) << "Error propagation test not implemented";
 }
-
