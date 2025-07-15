@@ -1,5 +1,5 @@
 // src/Core/Core.cpp
-#include <DIPAL/Core/Core.hpp>
+#include "../../include/DIPAL/Core/Core.hpp"
 
 #include <algorithm>
 #include <cctype>
@@ -265,7 +265,7 @@ int Core::getOptimalThreadCount() noexcept {
 
 void* Core::alignedAlloc(std::size_t size, std::size_t alignment) {
     s_memoryUsage += size;
-    s_peakMemoryUsage = std::max(s_peakMemoryUsage, s_memoryUsage);
+    s_peakMemoryUsage = (std::max)(s_peakMemoryUsage, s_memoryUsage);
 
 #ifdef _WIN32
     return _aligned_malloc(size, alignment);
