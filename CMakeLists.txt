@@ -7,7 +7,7 @@ project(DIPAL
 )
 
 # C++23 standard requirement
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -25,7 +25,7 @@ if(MSVC)
   # Explicitly enable exceptions for MSVC
   add_compile_options(/EHsc)  # Enable C++ exceptions
 else()
-  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++20)
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++23)
   # Explicitly enable exceptions for GCC/Clang (this is default, but let's be explicit)
   add_compile_options(-fexceptions)
 endif()
@@ -44,12 +44,13 @@ if(BUILD_TESTS)
 endif()
 
 # Expected library for C++23 (until full compiler support)
-# FetchContent_Declare(
-#        expected
-#        GIT_REPOSITORY https://github.com/TartanLlama/expected.git
-#        GIT_TAG v1.1.0
-# )
-# FetchContent_MakeAvailable(expected)
+set(EXPECTED_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+ FetchContent_Declare(
+        expected
+        GIT_REPOSITORY https://github.com/TartanLlama/expected.git
+        GIT_TAG v1.1.0
+ )
+ FetchContent_MakeAvailable(expected)
 
 # Source files
 file(GLOB_RECURSE DIPAL_SOURCES
@@ -76,7 +77,7 @@ target_include_directories(dipal
 
 
 # Compiler features and additional target-specific options
-target_compile_features(dipal PUBLIC cxx_std_20)
+target_compile_features(dipal PUBLIC cxx_std_23)
 
 # Additional MSVC-specific options for the target
 if(MSVC)

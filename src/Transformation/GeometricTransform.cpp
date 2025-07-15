@@ -36,7 +36,8 @@ GeometricTransform GeometricTransform::polarToCartesian(int outputWidth,
     // The horizontal axis corresponds to the angle, and the vertical axis to the radius
 
     auto mapping = [centerX, centerY, outputWidth, outputHeight](
-                       float normX, float normY) -> std::pair<float, float> {
+                       [[maybe_unused]] float normX,
+                       [[maybe_unused]] float normY) -> std::pair<float, float> {
         // Convert normalized coordinates [0,1] to polar coordinates
         float angle = normX * 2.0f * M_PI;  // Map X from [0,1] to [0,2π]
         float radius = normY;               // Map Y from [0,1] to [0,1]
@@ -272,7 +273,11 @@ Result<std::unique_ptr<Image>> GeometricTransform::apply(const Image& image) con
                         if (srcX < 0 || srcX >= srcWidth || srcY < 0 || srcY >= srcHeight) {
                             // For transparent images, set fully transparent
                             if (hasAlpha) {
-                                output.setPixel(x, y, 0, 0, 0, 0);
+                                auto setResult = output.setPixel(x, y, 0, 0, 0, 0);
+                                if (!setResult) {
+                                    return makeErrorResult<std::unique_ptr<Image>>(
+                                        setResult.error().code(), setResult.error().message());
+                                }
                             }
                             continue;
                         }
