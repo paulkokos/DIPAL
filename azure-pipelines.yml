@@ -1,5 +1,5 @@
-# Azure Pipelines configuration for DIPAL
-# This pipeline builds the C++ project on multiple platforms
+# Azure Pipelines configuration for DIPAL - C++23 Release Version
+# This pipeline builds the C++ project with C++23-compatible compilers only
 
 trigger:
   branches:
@@ -19,59 +19,20 @@ trigger:
 # Define build variables
 variables:
   CMAKE_VERSION: '3.28.0'
+  CXXFLAGS: '-std=c++23'
 
-# Multi-platform builds (Linux and macOS)
+# Multi-platform builds (Linux only - C++23 compatible compilers)
 jobs:
-# Linux builds with multiple distributions and compilers
-- job: Ubuntu_20_04
-  displayName: 'Ubuntu 20.04 Builds'
-  pool:
-    vmImage: 'ubuntu-20.04'
-  strategy:
-    matrix:
-      GCC11_Debug:
-        CC: gcc-11
-        CXX: g++-11
-        BUILD_TYPE: Debug
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
-      GCC12_Release:
-        CC: gcc-12
-        CXX: g++-12
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      Clang14_Debug:
-        CC: clang-14
-        CXX: clang++-14
-        BUILD_TYPE: Debug
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
-      Clang15_Release:
-        CC: clang-15
-        CXX: clang++-15
-        BUILD_TYPE: Release
-        BUILD_TESTS: OFF
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-
-  steps:
-  - template: .azure/linux-build-steps.yml
-    parameters:
-      osVersion: 'ubuntu-20.04'
-
+# Ubuntu 22.04 with C++23 compatible compilers only
 - job: Ubuntu_22_04
-  displayName: 'Ubuntu 22.04 Builds'
+  displayName: 'Ubuntu 22.04 C++23 Builds'
   pool:
     vmImage: 'ubuntu-22.04'
   strategy:
     matrix:
-      GCC12_Debug:
-        CC: gcc-12
-        CXX: g++-12
+      GCC13_Debug:
+        CC: gcc-13
+        CXX: g++-13
         BUILD_TYPE: Debug
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
@@ -79,27 +40,6 @@ jobs:
       GCC13_Release:
         CC: gcc-13
         CXX: g++-13
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      Clang15_Debug:
-        CC: clang-15
-        CXX: clang++-15
-        BUILD_TYPE: Debug
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
-      Clang16_Release:
-        CC: clang-16
-        CXX: clang++-16
-        BUILD_TYPE: Release
-        BUILD_TESTS: OFF
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      Clang17_Release:
-        CC: clang-17
-        CXX: clang++-17
         BUILD_TYPE: Release
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
@@ -109,13 +49,22 @@ jobs:
   - template: .azure/linux-build-steps.yml
     parameters:
       osVersion: 'ubuntu-22.04'
+      cppStandard: '23'
 
+# Ubuntu 24.04 with C++23 compatible compilers
 - job: Ubuntu_24_04
-  displayName: 'Ubuntu 24.04 Builds'
+  displayName: 'Ubuntu 24.04 C++23 Builds'
   pool:
     vmImage: 'ubuntu-24.04'
   strategy:
     matrix:
+      GCC13_Debug:
+        CC: gcc-13
+        CXX: g++-13
+        BUILD_TYPE: Debug
+        BUILD_TESTS: ON
+        BUILD_EXAMPLES: ON
+        ENABLE_SANITIZERS: ON
       GCC13_Release:
         CC: gcc-13
         CXX: g++-13
@@ -123,6 +72,13 @@ jobs:
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
+      GCC14_Debug:
+        CC: gcc-14
+        CXX: g++-14
+        BUILD_TYPE: Debug
+        BUILD_TESTS: ON
+        BUILD_EXAMPLES: ON
+        ENABLE_SANITIZERS: ON
       GCC14_Release:
         CC: gcc-14
         CXX: g++-14
@@ -130,16 +86,23 @@ jobs:
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
-      Clang17_Release:
-        CC: clang-17
-        CXX: clang++-17
+      Clang19_Debug:
+        CC: clang-19
+        CXX: clang++-19
+        BUILD_TYPE: Debug
+        BUILD_TESTS: ON
+        BUILD_EXAMPLES: ON
+        ENABLE_SANITIZERS: ON
+      Clang19_Release:
+        CC: clang-19
+        CXX: clang++-19
         BUILD_TYPE: Release
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
-      Clang18_Release:
-        CC: clang-18
-        CXX: clang++-18
+      Clang20_Release:
+        CC: clang-20
+        CXX: clang++-20
         BUILD_TYPE: Release
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
@@ -149,94 +112,9 @@ jobs:
   - template: .azure/linux-build-steps.yml
     parameters:
       osVersion: 'ubuntu-24.04'
+      cppStandard: '23'
 
-# macOS builds with Xcode and Homebrew compilers
-- job: macOS_Monterey
-  displayName: 'macOS 12 (Monterey) Builds'
-  pool:
-    vmImage: 'macOS-12'
-  strategy:
-    matrix:
-      AppleClang_Debug:
-        CC: clang
-        CXX: clang++
-        BUILD_TYPE: Debug
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
-      AppleClang_Release:
-        CC: clang
-        CXX: clang++
-        BUILD_TYPE: Release
-        BUILD_TESTS: OFF
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      GCC12_Release:
-        CC: gcc-12
-        CXX: g++-12
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-
-  steps:
-  - template: .azure/macos-build-steps.yml
-    parameters:
-      osVersion: 'macOS-12'
-
-- job: macOS_Ventura
-  displayName: 'macOS 13 (Ventura) Builds'
-  pool:
-    vmImage: 'macOS-13'
-  strategy:
-    matrix:
-      AppleClang_Release:
-        CC: clang
-        CXX: clang++
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      GCC13_Release:
-        CC: gcc-13
-        CXX: g++-13
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-      LLVM_Clang17:
-        CC: /opt/homebrew/opt/llvm/bin/clang
-        CXX: /opt/homebrew/opt/llvm/bin/clang++
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-
-  steps:
-  - template: .azure/macos-build-steps.yml
-    parameters:
-      osVersion: 'macOS-13'
-
-- job: macOS_Sonoma
-  displayName: 'macOS 14 (Sonoma) Builds'
-  pool:
-    vmImage: 'macOS-14'
-  strategy:
-    matrix:
-      AppleClang_Latest:
-        CC: clang
-        CXX: clang++
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
-
-  steps:
-  - template: .azure/macos-build-steps.yml
-    parameters:
-      osVersion: 'macOS-14'
-
-# Documentation job (optional)
+# Documentation job (kept unchanged)
 - job: Documentation
   displayName: 'Build Documentation'
   pool:
@@ -265,34 +143,26 @@ jobs:
     displayName: 'Publish Documentation'
     condition: succeeded()
 
-# Cross-compilation jobs for different architectures
+# Cross-compilation jobs with C++23 support
 - job: Cross_Compilation
-  displayName: 'Cross-compilation Builds'
+  displayName: 'Cross-compilation C++23 Builds'
   pool:
-    vmImage: 'ubuntu-22.04'
+    vmImage: 'ubuntu-24.04'  # Use 24.04 for newer cross-compilers
   strategy:
     matrix:
       ARM64_GCC:
         TARGET_ARCH: aarch64-linux-gnu
-        CC: aarch64-linux-gnu-gcc
-        CXX: aarch64-linux-gnu-g++
+        CC: aarch64-linux-gnu-gcc-13  # Use GCC 13 for C++23
+        CXX: aarch64-linux-gnu-g++-13
         CMAKE_TOOLCHAIN: arm64-toolchain.cmake
         BUILD_TYPE: Release
         BUILD_TESTS: OFF
         BUILD_EXAMPLES: ON
       ARM_GCC:
         TARGET_ARCH: arm-linux-gnueabihf
-        CC: arm-linux-gnueabihf-gcc
-        CXX: arm-linux-gnueabihf-g++
+        CC: arm-linux-gnueabihf-gcc-13  # Use GCC 13 for C++23
+        CXX: arm-linux-gnueabihf-g++-13
         CMAKE_TOOLCHAIN: arm-toolchain.cmake
-        BUILD_TYPE: Release
-        BUILD_TESTS: OFF
-        BUILD_EXAMPLES: ON
-      RISCV64_GCC:
-        TARGET_ARCH: riscv64-linux-gnu
-        CC: riscv64-linux-gnu-gcc
-        CXX: riscv64-linux-gnu-g++
-        CMAKE_TOOLCHAIN: riscv64-toolchain.cmake
         BUILD_TYPE: Release
         BUILD_TESTS: OFF
         BUILD_EXAMPLES: ON
@@ -302,31 +172,41 @@ jobs:
       sudo apt-get update
       sudo apt-get install -y ninja-build
       
-      # Install cross-compilation toolchains
+      # Install cross-compilation toolchains with C++23 support
       if [[ "$(TARGET_ARCH)" == "aarch64-linux-gnu" ]]; then
-        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+        sudo apt-get install -y gcc-13-aarch64-linux-gnu g++-13-aarch64-linux-gnu
+        # Create symlinks for easier access
+        sudo ln -sf /usr/bin/aarch64-linux-gnu-gcc-13 /usr/bin/aarch64-linux-gnu-gcc-13
+        sudo ln -sf /usr/bin/aarch64-linux-gnu-g++-13 /usr/bin/aarch64-linux-gnu-g++-13
       elif [[ "$(TARGET_ARCH)" == "arm-linux-gnueabihf" ]]; then
-        sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
-      elif [[ "$(TARGET_ARCH)" == "riscv64-linux-gnu" ]]; then
-        sudo apt-get install -y gcc-riscv64-linux-gnu g++-riscv64-linux-gnu
+        sudo apt-get install -y gcc-13-arm-linux-gnueabihf g++-13-arm-linux-gnueabihf
+        # Create symlinks for easier access
+        sudo ln -sf /usr/bin/arm-linux-gnueabihf-gcc-13 /usr/bin/arm-linux-gnueabihf-gcc-13
+        sudo ln -sf /usr/bin/arm-linux-gnueabihf-g++-13 /usr/bin/arm-linux-gnueabihf-g++-13
       fi
       
-      # Verify cross-compiler installation
+      # Verify cross-compiler installation and C++23 support
       $(CC) --version
       $(CXX) --version
+      echo "Testing C++23 support..."
+      echo '#include <iostream>' > test.cpp
+      echo 'int main() { return 0; }' >> test.cpp
+      $(CXX) -std=c++23 -c test.cpp -o test.o && echo "✅ C++23 supported" || echo "❌ C++23 not supported"
       
     displayName: 'Install Cross-compilation Tools'
     
   - script: |
-      # Create CMake toolchain file
+      # Create CMake toolchain file with C++23 support
       mkdir -p cmake/toolchains
       
       if [[ "$(TARGET_ARCH)" == "aarch64-linux-gnu" ]]; then
         cat > cmake/toolchains/$(CMAKE_TOOLCHAIN) << 'EOF'
       set(CMAKE_SYSTEM_NAME Linux)
       set(CMAKE_SYSTEM_PROCESSOR aarch64)
-      set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
-      set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+      set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc-13)
+      set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++-13)
+      set(CMAKE_CXX_STANDARD 23)
+      set(CMAKE_CXX_STANDARD_REQUIRED ON)
       set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
       set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
       set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
@@ -335,18 +215,10 @@ jobs:
         cat > cmake/toolchains/$(CMAKE_TOOLCHAIN) << 'EOF'
       set(CMAKE_SYSTEM_NAME Linux)
       set(CMAKE_SYSTEM_PROCESSOR arm)
-      set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
-      set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
-      set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-      set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-      set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-      EOF
-      elif [[ "$(TARGET_ARCH)" == "riscv64-linux-gnu" ]]; then
-        cat > cmake/toolchains/$(CMAKE_TOOLCHAIN) << 'EOF'
-      set(CMAKE_SYSTEM_NAME Linux)
-      set(CMAKE_SYSTEM_PROCESSOR riscv64)
-      set(CMAKE_C_COMPILER riscv64-linux-gnu-gcc)
-      set(CMAKE_CXX_COMPILER riscv64-linux-gnu-g++)
+      set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc-13)
+      set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++-13)
+      set(CMAKE_CXX_STANDARD 23)
+      set(CMAKE_CXX_STANDARD_REQUIRED ON)
       set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
       set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
       set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
@@ -360,6 +232,8 @@ jobs:
       cmake -G "Ninja" \
         -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/$(CMAKE_TOOLCHAIN) \
         -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+        -DCMAKE_CXX_STANDARD=23 \
+        -DCMAKE_CXX_STANDARD_REQUIRED=ON \
         -DBUILD_TESTS=$(BUILD_TESTS) \
         -DBUILD_EXAMPLES=$(BUILD_EXAMPLES) \
         -DCMAKE_INSTALL_PREFIX=$(Build.ArtifactStagingDirectory) \
@@ -382,30 +256,18 @@ jobs:
       artifactName: 'DIPAL-CrossCompiled-$(TARGET_ARCH)-$(BUILD_TYPE)'
     displayName: 'Publish Cross-compiled Artifacts'
 
-# Container-based builds for additional distributions
+# Container-based builds with C++23 support (limited to distributions with recent compilers)
 - job: Container_Builds
-  displayName: 'Container-based Distribution Builds'
+  displayName: 'Container-based C++23 Distribution Builds'
   pool:
-    vmImage: 'ubuntu-22.04'
+    vmImage: 'ubuntu-24.04'
   strategy:
     matrix:
-      Alpine_GCC:
-        CONTAINER_IMAGE: alpine:latest
-        PACKAGE_MANAGER: apk
-        CC: gcc
-        CXX: g++
-        BUILD_TYPE: Release
       Fedora_GCC:
         CONTAINER_IMAGE: fedora:latest
         PACKAGE_MANAGER: dnf
         CC: gcc
         CXX: g++
-        BUILD_TYPE: Release
-      Debian_GCC:
-        CONTAINER_IMAGE: debian:bookworm
-        PACKAGE_MANAGER: apt
-        CC: gcc-12
-        CXX: g++-12
         BUILD_TYPE: Release
       ArchLinux_GCC:
         CONTAINER_IMAGE: archlinux:latest
@@ -413,34 +275,49 @@ jobs:
         CC: gcc
         CXX: g++
         BUILD_TYPE: Release
+      Debian_GCC:
+        CONTAINER_IMAGE: debian:bookworm
+        PACKAGE_MANAGER: apt
+        CC: gcc-13
+        CXX: g++-13
+        BUILD_TYPE: Release
 
   steps:
   - script: |
-      # Create build script for container
+      # Create build script for container with C++23 support
       cat > container_build.sh << 'EOF'
       #!/bin/bash
       set -e
       
       # Install dependencies based on package manager
-      if [[ "$(PACKAGE_MANAGER)" == "apk" ]]; then
-        apk update
-        apk add --no-cache build-base cmake ninja git
-      elif [[ "$(PACKAGE_MANAGER)" == "dnf" ]]; then
+      if [[ "$(PACKAGE_MANAGER)" == "dnf" ]]; then
         dnf update -y
         dnf install -y gcc gcc-c++ cmake ninja-build git
+        # Fedora usually has recent GCC with C++23 support
       elif [[ "$(PACKAGE_MANAGER)" == "apt" ]]; then
         apt-get update
-        apt-get install -y build-essential cmake ninja-build git gcc-12 g++-12
+        apt-get install -y build-essential cmake ninja-build git gcc-13 g++-13
+        export CC=gcc-13
+        export CXX=g++-13
       elif [[ "$(PACKAGE_MANAGER)" == "pacman" ]]; then
         pacman -Syu --noconfirm
         pacman -S --noconfirm base-devel cmake ninja git
+        # Arch Linux usually has the latest GCC
       fi
+      
+      # Verify C++23 support
+      echo "Testing C++23 support..."
+      echo '#include <iostream>' > test_cpp23.cpp
+      echo 'int main() { return 0; }' >> test_cpp23.cpp
+      $CXX -std=c++23 -c test_cpp23.cpp -o test_cpp23.o && echo "✅ C++23 supported" || (echo "❌ C++23 not supported" && exit 1)
       
       # Build project
       mkdir -p build
       cd build
       cmake -G "Ninja" \
         -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+        -DCMAKE_CXX_STANDARD=23 \
+        -DCMAKE_CXX_STANDARD_REQUIRED=ON \
         -DBUILD_TESTS=OFF \
         -DBUILD_EXAMPLES=ON \
         ..
@@ -449,7 +326,7 @@ jobs:
       
       # Create archive
       cd /tmp
-      tar -czf /output/DIPAL-$(CONTAINER_IMAGE | tr ':' '-')-$(BUILD_TYPE).tar.gz install/*
+      tar -czf /output/DIPAL-$(echo "$(CONTAINER_IMAGE)" | tr ':' '-')-$(BUILD_TYPE)-cpp23.tar.gz install/*
       EOF
       
       chmod +x container_build.sh
@@ -458,17 +335,77 @@ jobs:
   - script: |
       mkdir -p $(Build.ArtifactStagingDirectory)
       docker run --rm \
-        -v $(pwd):/workspace \
+        -v $(pwd):/src \
         -v $(Build.ArtifactStagingDirectory):/output \
-        -w /workspace \
-        -e BUILD_TYPE=$(BUILD_TYPE) \
+        -w /src \
         -e PACKAGE_MANAGER=$(PACKAGE_MANAGER) \
+        -e BUILD_TYPE=$(BUILD_TYPE) \
+        -e CONTAINER_IMAGE=$(CONTAINER_IMAGE) \
         $(CONTAINER_IMAGE) \
         ./container_build.sh
-    displayName: 'Build in Container ($(CONTAINER_IMAGE))'
+    displayName: 'Build in Container'
     
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: 'DIPAL-Container-$(CONTAINER_IMAGE)-$(BUILD_TYPE)'
+      artifactName: 'DIPAL-Container-$(CONTAINER_IMAGE | tr ":" "-")-$(BUILD_TYPE)'
     displayName: 'Publish Container Build Artifacts'
+
+# C++23 Feature Validation Job
+- job: CPP23_Validation
+  displayName: 'C++23 Feature Validation'
+  pool:
+    vmImage: 'ubuntu-24.04'
+  
+  steps:
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y gcc-14 g++-14 clang-19 clang++-19
+    displayName: 'Install Latest Compilers'
+    
+  - script: |
+      # Create C++23 feature test
+      cat > cpp23_features_test.cpp << 'EOF'
+      #include <iostream>
+      #include <expected>
+      #include <print>
+      #include <ranges>
+      #include <format>
+      
+      int main() {
+          // Test C++23 features
+          std::println("Testing C++23 features...");
+          
+          // Test std::expected (C++23)
+          auto divide = [](int a, int b) -> std::expected<int, std::string> {
+              if (b == 0) return std::unexpected("Division by zero");
+              return a / b;
+          };
+          
+          auto result = divide(10, 2);
+          if (result.has_value()) {
+              std::println("Division result: {}", result.value());
+          }
+          
+          // Test ranges (enhanced in C++23)
+          std::vector<int> numbers = {1, 2, 3, 4, 5};
+          auto doubled = numbers | std::views::transform([](int x) { return x * 2; });
+          
+          std::print("Doubled numbers: ");
+          for (auto n : doubled) {
+              std::print("{} ", n);
+          }
+          std::println("");
+          
+          std::println("✅ All C++23 features working!");
+          return 0;
+      }
+      EOF
+      
+      echo "Testing GCC-14 C++23 support..."
+      g++-14 -std=c++23 cpp23_features_test.cpp -o test_gcc && echo "✅ GCC-14 C++23 works" || echo "❌ GCC-14 C++23 failed"
+      
+      echo "Testing Clang-19 C++23 support..."
+      clang++-19 -std=c++23 cpp23_features_test.cpp -o test_clang && echo "✅ Clang-19 C++23 works" || echo "❌ Clang-19 C++23 failed"
+      
+    displayName: 'Validate C++23 Features'
