@@ -103,9 +103,9 @@ VoidResult ImageIO::save(const Image& image, std::string_view filename) {
 }
 
 // Overload save function to allow quality parameter for supported formats
-VoidResult ImageIO::save(const Image& image, std::string_view filename, int quality) {
+VoidResult ImageIO::save(const Image& image, std::string_view filename, [[maybe_unused]] int quality) {
     // Get the file format from the extension
-    auto format = getFormatFromExtension(filename);
+    [[maybe_unused]]auto format = getFormatFromExtension(filename);
 
 #ifdef DIPAL_HAS_JPEG
     if (format == "jpg" || format == "jpeg") {

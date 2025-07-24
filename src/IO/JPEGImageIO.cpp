@@ -333,12 +333,12 @@ VoidResult JPEGImageIO::save(const Image& image, std::string_view filename, int 
 
 namespace DIPAL {
 
-Result<std::unique_ptr<Image>> JPEGImageIO::load(std::string_view filename) {
+Result<std::unique_ptr<Image>> JPEGImageIO::load([[maybe_unused]]std::string_view filename) {
     return makeErrorResult<std::unique_ptr<Image>>(
         ErrorCode::UnsupportedFormat, "JPEG support is not enabled in this build of DIPAL");
 }
 
-VoidResult JPEGImageIO::save(const Image& image, std::string_view filename, int quality) {
+VoidResult JPEGImageIO::save([[maybe_unused]]const Image& image, [[maybe_unused]]std::string_view filename,[[maybe_unused]] int quality) {
     return makeVoidErrorResult(ErrorCode::UnsupportedFormat,
                                "JPEG support is not enabled in this build of DIPAL");
 }

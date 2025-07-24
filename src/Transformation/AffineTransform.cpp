@@ -175,7 +175,13 @@ Result<std::unique_ptr<Image>> AffineTransform::apply(const Image& image) const 
                         if (srcX < 0 || srcX >= srcWidth || srcY < 0 || srcY >= srcHeight) {
                             // For transparent images, set fully transparent
                             if (hasAlpha) {
-                                output.setPixel(x, y, 0, 0, 0, 0);
+                                    
+                                   if (auto result = output.setPixel(x, y, 0, 0, 0, 0); !result) {
+    return makeErrorResult<std::unique_ptr<Image>>(
+        ErrorCode::ProcessingFailed,
+        std::format("Failed to set pixel at ({}, {}): {}", x, y, result.error().message())
+    );
+} 
                             }
                             continue;
                         }
