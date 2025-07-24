@@ -325,11 +325,19 @@ Result<std::unique_ptr<Image>> WarpTransform::applyThinPlateSpline(const Image& 
                         input, srcX, srcY, r, g, b, a, m_interpolationMethod);
 
                     if (colorResult) {
-                        output.setPixel(x, y, r, g, b, hasAlpha ? a : 255);
+                        auto setResult1 = output.setPixel(x, y, r, g, b, hasAlpha ? a : 255);
+                        if (!setResult1) {
+                            return makeErrorResult<std::unique_ptr<Image>>(
+                                setResult1.error().code(), setResult1.error().message());
+                        }
                     }
                 } else if (hasAlpha) {
                     // Set transparent pixel for out-of-bounds coordinates
-                    output.setPixel(x, y, 0, 0, 0, 0);
+                    auto setResult = output.setPixel(x, y, 0, 0, 0, 0);
+                    if (!setResult) {
+                        return makeErrorResult<std::unique_ptr<Image>>(setResult.error().code(),
+                                                                       setResult.error().message());
+                    }
                 }
             }
         }
@@ -487,11 +495,19 @@ Result<std::unique_ptr<Image>> WarpTransform::applyMeshWarp(const Image& image) 
                         input, srcX, srcY, r, g, b, a, m_interpolationMethod);
 
                     if (colorResult) {
-                        output.setPixel(x, y, r, g, b, hasAlpha ? a : 255);
+                        auto setResult = output.setPixel(x, y, r, g, b, hasAlpha ? a : 255);
+                        if (!setResult) {
+                            return makeErrorResult<std::unique_ptr<Image>>(
+                                setResult.error().code(), setResult.error().message());
+                        }
                     }
                 } else if (hasAlpha) {
                     // Set transparent pixel for out-of-bounds coordinates
-                    output.setPixel(x, y, 0, 0, 0, 0);
+                    auto setResult = output.setPixel(x, y, 0, 0, 0, 0);
+                    if (!setResult) {
+                        return makeErrorResult<std::unique_ptr<Image>>(setResult.error().code(),
+                                                                       setResult.error().message());
+                    }
                 }
             }
         }
