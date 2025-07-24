@@ -111,7 +111,6 @@ jobs:
   - template: .azure/linux-build-steps.yml
     parameters:
       osVersion: 'ubuntu-24.04'
-      cppStandard: '23'
 
 # Documentation job (kept unchanged)
 - job: Documentation
