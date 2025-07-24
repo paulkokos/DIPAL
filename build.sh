@@ -1,8 +1,8 @@
 rm -rf build
 
-mkdir build 
+mkdir build
 
-cd build 
+cd build
 
 cmake ..
 
