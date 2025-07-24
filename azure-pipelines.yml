@@ -49,7 +49,6 @@ jobs:
   - template: .azure/linux-build-steps.yml
     parameters:
       osVersion: 'ubuntu-22.04'
-      cppStandard: '23'
 
 # Ubuntu 24.04 with C++23 compatible compilers
 - job: Ubuntu_24_04
