@@ -1,18 +1,6 @@
 # tests/CMakeLists.txt
 cmake_minimum_required(VERSION 3.16.3)
 
-<<<<<<< HEAD
-function(add_dipal_test test_name)
-    add_executable(${test_name} unit/${test_name}.cpp)
-    target_link_libraries(${test_name}
-            PRIVATE
-            dipal
-            gtest_main  # Use gtest_main instead of GTest::gtest_main
-    )
-    # Use add_test instead of gtest_discover_tests for simplicity
-    add_test(NAME ${test_name} COMMAND ${test_name})
-    set_tests_properties(${test_name} PROPERTIES LABELS "unit")
-=======
 function(add_dipal_test test_name test_type)
     add_executable(${test_name} ${test_type}/${test_name}.cpp)
     target_link_libraries(${test_name}
@@ -22,7 +10,6 @@ function(add_dipal_test test_name test_type)
     )
     add_test(NAME ${test_name} COMMAND ${test_name})
     set_tests_properties(${test_name} PROPERTIES LABELS ${test_type})
->>>>>>> development
 endfunction()
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/fixtures)
     file(COPY fixtures/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/fixtures/)
