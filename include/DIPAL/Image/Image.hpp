@@ -25,10 +25,10 @@ public:
 
     // Rule of five (virtual destructor and default others)
     virtual ~Image() = default;
-    Image(const Image&) = default;
-    Image& operator=(const Image&) = default;
-    Image(Image&&) = default;
-    Image& operator=(Image&&) = default;
+    Image(const Image&);
+    Image& operator=(const Image&);
+    Image(Image&&) ;
+    Image& operator=(Image&&);
 
     /*
      * @brief Create a new empty image
