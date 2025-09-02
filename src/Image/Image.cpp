@@ -130,4 +130,26 @@ std::size_t Image::getPixelIndex(int x, int y) const {
            static_cast<size_t>(x) * m_bytesPerPixel;
 }
 
+Image::Image(const Image& other)
+    : m_width(other.m_width),
+    m_height(other.m_height),
+    m_type (other.m_type),
+    m_channels(other.m_channels),
+    m_bytesPerPixel(other.m_bytesPerPixel) {
+    m_data = other.m_data;
+}
+
+Image& Image::operator=(const Image& other) {
+    if (this != &other) {
+        m_width = other.m_width;
+        m_height = other.m_height;
+        m_type = other.m_type;
+        m_channels = other.m_channels;
+        m_bytesPerPixel = other.m_bytesPerPixel;
+        m_data = other.m_data;
+    }
+    return *this;
+}
+
+
 } // namespace DIPAL
