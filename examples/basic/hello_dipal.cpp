@@ -1,4 +1,4 @@
-#include <DIPAL/DIPAL.hpp>
+#include "../include/DIPAL/Observer/ProgressObserver.hpp"
 #include <iostream>
 
 int main() {

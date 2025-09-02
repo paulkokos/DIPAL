@@ -46,7 +46,7 @@
 #include "Transformation/Interpolation.hpp"
 #include "Transformation/ResizeTransform.hpp"
 #include "Transformation/RotateTransform.hpp"
-#include "Transformation/Transformations.hpp"  // Must come first for common definitions
+#include "Transformation/Transformations.hpp"
 #include "Transformation/WarpTransform.hpp"
 
 // Utility includes
