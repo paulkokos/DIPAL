@@ -27,8 +27,8 @@ public:
     virtual ~Image() = default;
     Image(const Image&);
     Image& operator=(const Image&);
-    Image(Image&&) ;
-    Image& operator=(Image&&);
+    Image(Image&&) noexcept;
+    Image& operator=(Image&&) noexcept;
 
     /*
      * @brief Create a new empty image
@@ -125,10 +125,9 @@ protected:
     int m_width;
     int m_height;
     Type m_type;
-    std::vector<uint8_t> m_data;
     int m_channels;
     int m_bytesPerPixel;
-
+    std::vector<uint8_t> m_data;
     // Protected constructor for derived classes
     Image();
 };
