@@ -74,7 +74,7 @@ public:
     
     // Get a formatted error string
     [[nodiscard]] std::string toString() const {
-        return std::format("Error [{}:{}]: {}", 
+        return std::format("Error [{}:{}]: {}",
             static_cast<int>(m_category), 
             static_cast<int>(m_code), 
             m_message.empty() ? getDefaultMessage(m_code) : m_message);

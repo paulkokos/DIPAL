@@ -1,6 +1,6 @@
 // examples/basic/unsharp_mask_example.cpp
-#include <DIPAL/DIPAL.hpp>
-#include <DIPAL/Filters/UnsharpMaskFilter.hpp>
+#include "../../include/DIPAL/DIPAL.hpp"
+#include "../../include/DIPAL/Filters/UnsharpMaskFilter.hpp"
 
 #include <format>
 #include <iostream>
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
         if (argc > 5)
             threshold = static_cast<uint8_t>(std::stoi(argv[5]));
 
-        std::cout << std::format("Loading image: {}\n", inputFile);
+        std::cout << std::format("Loading image: {}\n",inputFile);
 
         // Load the image
         auto imageResult = DIPAL::ImageFactory::loadImage(inputFile);
