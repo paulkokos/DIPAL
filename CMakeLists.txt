@@ -25,7 +25,7 @@ if(MSVC)
   # Explicitly enable exceptions for MSVC
   add_compile_options(/EHsc)  # Enable C++ exceptions
 else()
-  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++23)
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++23 -fsanitize=address)
   # Explicitly enable exceptions for GCC/Clang (this is default, but let's be explicit)
   add_compile_options(-fexceptions)
 endif()

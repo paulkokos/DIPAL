@@ -3,7 +3,7 @@
 // Auto-generated test file for DIPAL Library
 
 #include <gtest/gtest.h>
-#include <DIPAL/DIPAL.hpp>
+#include "DIPAL/DIPAL.hpp"
 #include <concepts>
 
 using namespace DIPAL;
