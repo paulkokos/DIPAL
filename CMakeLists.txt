@@ -20,7 +20,7 @@ option(ENABLE_SANITIZERS "Enable sanitizers in Debug" OFF)
 
 # Global compiler warnings
 if(MSVC)
-  add_compile_options(/W4 /WX /permissive- /std:c++20 /Zc:__cplusplus /EHsc)
+  add_compile_options(/W4 /WX /permissive- /std:c++23 /Zc:__cplusplus /EHsc)
   add_compile_definitions(_SILENCE_ALL_CXX20_DEPRECATION_WARNINGS NOMINMAX WIN32_LEAN_AND_MEAN)
   # Explicitly enable exceptions for MSVC
   add_compile_options(/EHsc)  # Enable C++ exceptions
