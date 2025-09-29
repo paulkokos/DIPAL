@@ -54,7 +54,7 @@ Result<std::unique_ptr<Image>> GaussianBlurFilter::apply(const Image& image) con
             
             // Horizontal pass
             for (int y = 0; y < height; ++y) {
-                auto rowSpan = grayTemp.getRow(y);
+                [[maybe_unused]] auto rowSpan = grayTemp.getRow(y);
                 
                 for (int x = 0; x < width; ++x) {
                     float sum = 0.0f;
