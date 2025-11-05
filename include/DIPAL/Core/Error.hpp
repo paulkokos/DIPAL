@@ -4,9 +4,11 @@
 
 #include <string>
 #include <string_view>
-#include <expected>
 #include <system_error>
 #include <format>
+
+// Include TartanLlama expected library
+#include <tl/expected.hpp>
 
 namespace DIPAL {
 
@@ -92,24 +94,23 @@ private:
     static std::string_view getDefaultMessage(ErrorCode code);
 };
 
-// Helper template for std::expected with Error
+// Helper template for expected with Error
 template <typename T>
-using Result = std::expected<T, Error>;
+using Result = tl::expected<T, Error>;
 
-// Helper for void results
-using VoidResult = std::expected<void, Error>;
+using VoidResult = tl::expected<void, Error>;
 
 // Helper function to create an error result
 template <typename T>
-inline Result<T> makeErrorResult(ErrorCode code, std::string_view message = {}, 
+inline Result<T> makeErrorResult(ErrorCode code, std::string_view message = {},
                                  ErrorCategory category = ErrorCategory::None) {
-    return std::unexpected(Error(code, message, category));
+    return tl::unexpected(Error(code, message, category));
 }
 
 // Helper function to create a void error result
-inline VoidResult makeVoidErrorResult(ErrorCode code, std::string_view message = {}, 
+inline VoidResult makeVoidErrorResult(ErrorCode code, std::string_view message = {},
                                       ErrorCategory category = ErrorCategory::None) {
-    return std::unexpected(Error(code, message, category));
+    return tl::unexpected(Error(code, message, category));
 }
 
 // Helper function to create a success result

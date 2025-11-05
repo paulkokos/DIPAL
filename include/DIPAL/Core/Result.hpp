@@ -2,13 +2,13 @@
 #ifndef DIPAL_RESULT_HPP
 #define DIPAL_RESULT_HPP
 
-#include <expected>
 #include <utility>
 #include <optional>
 #include <type_traits>
 #include <functional>
 
 #include "Error.hpp"
+// Note: Error.hpp includes tl/expected.hpp
 
 namespace DIPAL {
 
@@ -27,7 +27,7 @@ Result<U> map(const Result<T>& result, std::function<U(const T&)> f) {
     if (result) {
         return makeSuccessResult(f(result.value()));
     } else {
-        return std::unexpected(result.error());
+        return tl::unexpected(result.error());
     }
 }
 
@@ -44,7 +44,7 @@ Result<U> map(Result<T>&& result, std::function<U(T&&)> f) {
     if (result) {
         return makeSuccessResult(f(std::move(result.value())));
     } else {
-        return std::unexpected(result.error());
+        return tl::unexpected(result.error());
     }
 }
 
@@ -62,7 +62,7 @@ Result<U> flatMap(const Result<T>& result, std::function<Result<U>(const T&)> f)
     if (result) {
         return f(result.value());
     } else {
-        return std::unexpected(result.error());
+        return tl::unexpected(result.error());
     }
 }
 
@@ -79,7 +79,7 @@ Result<U> flatMap(Result<T>&& result, std::function<Result<U>(T&&)> f) {
     if (result) {
         return f(std::move(result.value()));
     } else {
-        return std::unexpected(result.error());
+        return tl::unexpected(result.error());
     }
 }
 

@@ -82,7 +82,7 @@ public:
      * @return Vector with aligned storage
      */
     template <typename T>
-    static std::vector<T> createAlignedVector(size_t size, size_t alignment = 32) {
+    static std::vector<T> createAlignedVector(size_t size, [[maybe_unused]] size_t alignment = 32) {
         // Create aligned allocator
         auto alloc = std::allocator<T>();
         
