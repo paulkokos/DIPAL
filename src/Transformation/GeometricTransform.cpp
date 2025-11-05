@@ -35,7 +35,7 @@ GeometricTransform GeometricTransform::polarToCartesian(int outputWidth,
     // Creates a mapping where the output is a "polar unwrapped" version of the input
     // The horizontal axis corresponds to the angle, and the vertical axis to the radius
 
-    auto mapping = [centerX, centerY, outputWidth, outputHeight](
+    auto mapping = [centerX, centerY](
                        [[maybe_unused]] float normX,
                        [[maybe_unused]] float normY) -> std::pair<float, float> {
         // Convert normalized coordinates [0,1] to polar coordinates
@@ -128,7 +128,7 @@ GeometricTransform GeometricTransform::perspective(
     // For simplicity, we'll use a mapping function that directly computes the transformation
     // using bilinear interpolation between the four corners.
 
-    auto mapping = [srcQuad, dstQuad](float normX, float normY) -> std::pair<float, float> {
+    auto mapping = [srcQuad](float normX, float normY) -> std::pair<float, float> {
         // Bilinear interpolation between the four corners
         float u = normX;
         float v = normY;

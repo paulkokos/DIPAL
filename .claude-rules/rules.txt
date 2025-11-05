@@ -1,0 +1,14 @@
+DO NOT INCLUDE IN ANY:
+- Commit messages
+- Code comments
+- Documentation
+- Pull requests
+- Any files
+- Git history
+- Public materials
+- Messages
+- Anything pushed or public
+
+RULE: KEEP IT CLEAN AND PROFESSIONAL
+ALL WORK SHOULD APPEAR ORIGINAL AND SELF-AUTHORED
+NO REFERENCES TO TOOLS, GENERATORS, OR AI
