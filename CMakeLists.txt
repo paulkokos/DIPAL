@@ -51,8 +51,8 @@ else()
         add_compile_options(-fcolor-diagnostics)
     endif()
 
-    # Additional optimizations in Release mode
-    if(CMAKE_BUILD_TYPE MATCHES Release)
+    # Additional optimizations in Release mode (native only, not for cross-compilation)
+    if(CMAKE_BUILD_TYPE MATCHES Release AND NOT CMAKE_CROSSCOMPILING)
         add_compile_options(-march=native)
     endif()
 endif()
