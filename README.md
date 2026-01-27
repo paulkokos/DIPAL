@@ -7,32 +7,31 @@
 
 **Digital Image Processing and Analysis Library**
 
-[![Build Status](https://dev.azure.com/dipal/DIPAL/_apis/build/status/DIPAL-CI?branchName=main)](https://dev.azure.com/dipal/DIPAL/_build/latest?definitionId=1&branchName=main)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/dipal/DIPAL?branch=main&svg=true)](https://ci.appveyor.com/project/dipal/DIPAL)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![C++23](https://img.shields.io/badge/C%2B%2B-23-blue.svg)](https://isocpp.org/)
 
-A lightweight, powerful C++23 image processing and analysis library built with modern techniques. DIPAL is designed to be independent of external libraries while providing high performance and ease of use.
+A lightweight C++23 image processing and analysis library built with modern techniques. DIPAL provides high performance and ease of use with minimal external dependencies.
 
 ## Features
 
 ### Core Features
 
-- **Modern C++23 Design**: Leverages the latest language features for safety and expressiveness
-- **Zero Dependencies**: Standalone library with no external dependencies
+- **Modern C++23 Design**: Uses `std::expected` (via [tl::expected](https://github.com/TartanLlama/expected)), `std::span`, `std::format`, concepts, and `[[nodiscard]]`
+- **Minimal Dependencies**: Only runtime dependency is [TartanLlama/expected](https://github.com/TartanLlama/expected) v1.1.0 (fetched automatically via CMake)
 - **Cross-Platform**: Works on Windows, Linux, and macOS
-- **Thread-Safe**: Proper concurrency support with parallel processing capabilities
+- **Thread-Safe**: Built-in thread pool with parallel processing capabilities
 
 ### Image Processing
 
-- **Flexible Image Types**: Support for grayscale, RGB, and RGBA images
+- **Image Types**: Binary, grayscale, RGB, and RGBA image representations
 - **Filter Operations**:
   - Gaussian blur with configurable sigma and kernel size
   - Median filtering for noise reduction
   - Sobel edge detection with optional normalization
-  - More filters being added regularly
+  - Unsharp mask sharpening with configurable amount, radius, and threshold
 - **Geometric Transformations**:
   - Image resizing with multiple interpolation methods (Nearest Neighbor, Bilinear, Bicubic)
-  - Rotation and affine transformations
+  - Rotation, affine, warp, and general geometric transformations
 - **Color Operations**:
   - RGB to HSV conversion and back
   - Color channel manipulation
@@ -48,33 +47,28 @@ A lightweight, powerful C++23 image processing and analysis library built with m
 
 ### Error Handling & Safety
 
-- **Modern Error Handling**: Uses C++23's `std::expected` for robust error propagation
-- **Result-Based API**: No exceptions thrown, all errors clearly reported
+- **Result-Based API**: Uses `tl::expected<T, Error>` (aliased as `Result<T>`) for error propagation without exceptions
 - **Boundary Checking**: Safe operations with proper validation
 - **Strong Type Safety**: Prevents common programming errors
 
 ### Performance Features
 
-- **Memory Efficiency**: Optimized memory usage for image processing
 - **Parallel Processing**: Thread pool for multi-core utilization
-- **SIMD-Ready**: Architecture designed for vectorization
-- **Profiling Tools**: Built-in performance measurement capabilities
+- **Profiling Tools**: Built-in performance measurement and logging
+- **LTO/IPO**: Link-time and interprocedural optimization enabled for release builds
 
 ### I/O Capabilities
 
 - **Image Format Support**:
   - PPM/PGM/PBM formats (full read/write)
-  - BMP format (full read/write)
-  - More formats coming soon
+  - BMP format (24/32-bit read/write)
+  - JPEG format (read/write)
+  - PNG format (read/write)
 
 ### Developer Tools
 
-- **Comprehensive Logging**: Built-in logging system with multiple levels
-- **Development Environment**: Includes configurations for:
-  - clang-format
-  - clang-tidy
-  - clangd
-  - AstroNvim
+- **Logging**: Built-in logging system with multiple levels
+- **Development Environment**: Includes configurations for clang-format, clang-tidy, and clangd
 
 ## Quick Start
 
@@ -83,13 +77,13 @@ A lightweight, powerful C++23 image processing and analysis library built with m
 #### Prerequisites
 
 - C++23 compatible compiler (GCC 12+, Clang 15+, MSVC 19.34+)
-- CMake 3.20 or higher
+- CMake 3.24 or higher
 
 #### Building from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/dipal/DIPAL.git
+git clone https://github.com/paulkokos/DIPAL.git
 cd DIPAL
 
 # Create build directory
@@ -248,42 +242,62 @@ int main() {
 }
 ```
 
-## Advanced Usage Examples
+## Examples
 
-Check the `examples/` directory for more detailed examples:
+The `examples/` directory contains working examples:
 
-- Basic image loading and saving
-- Filter applications
-- Image transformation
-- Processing pipelines
-- Parallel processing
-- Performance benchmarking
+- **basic/** - Image loading/saving, filter application, unsharp masking, transformations, JPEG I/O
+- **advanced/** - Multithreaded processing, processing pipelines, filter profiling
+
+## CMake Build Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `BUILD_TESTS` | ON | Build the test suite (Google Test fetched automatically) |
+| `BUILD_EXAMPLES` | ON | Build example applications |
+| `BUILD_SHARED_LIBS` | ON | Build as shared library |
+| `ENABLE_SANITIZERS` | OFF | Enable AddressSanitizer and UndefinedBehaviorSanitizer (Debug) |
+| `ENABLE_LTO` | ON | Enable Link-Time Optimization |
+| `ENABLE_IPO` | ON | Enable Interprocedural Optimization |
 
 ## Documentation
 
-Full API documentation is available:
+- [Build Instructions](docs/BUILD_INSTRUCTIONS.md)
+- [C++23 Features Used](docs/CPP23_FEATURES.md)
+- [Architecture Overview](docs/ARCHITECTURE_OVERVIEW.md)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Upgrade Guide](docs/UPGRADE_GUIDE.md)
 
-- [API Reference](docs/api/index.html)
-- [User Guide](docs/guide/index.html)
-- [Examples](docs/examples/index.html)
+## Project Structure
 
-## Benchmarks
-
-| Operation | DIPAL | OpenCV | Improvement |
-|------------|-------|--------|------------|
-| Gaussian Blur (1080p) | 12ms | 15ms | +25% |
-| Resize (4K → 1080p) | 8ms | 10ms | +20% |
-| Edge Detection (1080p) | 5ms | 7ms | +40% |
-
-Benchmarks performed on Intel i7-12700K, 32GB RAM, measured in milliseconds (lower is better)
+```
+DIPAL/
+├── include/DIPAL/       # Public headers
+│   ├── Core/            # Result, Error, Concepts, Types
+│   ├── Image/           # Image classes (Binary, Grayscale, Color)
+│   ├── Filters/         # Gaussian, Median, Sobel, UnsharpMask
+│   ├── Transformation/  # Resize, Rotate, Affine, Warp
+│   ├── Color/           # Color conversions and spaces
+│   ├── IO/              # BMP, PPM, JPEG, PNG
+│   ├── ImageProcessor/  # Sequential and parallel processing
+│   ├── Observer/        # Progress monitoring
+│   └── Utils/           # Logger, Profiler, Threading
+├── src/                 # Implementation files
+├── tests/               # Unit, integration, performance, stress tests
+├── examples/            # Example applications
+├── docs/                # Documentation
+└── cmake/               # CMake modules
+```
 
 ## Roadmap
 
-- **Version 0.2.0**: Advanced filters (edge detection, morphological operations)
-- **Version 0.3.0**: Format support for JPEG, PNG, and TIFF
-- **Version 0.4.0**: Multithreaded image processing framework improvements
-- **Version 0.5.0**: GPU acceleration for supported operations
-- **Version 1.0.0**: API stabilization and comprehensive documentation
+- **v0.2.0**: Additional filters (morphological operations, Canny edge detection, bilateral filter)
+- **v0.3.0**: Extended color space support (CIELAB, YCbCr, HSI/HLS)
+- **v0.4.0**: Histogram operations, segmentation algorithms
+- **v0.5.0**: GPU acceleration for supported operations
+- **v1.0.0**: API stabilization and comprehensive documentation
+
+See [Feature Roadmap](docs/FEATURE_ADDITIONS_ROADMAP.md) for the full development plan.
 
 ## Contributing
 
@@ -297,6 +311,4 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 
 - The STB library for inspiration on image handling
 - The OpenCV project for reference implementations
-- All contributors who have helped improve this library
-
-<p align="center">Made with ❤️ for the computer vision and image processing community</p>
+- [TartanLlama/expected](https://github.com/TartanLlama/expected) for the `std::expected` backport
