@@ -134,9 +134,9 @@ TEST(ExampleTest, CreateAndProcessImage) {
 
 ```
 tests/
-├── unit/                    # 34 unit test files
-├── integration/             # 6 integration test files
-├── performance/             # 4 performance test files
+├── unit/                    # 37 unit test files
+├── integration/             # 8 integration test files
+├── performance/             # 6 performance test files
 ├── stress/                  # 5 stress test files
 ├── compatibility/           # 3 compatibility test files
 ├── utils/                   # Test utilities and helpers

@@ -28,6 +28,7 @@
 // I/O Includes
 #include "IO/BMPImageIO.hpp"
 #include "IO/ImageIO.hpp"
+#include "IO/JPEGImageIO.hpp"
 #include "IO/PPMImageIO.hpp"
 
 // Processing includes
