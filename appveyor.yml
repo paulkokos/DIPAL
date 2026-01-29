@@ -12,52 +12,27 @@ branches:
 # Do not build on tags
 skip_tags: true
 
-# Build matrix - Multiple OS and compilers (NO Windows)
+# Build matrix - C++23 compatible compilers only
 environment:
   matrix:
-    # Ubuntu 20.04 - GCC builds
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CC: gcc-11
-      CXX: g++-11
+    # Ubuntu 22.04 - GCC 13 (C++23 support)
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
+      CC: gcc-13
+      CXX: g++-13
       BUILD_TYPE: Debug
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CC: gcc-12
-      CXX: g++-12
-      BUILD_TYPE: Release
-      BUILD_TESTS: ON
-      BUILD_EXAMPLES: ON
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
       CC: gcc-13
       CXX: g++-13
       BUILD_TYPE: Release
-      BUILD_TESTS: OFF
-      BUILD_EXAMPLES: ON
-    # Ubuntu 20.04 - Clang builds
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CC: clang-14
-      CXX: clang++-14
-      BUILD_TYPE: Debug
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CC: clang-15
-      CXX: clang++-15
-      BUILD_TYPE: Release
-      BUILD_TESTS: OFF
-      BUILD_EXAMPLES: ON
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CC: clang-16
-      CXX: clang++-16
-      BUILD_TYPE: Release
-      BUILD_TESTS: ON
-      BUILD_EXAMPLES: ON
-    # Ubuntu 22.04 - Latest compilers
+    # Ubuntu 22.04 - Clang 17 (C++23 support)
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
-      CC: gcc-12
-      CXX: g++-12
-      BUILD_TYPE: Release
+      CC: clang-17
+      CXX: clang++-17
+      BUILD_TYPE: Debug
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
@@ -66,18 +41,12 @@ environment:
       BUILD_TYPE: Release
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
-    # macOS builds
-    - APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
-      CC: clang
-      CXX: clang++
-      BUILD_TYPE: Debug
-      BUILD_TESTS: ON
-      BUILD_EXAMPLES: ON
+    # macOS builds (Apple Clang has C++23 support)
     - APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
       CC: clang
       CXX: clang++
       BUILD_TYPE: Release
-      BUILD_TESTS: OFF
+      BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
     - APPVEYOR_BUILD_WORKER_IMAGE: macos-ventura
       CC: clang
@@ -88,61 +57,45 @@ environment:
 
 # Install dependencies
 install:
-  # Common setup
-  - git submodule update --init --recursive
-  
+  # Initialize git submodules
+  - sh: |
+      if [ -f .gitmodules ]; then
+        git submodule update --init --recursive
+      fi
+
   # Linux-specific setup
   - sh: |
-      sudo apt-get update
-      sudo apt-get install -y ninja-build cmake
-      
-      # Install GCC compilers
-      if [[ "${CC}" == gcc-* ]]; then
-        if [[ "${CC}" == "gcc-11" ]]; then
-          sudo apt-get install -y gcc-11 g++-11
-        elif [[ "${CC}" == "gcc-12" ]]; then
-          sudo apt-get install -y gcc-12 g++-12
-        elif [[ "${CC}" == "gcc-13" ]]; then
-          # Add toolchain repository for GCC 13
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == Ubuntu* ]]; then
+        sudo apt-get update
+        sudo apt-get install -y ninja-build cmake
+
+        # Install GCC compilers
+        if [[ "${CC}" == gcc-* ]]; then
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
           sudo apt-get update
-          sudo apt-get install -y gcc-13 g++-13
+          sudo apt-get install -y ${CC} ${CXX}
         fi
+
+        # Install Clang compilers
+        if [[ "${CC}" == clang-* ]]; then
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" -y
+          sudo apt-get update
+          CLANG_VERSION="${CC#clang-}"
+          sudo apt-get install -y clang-${CLANG_VERSION}
+        fi
+
+        # Verify compiler installation
+        ${CC} --version
+        ${CXX} --version
       fi
-      
-      # Install Clang compilers
-      if [[ "${CC}" == clang-* ]]; then
-        # Add LLVM repository
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "Ubuntu2004" ]]; then
-          sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
-          sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main"
-          sudo add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-16 main"
-        elif [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == "Ubuntu2204" ]]; then
-          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main"
-        fi
-        sudo apt-get update
-        sudo apt-get install -y ${CC}
-        # Create symlink for clang++ if needed
-        if [[ ! -f /usr/bin/${CXX} ]]; then
-          sudo ln -sf /usr/bin/${CC} /usr/bin/${CXX}
-        fi
-      fi
-      
-      # Verify compiler installation
-      ${CC} --version
-      ${CXX} --version
-  
+
   # macOS-specific setup
-  - cmd: |
-      if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" == macos-* ]]; then
-        # Update Homebrew and install dependencies
+  - sh: |
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == macos-* ]]; then
         brew update
         brew install ninja cmake
-        
-        # Install additional GCC on macOS if needed
-        # brew install gcc@12 gcc@13
-        
+
         # Verify compiler
         ${CC} --version
         ${CXX} --version
@@ -150,32 +103,41 @@ install:
 
 # Configure the build
 before_build:
-  - export CC=${CC}
-  - export CXX=${CXX}
-  - mkdir -p build
-  - cd build
-  - cmake -G "Ninja" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DBUILD_TESTS=${BUILD_TESTS} -DBUILD_EXAMPLES=${BUILD_EXAMPLES} ..
-  - cd ..
+  - sh: |
+      export CC=${CC}
+      export CXX=${CXX}
+      mkdir -p build
+      cd build
+      cmake -G "Ninja" \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+        -DCMAKE_CXX_STANDARD=23 \
+        -DBUILD_TESTS=${BUILD_TESTS} \
+        -DBUILD_EXAMPLES=${BUILD_EXAMPLES} \
+        ..
 
 # Build the project
 build_script:
-  - cd build
-  - cmake --build . --config ${BUILD_TYPE}
-  - cd ..
+  - sh: |
+      cd build
+      cmake --build . --config ${BUILD_TYPE}
 
 # Run the tests
 test_script:
-  - if [[ "${BUILD_TESTS}" == "ON" ]]; then cd build && ctest --output-on-failure && cd ..; fi
+  - sh: |
+      if [[ "${BUILD_TESTS}" == "ON" ]]; then
+        cd build
+        ctest --output-on-failure
+      fi
 
 # Package artifacts
 after_build:
-  - cd build
-  - cmake --install . --prefix ../install --config ${BUILD_TYPE}
-  - cd ..
-  # Create OS-specific packages
-  - sh: tar -czf DIPAL-${BUILD_TYPE}-${CC}-linux.tar.gz ./install/*
-  - cmd: |
-      if [[ "$APPVEYOR_BUILD_WORKER_IMAGE" == macos-* ]]; then
+  - sh: |
+      cd build
+      cmake --install . --prefix ../install --config ${BUILD_TYPE}
+      cd ..
+      if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == Ubuntu* ]]; then
+        tar -czf DIPAL-${BUILD_TYPE}-${CC}-linux.tar.gz ./install/*
+      elif [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == macos-* ]]; then
         tar -czf DIPAL-${BUILD_TYPE}-${CC}-macos.tar.gz ./install/*
       fi
 

@@ -85,23 +85,30 @@ jobs:
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
-      Clang19_Debug:
-        CC: clang-19
-        CXX: clang++-19
+      Clang17_Debug:
+        CC: clang-17
+        CXX: clang++-17
         BUILD_TYPE: Debug
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: ON
-      Clang19_Release:
-        CC: clang-19
-        CXX: clang++-19
+      Clang17_Release:
+        CC: clang-17
+        CXX: clang++-17
         BUILD_TYPE: Release
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
-      Clang20_Release:
-        CC: clang-20
-        CXX: clang++-20
+      Clang18_Debug:
+        CC: clang-18
+        CXX: clang++-18
+        BUILD_TYPE: Debug
+        BUILD_TESTS: ON
+        BUILD_EXAMPLES: ON
+        ENABLE_SANITIZERS: ON
+      Clang18_Release:
+        CC: clang-18
+        CXX: clang++-18
         BUILD_TYPE: Release
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
@@ -358,52 +365,55 @@ jobs:
   steps:
   - script: |
       sudo apt-get update
-      sudo apt-get install -y gcc-14 g++-14 clang-19 clang++-19
+      # Add LLVM repo for Clang 18
+      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" -y
+      sudo apt-get update
+      sudo apt-get install -y gcc-14 g++-14 clang-18
     displayName: 'Install Latest Compilers'
-    
+
   - script: |
-      # Create C++23 feature test
+      # Create C++23 feature test (using widely supported features)
       cat > cpp23_features_test.cpp << 'EOF'
       #include <iostream>
       #include <expected>
-      #include <print>
       #include <ranges>
       #include <format>
-      
+      #include <vector>
+
       int main() {
-          // Test C++23 features
-          std::println("Testing C++23 features...");
-          
+          std::cout << "Testing C++23 features...\n";
+
           // Test std::expected (C++23)
           auto divide = [](int a, int b) -> std::expected<int, std::string> {
               if (b == 0) return std::unexpected("Division by zero");
               return a / b;
           };
-          
+
           auto result = divide(10, 2);
           if (result.has_value()) {
-              std::println("Division result: {}", result.value());
+              std::cout << std::format("Division result: {}\n", result.value());
           }
-          
+
           // Test ranges (enhanced in C++23)
           std::vector<int> numbers = {1, 2, 3, 4, 5};
           auto doubled = numbers | std::views::transform([](int x) { return x * 2; });
-          
-          std::print("Doubled numbers: ");
+
+          std::cout << "Doubled numbers: ";
           for (auto n : doubled) {
-              std::print("{} ", n);
+              std::cout << std::format("{} ", n);
           }
-          std::println("");
-          
-          std::println("✅ All C++23 features working!");
+          std::cout << "\n";
+
+          std::cout << "All C++23 features working!\n";
           return 0;
       }
       EOF
-      
+
       echo "Testing GCC-14 C++23 support..."
-      g++-14 -std=c++23 cpp23_features_test.cpp -o test_gcc && echo "✅ GCC-14 C++23 works" || echo "❌ GCC-14 C++23 failed"
-      
-      echo "Testing Clang-19 C++23 support..."
-      clang++-19 -std=c++23 cpp23_features_test.cpp -o test_clang && echo "✅ Clang-19 C++23 works" || echo "❌ Clang-19 C++23 failed"
-      
+      g++-14 -std=c++23 cpp23_features_test.cpp -o test_gcc && ./test_gcc && echo "GCC-14 C++23 works" || echo "GCC-14 C++23 failed"
+
+      echo "Testing Clang-18 C++23 support..."
+      clang++-18 -std=c++23 -stdlib=libstdc++ cpp23_features_test.cpp -o test_clang && ./test_clang && echo "Clang-18 C++23 works" || echo "Clang-18 C++23 failed"
+
     displayName: 'Validate C++23 Features'
