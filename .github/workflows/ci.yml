@@ -1,0 +1,138 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop, 'feature/*', 'release/*']
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  build:
+    name: ${{ matrix.os }} - ${{ matrix.compiler }} - ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Ubuntu 24.04 - GCC 13
+          - os: ubuntu-24.04
+            compiler: gcc-13
+            cc: gcc-13
+            cxx: g++-13
+            build_type: Debug
+            enable_sanitizers: ON
+          - os: ubuntu-24.04
+            compiler: gcc-13
+            cc: gcc-13
+            cxx: g++-13
+            build_type: Release
+            enable_sanitizers: OFF
+          # Ubuntu 24.04 - GCC 14
+          - os: ubuntu-24.04
+            compiler: gcc-14
+            cc: gcc-14
+            cxx: g++-14
+            build_type: Debug
+            enable_sanitizers: ON
+          - os: ubuntu-24.04
+            compiler: gcc-14
+            cc: gcc-14
+            cxx: g++-14
+            build_type: Release
+            enable_sanitizers: OFF
+          # Ubuntu 24.04 - Clang 17
+          - os: ubuntu-24.04
+            compiler: clang-17
+            cc: clang-17
+            cxx: clang++-17
+            build_type: Debug
+            enable_sanitizers: ON
+          - os: ubuntu-24.04
+            compiler: clang-17
+            cc: clang-17
+            cxx: clang++-17
+            build_type: Release
+            enable_sanitizers: OFF
+          # Ubuntu 24.04 - Clang 18
+          - os: ubuntu-24.04
+            compiler: clang-18
+            cc: clang-18
+            cxx: clang++-18
+            build_type: Debug
+            enable_sanitizers: ON
+          - os: ubuntu-24.04
+            compiler: clang-18
+            cc: clang-18
+            cxx: clang++-18
+            build_type: Release
+            enable_sanitizers: OFF
+          # macOS - Apple Clang
+          - os: macos-14
+            compiler: apple-clang
+            cc: clang
+            cxx: clang++
+            build_type: Release
+            enable_sanitizers: OFF
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies (Ubuntu)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+          # Install GCC if needed
+          if [[ "${{ matrix.cc }}" == gcc-* ]]; then
+            sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+            sudo apt-get update
+            sudo apt-get install -y ${{ matrix.cc }} ${{ matrix.cxx }}
+          fi
+
+          # Install Clang if needed
+          if [[ "${{ matrix.cc }}" == clang-* ]]; then
+            wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+            sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-17 main" -y
+            sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" -y
+            sudo apt-get update
+            CLANG_VERSION="${{ matrix.cc }}"
+            CLANG_VERSION="${CLANG_VERSION#clang-}"
+            sudo apt-get install -y clang-${CLANG_VERSION}
+          fi
+
+      - name: Install dependencies (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          brew install ninja cmake
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_CXX_STANDARD=23 \
+            -DBUILD_TESTS=ON \
+            -DBUILD_EXAMPLES=ON \
+            -DENABLE_SANITIZERS=${{ matrix.enable_sanitizers }}
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --parallel
+
+      - name: Install
+        run: cmake --install build --prefix install
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DIPAL-${{ matrix.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}
+          path: install/
+          retention-days: 7
