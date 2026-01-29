@@ -28,16 +28,16 @@ environment:
       BUILD_TYPE: Release
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
-    # Ubuntu 22.04 - Clang 17 (C++23 support)
+    # Ubuntu 22.04 - Clang 18 (C++23 support)
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
-      CC: clang-17
-      CXX: clang++-17
+      CC: clang-18
+      CXX: clang++-18
       BUILD_TYPE: Debug
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
-      CC: clang-17
-      CXX: clang++-17
+      CC: clang-18
+      CXX: clang++-18
       BUILD_TYPE: Release
       BUILD_TESTS: ON
       BUILD_EXAMPLES: ON
@@ -67,7 +67,13 @@ install:
   - sh: |
       if [[ "${APPVEYOR_BUILD_WORKER_IMAGE}" == Ubuntu* ]]; then
         sudo apt-get update
-        sudo apt-get install -y ninja-build cmake
+        sudo apt-get install -y ninja-build ca-certificates gpg wget
+
+        # Install CMake from Kitware repository (need 3.24+)
+        wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+        sudo apt-get update
+        sudo apt-get install -y cmake
 
         # Install GCC compilers
         if [[ "${CC}" == gcc-* ]]; then
@@ -79,13 +85,14 @@ install:
         # Install Clang compilers
         if [[ "${CC}" == clang-* ]]; then
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" -y
+          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-18 main" -y
           sudo apt-get update
           CLANG_VERSION="${CC#clang-}"
           sudo apt-get install -y clang-${CLANG_VERSION}
         fi
 
-        # Verify compiler installation
+        # Verify installations
+        cmake --version
         ${CC} --version
         ${CXX} --version
       fi
