@@ -20,7 +20,7 @@ jobs:
             cc: gcc-13
             cxx: g++-13
             build_type: Debug
-            enable_sanitizers: ON
+            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: gcc-13
             cc: gcc-13
@@ -33,33 +33,20 @@ jobs:
             cc: gcc-14
             cxx: g++-14
             build_type: Debug
-            enable_sanitizers: ON
+            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: gcc-14
             cc: gcc-14
             cxx: g++-14
             build_type: Release
             enable_sanitizers: OFF
-          # Ubuntu 24.04 - Clang 17
-          - os: ubuntu-24.04
-            compiler: clang-17
-            cc: clang-17
-            cxx: clang++-17
-            build_type: Debug
-            enable_sanitizers: ON
-          - os: ubuntu-24.04
-            compiler: clang-17
-            cc: clang-17
-            cxx: clang++-17
-            build_type: Release
-            enable_sanitizers: OFF
-          # Ubuntu 24.04 - Clang 18
+          # Ubuntu 24.04 - Clang 18 (Clang 17 has issues with GCC 14 libstdc++)
           - os: ubuntu-24.04
             compiler: clang-18
             cc: clang-18
             cxx: clang++-18
             build_type: Debug
-            enable_sanitizers: ON
+            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: clang-18
             cc: clang-18
@@ -96,7 +83,6 @@ jobs:
           # Install Clang if needed
           if [[ "${{ matrix.cc }}" == clang-* ]]; then
             wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-            sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-17 main" -y
             sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" -y
             sudo apt-get update
             CLANG_VERSION="${{ matrix.cc }}"

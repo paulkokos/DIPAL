@@ -1,6 +1,7 @@
 // include/DIPAL/Core/Types.hpp
 #ifndef DIPAL_TYPES_HPP
 #define DIPAL_TYPES_HPP
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <array>
