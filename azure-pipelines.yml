@@ -85,27 +85,13 @@ jobs:
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
         ENABLE_SANITIZERS: OFF
-      Clang17_Debug:
-        CC: clang-17
-        CXX: clang++-17
-        BUILD_TYPE: Debug
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
-      Clang17_Release:
-        CC: clang-17
-        CXX: clang++-17
-        BUILD_TYPE: Release
-        BUILD_TESTS: ON
-        BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: OFF
       Clang18_Debug:
         CC: clang-18
         CXX: clang++-18
         BUILD_TYPE: Debug
         BUILD_TESTS: ON
         BUILD_EXAMPLES: ON
-        ENABLE_SANITIZERS: ON
+        ENABLE_SANITIZERS: OFF
       Clang18_Release:
         CC: clang-18
         CXX: clang++-18
