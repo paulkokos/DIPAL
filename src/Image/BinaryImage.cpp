@@ -108,7 +108,7 @@ VoidResult BinaryImage::invert() {
 
 VoidResult BinaryImage::fill(bool value) {
     // Set all bytes to 0x00 (all black) or 0xFF (all white)
-    std::fill(m_data.begin(), m_data.end(), value ? 0xFF : 0x00);
+    std::fill(m_data.begin(), m_data.end(), static_cast<uint8_t>(value ? 0xFF : 0x00));
 
     // If the image width is not a multiple of 8, we need to clean up the unused bits
     // in the last byte of each row
@@ -150,9 +150,9 @@ size_t BinaryImage::countWhitePixels() const {
             uint8_t lastByte = m_data[lastByteIndex];
 
             // Count only the bits corresponding to actual pixels
-            uint8_t maskedByte = lastByte & ((1 << extraBits) - 1);
-            uint8_t unusedBitCount = std::popcount(lastByte) - std::popcount(maskedByte);
-            count -= unusedBitCount;
+            uint8_t maskedByte = static_cast<uint8_t>(lastByte & ((1 << extraBits) - 1));
+            int unusedBitCount = std::popcount(lastByte) - std::popcount(maskedByte);
+            count -= static_cast<size_t>(unusedBitCount);
         }
     }
 
