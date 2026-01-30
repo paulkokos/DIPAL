@@ -60,6 +60,19 @@ jobs:
             cxx: clang++
             build_type: Release
             enable_sanitizers: OFF
+          # Windows - MSVC 2022 (C++23 support)
+          - os: windows-2022
+            compiler: msvc
+            cc: cl
+            cxx: cl
+            build_type: Debug
+            enable_sanitizers: OFF
+          - os: windows-2022
+            compiler: msvc
+            cc: cl
+            cxx: cl
+            build_type: Release
+            enable_sanitizers: OFF
 
     steps:
       - name: Checkout
@@ -95,7 +108,17 @@ jobs:
         run: |
           brew install ninja cmake
 
-      - name: Configure
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          choco install ninja -y
+
+      - name: Setup MSVC (Windows)
+        if: startsWith(matrix.os, 'windows')
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure (Unix)
+        if: "!startsWith(matrix.os, 'windows')"
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
@@ -105,6 +128,16 @@ jobs:
             -DCMAKE_CXX_STANDARD=23 \
             -DBUILD_TESTS=ON \
             -DBUILD_EXAMPLES=ON \
+            -DENABLE_SANITIZERS=${{ matrix.enable_sanitizers }}
+
+      - name: Configure (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          cmake -B build -G Ninja `
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} `
+            -DCMAKE_CXX_STANDARD=23 `
+            -DBUILD_TESTS=ON `
+            -DBUILD_EXAMPLES=ON `
             -DENABLE_SANITIZERS=${{ matrix.enable_sanitizers }}
 
       - name: Build
