@@ -35,6 +35,12 @@ option(ENABLE_SANITIZERS "Enable sanitizers in Debug" OFF)
 option(ENABLE_LTO "Enable Link Time Optimization" ON)
 option(ENABLE_IPO "Enable Interprocedural Optimization" ON)
 
+# On Windows, force static library build (DLL exports not yet implemented)
+if(WIN32 AND BUILD_SHARED_LIBS)
+    message(STATUS "Windows detected: Building as static library (DLL exports not implemented)")
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
+endif()
+
 # ============================================================================
 # Compiler-specific Configuration
 # ============================================================================
