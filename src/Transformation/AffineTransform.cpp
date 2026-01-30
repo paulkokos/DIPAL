@@ -11,6 +11,7 @@
 #include <cmath>
 #include <format>
 #include <limits>
+#include <numbers>
 
 namespace DIPAL {
 
@@ -35,7 +36,7 @@ AffineTransform AffineTransform::rotation(float angleDegrees,
                                           float centerX,
                                           float centerY,
                                           InterpolationMethod method) {
-    float angleRadians = angleDegrees * (M_PI / 180.0f);
+    float angleRadians = angleDegrees * (std::numbers::pi_v<float> / 180.0f);
     float cosA = std::cos(angleRadians);
     float sinA = std::sin(angleRadians);
 
