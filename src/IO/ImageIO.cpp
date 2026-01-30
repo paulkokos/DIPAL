@@ -113,7 +113,7 @@ std::string ImageIO::getFormatFromExtension(std::string_view filename) {
 
     // Convert to lowercase
     std::transform(extension.begin(), extension.end(), extension.begin(), [](unsigned char c) {
-        return std::tolower(c);
+        return static_cast<char>(std::tolower(c));
     });
 
     // Remove the leading dot
