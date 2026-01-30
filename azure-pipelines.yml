@@ -329,32 +329,34 @@ jobs:
       set -e
       
       # Install dependencies based on package manager
-      if [[ "$(PACKAGE_MANAGER)" == "dnf" ]]; then
+      if [[ "${PACKAGE_MANAGER}" == "dnf" ]]; then
         dnf update -y
         dnf install -y gcc gcc-c++ cmake ninja-build git
-        # Fedora usually has recent GCC with C++23 support
-      elif [[ "$(PACKAGE_MANAGER)" == "apt" ]]; then
+        export CC=gcc
+        export CXX=g++
+      elif [[ "${PACKAGE_MANAGER}" == "apt" ]]; then
         apt-get update
         apt-get install -y build-essential cmake ninja-build git gcc-13 g++-13
         export CC=gcc-13
         export CXX=g++-13
-      elif [[ "$(PACKAGE_MANAGER)" == "pacman" ]]; then
+      elif [[ "${PACKAGE_MANAGER}" == "pacman" ]]; then
         pacman -Syu --noconfirm
         pacman -S --noconfirm base-devel cmake ninja git
-        # Arch Linux usually has the latest GCC
+        export CC=gcc
+        export CXX=g++
       fi
-      
+
       # Verify C++23 support
-      echo "Testing C++23 support..."
+      echo "Testing C++23 support with ${CXX}..."
       echo '#include <iostream>' > test_cpp23.cpp
       echo 'int main() { return 0; }' >> test_cpp23.cpp
-      $CXX -std=c++23 -c test_cpp23.cpp -o test_cpp23.o && echo "✅ C++23 supported" || (echo "❌ C++23 not supported" && exit 1)
-      
+      ${CXX} -std=c++23 -c test_cpp23.cpp -o test_cpp23.o && echo "C++23 supported" || (echo "C++23 not supported" && exit 1)
+
       # Build project
       mkdir -p build
       cd build
       cmake -G "Ninja" \
-        -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
         -DCMAKE_CXX_STANDARD=23 \
         -DCMAKE_CXX_STANDARD_REQUIRED=ON \
         -DBUILD_TESTS=OFF \
@@ -362,10 +364,10 @@ jobs:
         ..
       cmake --build . --parallel $(nproc)
       cmake --install . --prefix /tmp/install
-      
+
       # Create archive
       cd /tmp
-      tar -czf /output/DIPAL-$(echo "$(CONTAINER_IMAGE)" | tr ':' '-')-$(BUILD_TYPE)-cpp23.tar.gz install/*
+      tar -czf /output/DIPAL-${CONTAINER_IMAGE//:/-}-${BUILD_TYPE}-cpp23.tar.gz install/*
       EOF
       
       chmod +x container_build.sh
