@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cmath>
 #include <format>
+#include <numbers>
 
 namespace DIPAL {
 
@@ -39,7 +40,7 @@ GeometricTransform GeometricTransform::polarToCartesian(int outputWidth,
                        [[maybe_unused]] float normX,
                        [[maybe_unused]] float normY) -> std::pair<float, float> {
         // Convert normalized coordinates [0,1] to polar coordinates
-        float angle = normX * 2.0f * M_PI;  // Map X from [0,1] to [0,2π]
+        float angle = normX * 2.0f * std::numbers::pi_v<float>;  // Map X from [0,1] to [0,2π]
         float radius = normY;               // Map Y from [0,1] to [0,1]
 
         // Convert polar coordinates to Cartesian coordinates
@@ -62,7 +63,7 @@ GeometricTransform GeometricTransform::cartesianToPolar(int outputWidth,
 
     auto mapping = [centerX, centerY](float normX, float normY) -> std::pair<float, float> {
         // Convert normalized coordinates [0,1] to angle and radius
-        float angle = normX * 2.0f * M_PI;
+        float angle = normX * 2.0f * std::numbers::pi_v<float>;
         float radius = normY;
 
         // Convert angle and radius to source image coordinates
@@ -152,7 +153,7 @@ GeometricTransform GeometricTransform::fishEye(float fovDegrees,
                                                int outputHeight,
                                                InterpolationMethod method) {
     // Create a fish-eye lens effect
-    float fovRadians = fovDegrees * (M_PI / 180.0f);
+    float fovRadians = fovDegrees * (std::numbers::pi_v<float> / 180.0f);
 
     auto mapping = [fovRadians](float normX, float normY) -> std::pair<float, float> {
         // Map from [0,1] to [-1,1] range (centered at origin)

@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <format>
+#include <numbers>
 
 namespace DIPAL {
 
@@ -47,7 +48,7 @@ Result<std::unique_ptr<Image>> RotateTransform::apply(const Image& image) const 
 
     try {
         // Convert angle to radians for calculations
-        float angleRadians = m_angle * (M_PI / 180.0f);
+        float angleRadians = m_angle * (std::numbers::pi_v<float> / 180.0f);
 
         // Determine source image dimensions
         int srcWidth = image.getWidth();
