@@ -107,7 +107,7 @@ GeometricTransform GeometricTransform::barrelDistortion(float strength,
 
 GeometricTransform GeometricTransform::perspective(
     const std::array<std::pair<float, float>, 4>& srcQuad,
-    const std::array<std::pair<float, float>, 4>& dstQuad,
+    [[maybe_unused]] const std::array<std::pair<float, float>, 4>& dstQuad,
     int outputWidth,
     int outputHeight,
     InterpolationMethod method) {
