@@ -145,3 +145,14 @@ compile_commands.json.template
 
 # Claude Code local config
 .claude-rules/
+
+# IDE and editor files
+.idea/
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+
+# Clangd cache
+.cache/
