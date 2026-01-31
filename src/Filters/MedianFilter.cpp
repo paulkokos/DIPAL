@@ -41,7 +41,7 @@ Result<std::unique_ptr<Image>> MedianFilter::apply(const Image& image) const {
             const auto& srcGray = static_cast<const GrayscaleImage&>(image);
             auto& dstGray = static_cast<GrayscaleImage&>(*result);
             
-            std::vector<uint8_t> neighborhood(m_kernelSize * m_kernelSize);
+            std::vector<uint8_t> neighborhood(static_cast<size_t>(m_kernelSize) * m_kernelSize);
             
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; ++x) {
@@ -86,14 +86,14 @@ Result<std::unique_ptr<Image>> MedianFilter::apply(const Image& image) const {
             auto& dstColor = static_cast<ColorImage&>(*result);
             
             // Process each channel separately
-            std::vector<uint8_t> rValues(m_kernelSize * m_kernelSize);
-            std::vector<uint8_t> gValues(m_kernelSize * m_kernelSize);
-            std::vector<uint8_t> bValues(m_kernelSize * m_kernelSize);
+            std::vector<uint8_t> rValues(static_cast<size_t>(m_kernelSize) * m_kernelSize);
+            std::vector<uint8_t> gValues(static_cast<size_t>(m_kernelSize) * m_kernelSize);
+            std::vector<uint8_t> bValues(static_cast<size_t>(m_kernelSize) * m_kernelSize);
             std::vector<uint8_t> aValues;
-            
+
             bool hasAlpha = srcColor.hasAlpha();
             if (hasAlpha) {
-                aValues.resize(m_kernelSize * m_kernelSize);
+                aValues.resize(static_cast<size_t>(m_kernelSize) * m_kernelSize);
             }
             
             for (int y = 0; y < height; ++y) {

@@ -76,7 +76,7 @@ Result<std::unique_ptr<Image>> SobelFilter::apply(const Image& image) const {
         
         // Find maximum gradient magnitude for normalization if needed
         int maxMagnitude = 0;
-        std::vector<int> magnitudes(width * height, 0);
+        std::vector<int> magnitudes(static_cast<size_t>(width) * height, 0);
         
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
