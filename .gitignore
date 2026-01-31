@@ -130,6 +130,7 @@ core.*
 # Package management
 vcpkg_installed/
 conan/
+!packaging/conan/
 
 # Temporary files
 *~
