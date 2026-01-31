@@ -155,44 +155,9 @@ Result<std::unique_ptr<Image>> ImageProcessor::applyFilter(
         );
     }
 }
-/*  TODO: there is a bug in the whole Undo functionality
-Result<std::unique_ptr<Image>> ImageProcessor::undo(const Image& image) {
-    if (!canUndo()) {
-        notifyError("No operations to undo");
-        return makeErrorResult<std::unique_ptr<Image>>(
-            ErrorCode::InvalidParameter,
-            "No operations to undo"
-        );
-    }
 
-    auto command = std::move(m_undoStack.back());
-    m_undoStack.pop_back();
+// TODO: Undo functionality needs reimplementation
 
-    std::string operationName = std::format("Undo {}", command->getName());
-    notifyProcessingStarted(operationName);
-
-    try {
-        auto result = command->undo(image);
-        
-        if (!result) {
-            notifyError(std::format("Undo failed: {}", result.error().message()));
-            notifyProcessingCompleted(operationName, false);
-            return result;
-        }
-        
-        notifyProcessingCompleted(operationName, true);
-        return result;
-    } catch (const std::exception& e) {
-        std::string errorMsg = std::format("Exception during undo: {}", e.what());
-        notifyError(errorMsg);
-        notifyProcessingCompleted(operationName, false);
-        return makeErrorResult<std::unique_ptr<Image>>(
-            ErrorCode::ProcessingFailed,
-            errorMsg
-        );
-    }
-}
-*/
 bool ImageProcessor::canUndo() const noexcept {
     return !m_undoStack.empty();
 }
