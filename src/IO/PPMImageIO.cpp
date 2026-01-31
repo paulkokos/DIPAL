@@ -128,7 +128,7 @@ Result<std::unique_ptr<Image>> PPMImageIO::load(std::string_view filename) {
                 }
             } else if (magicNumber == "P6") {
                 // Binary format
-                std::vector<uint8_t> data(width * height * 3);
+                std::vector<uint8_t> data(static_cast<size_t>(width) * height * 3);
                 file.read(reinterpret_cast<char*>(data.data()), data.size());
                 
                 if (file.gcount() != static_cast<std::streamsize>(data.size())) {
@@ -205,7 +205,7 @@ Result<std::unique_ptr<Image>> PPMImageIO::load(std::string_view filename) {
                 }
             } else if (magicNumber == "P5") {
                 // Binary format
-                std::vector<uint8_t> data(width * height);
+                std::vector<uint8_t> data(static_cast<size_t>(width) * height);
                 file.read(reinterpret_cast<char*>(data.data()), data.size());
                 
                 if (file.gcount() != static_cast<std::streamsize>(data.size())) {
