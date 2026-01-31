@@ -146,7 +146,7 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         run: |
           brew update
-          brew install ninja cmake llvm@18
+          brew install ninja cmake llvm@18 2>/dev/null || true
 
       - name: Configure (macOS)
         if: startsWith(matrix.os, 'macos')
