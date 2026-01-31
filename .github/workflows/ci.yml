@@ -9,6 +9,53 @@ on:
     branches: [main, master, develop]
 
 jobs:
+  # ===================
+  # Checksums for Package Managers (releases only)
+  # ===================
+  checksums:
+    name: Generate Package Checksums
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - name: Calculate and publish checksums
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Download source archive
+          curl -sL "https://github.com/${{ github.repository }}/archive/refs/tags/${{ github.ref_name }}.tar.gz" -o source.tar.gz
+
+          # Calculate checksums
+          SHA256=$(sha256sum source.tar.gz | cut -d' ' -f1)
+          SHA512=$(sha512sum source.tar.gz | cut -d' ' -f1)
+
+          # Print to logs
+          echo "SHA256: $SHA256"
+          echo "SHA512: $SHA512"
+
+          # Append to release notes
+          gh release view ${{ github.ref_name }} --repo ${{ github.repository }} --json body -q .body > current_notes.txt || echo "" > current_notes.txt
+
+          cat >> current_notes.txt << EOF
+
+          ---
+
+          ## Package Manager Checksums
+
+          **SHA256** (Homebrew, AUR):
+          \`\`\`
+          $SHA256
+          \`\`\`
+
+          **SHA512** (vcpkg):
+          \`\`\`
+          $SHA512
+          \`\`\`
+          EOF
+
+          gh release edit ${{ github.ref_name }} --repo ${{ github.repository }} --notes-file current_notes.txt
+
   build:
     name: ${{ matrix.os }} - ${{ matrix.compiler }} - ${{ matrix.build_type }}
     runs-on: ${{ matrix.os }}
