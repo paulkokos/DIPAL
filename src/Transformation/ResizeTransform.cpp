@@ -367,14 +367,7 @@ Result<std::unique_ptr<Image>> ResizeTransform::resizeBicubic(const Image& image
     if (!resultImg) {
         return resultImg;
     }
-    
-    [[maybe_unused]]auto& dstImg = *resultImg.value();
-    
-    // Scaling factors
-    [[maybe_unused]]double scaleX = static_cast<double>(srcWidth) / m_newWidth;
 
-    [[maybe_unused]]double scaleY = static_cast<double>(srcHeight) / m_newHeight;
-    
     // For small images or extreme downscaling, fallback to bilinear
     if (srcWidth < 4 || srcHeight < 4 || 
         srcWidth < m_newWidth / 3 || srcHeight < m_newHeight / 3) {

@@ -273,7 +273,6 @@ VoidResult BMPImageIO::save(const Image& image, std::string_view filename) {
         // Calculate row padding (BMP rows are padded to 4-byte boundaries)
         int bytesPerPixel = (image.getType() == Image::Type::Grayscale) ? 1 : 3;
         int rowSize = ((width * bytesPerPixel + 3) / 4) * 4;
-        [[maybe_unused]] int paddingSize = rowSize - (width * bytesPerPixel);
         
         // Prepare headers
         BMPFileHeader fileHeader = {};

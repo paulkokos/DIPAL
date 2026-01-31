@@ -142,7 +142,6 @@ size_t BinaryImage::countWhitePixels() const {
     // in the last byte of each row
     int extraBits = m_width % 8;
     if (extraBits != 0) {
-        [[maybe_unused]] int unusedBits = 8 - extraBits;
         int bytesPerRow = getBytesPerRow();
 
         for (int y = 0; y < m_height; ++y) {
