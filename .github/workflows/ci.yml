@@ -20,59 +20,55 @@ jobs:
             cc: gcc-13
             cxx: g++-13
             build_type: Debug
-            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: gcc-13
             cc: gcc-13
             cxx: g++-13
             build_type: Release
-            enable_sanitizers: OFF
           # Ubuntu 24.04 - GCC 14
           - os: ubuntu-24.04
             compiler: gcc-14
             cc: gcc-14
             cxx: g++-14
             build_type: Debug
-            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: gcc-14
             cc: gcc-14
             cxx: g++-14
             build_type: Release
-            enable_sanitizers: OFF
-          # Ubuntu 24.04 - Clang 18 (Clang 17 has issues with GCC 14 libstdc++)
+          # Ubuntu 24.04 - Clang 18
           - os: ubuntu-24.04
             compiler: clang-18
             cc: clang-18
             cxx: clang++-18
             build_type: Debug
-            enable_sanitizers: OFF
           - os: ubuntu-24.04
             compiler: clang-18
             cc: clang-18
             cxx: clang++-18
             build_type: Release
-            enable_sanitizers: OFF
-          # macOS - Apple Clang
+          # macOS 14 - LLVM Clang 18 (Apple Clang doesn't support C++23)
           - os: macos-14
-            compiler: apple-clang
-            cc: clang
-            cxx: clang++
+            compiler: llvm-18
+            cc: llvm-clang
+            cxx: llvm-clang++
+            build_type: Debug
+          - os: macos-14
+            compiler: llvm-18
+            cc: llvm-clang
+            cxx: llvm-clang++
             build_type: Release
-            enable_sanitizers: OFF
-          # Windows - MSVC 2022 (C++23 support)
+          # Windows - MSVC 2022
           - os: windows-2022
             compiler: msvc
             cc: cl
             cxx: cl
             build_type: Debug
-            enable_sanitizers: OFF
           - os: windows-2022
             compiler: msvc
             cc: cl
             cxx: cl
             build_type: Release
-            enable_sanitizers: OFF
 
     steps:
       - name: Checkout
@@ -95,18 +91,17 @@ jobs:
 
           # Install Clang if needed
           if [[ "${{ matrix.cc }}" == clang-* ]]; then
-            wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-            sudo add-apt-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" -y
+            wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main" | sudo tee /etc/apt/sources.list.d/llvm-18.list
             sudo apt-get update
-            CLANG_VERSION="${{ matrix.cc }}"
-            CLANG_VERSION="${CLANG_VERSION#clang-}"
-            sudo apt-get install -y clang-${CLANG_VERSION}
+            sudo apt-get install -y clang-18
           fi
 
       - name: Install dependencies (macOS)
         if: startsWith(matrix.os, 'macos')
         run: |
-          brew install ninja cmake
+          brew update
+          brew install ninja cmake llvm@18
 
       - name: Install dependencies (Windows)
         if: startsWith(matrix.os, 'windows')
@@ -117,8 +112,8 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Configure (Unix)
-        if: "!startsWith(matrix.os, 'windows')"
+      - name: Configure (Ubuntu)
+        if: startsWith(matrix.os, 'ubuntu')
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
@@ -127,8 +122,22 @@ jobs:
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
             -DCMAKE_CXX_STANDARD=23 \
             -DBUILD_TESTS=ON \
-            -DBUILD_EXAMPLES=ON \
-            -DENABLE_SANITIZERS=${{ matrix.enable_sanitizers }}
+            -DBUILD_EXAMPLES=ON
+
+      - name: Configure (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          # Use LLVM Clang for C++23 support
+          export CC="$(brew --prefix llvm@18)/bin/clang"
+          export CXX="$(brew --prefix llvm@18)/bin/clang++"
+
+          cmake -B build -G Ninja \
+            -DCMAKE_C_COMPILER=$CC \
+            -DCMAKE_CXX_COMPILER=$CXX \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DCMAKE_CXX_STANDARD=23 \
+            -DBUILD_TESTS=ON \
+            -DBUILD_EXAMPLES=ON
 
       - name: Configure (Windows)
         if: startsWith(matrix.os, 'windows')
@@ -137,8 +146,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} `
             -DCMAKE_CXX_STANDARD=23 `
             -DBUILD_TESTS=ON `
-            -DBUILD_EXAMPLES=ON `
-            -DENABLE_SANITIZERS=${{ matrix.enable_sanitizers }}
+            -DBUILD_EXAMPLES=ON
 
       - name: Build
         run: cmake --build build --parallel
