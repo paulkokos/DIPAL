@@ -88,14 +88,8 @@ jobs:
             build_type: Release
 
           # ===================
-          # Windows Server 2019 (~Windows 10)
-          # ===================
-          - os: windows-2019
-            compiler: msvc
-            build_type: Release
-
-          # ===================
           # Windows Server 2022 (~Windows 11)
+          # Note: Windows 2019/MSVC 2019 not supported - lacks C++23 std::expected
           # ===================
           - os: windows-2022
             compiler: msvc
