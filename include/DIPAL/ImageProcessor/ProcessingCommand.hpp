@@ -37,12 +37,6 @@ public:
      */
     virtual bool isUndoable() const = 0;
 
-    /**
-     * @brief Undo the command (if supported)
-     * @param image The processed image
-     * @return Result containing the original image before processing or error
-     */
-//    virtual std::unique_ptr<Image> undo(const Image& image) =0;
 };
 
 } // namespace DIPAL

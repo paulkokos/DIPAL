@@ -194,7 +194,6 @@ Result<std::unique_ptr<Image>> BMPImageIO::load(std::string_view filename) {
                         uint8_t g = (color >> 8) & 0xFF;
                         uint8_t r = (color >> 16) & 0xFF;
                         
-                        //colorImage.setPixel(x, readY, r, g, b);
                         auto setResult = colorImage.setPixel(x, readY, r, g, b);
                         auto checkResult = checkPixelResult<std::unique_ptr<Image>>(setResult, x, readY, nullptr);
                         if (!checkResult) {
