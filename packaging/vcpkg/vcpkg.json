@@ -1,0 +1,9 @@
+{
+  "name": "dipal",
+  "version": "0.1.2",
+  "description": "Digital Image Processing and Analysis Library - A modern C++23 image processing library",
+  "homepage": "https://github.com/paulkokos/DIPAL",
+  "license": "MIT",
+  "supports": "!uwp",
+  "dependencies": []
+}
