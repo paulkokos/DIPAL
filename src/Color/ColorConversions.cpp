@@ -20,11 +20,12 @@ HSV ColorConversions::rgbToHsv(const RGB& rgb) {
     HSV hsv;
 
     // Calculate hue
-    if (delta < 0.00001f) {
+    constexpr float epsilon = 0.00001f;
+    if (delta < epsilon) {
         hsv.h = 0.0f;  // Undefined, default to 0
-    } else if (cmax == r) {
+    } else if (std::abs(cmax - r) < epsilon) {
         hsv.h = 60.0f * std::fmod(((g - b) / delta), 6.0f);
-    } else if (cmax == g) {
+    } else if (std::abs(cmax - g) < epsilon) {
         hsv.h = 60.0f * (((b - r) / delta) + 2.0f);
     } else { // cmax == b
         hsv.h = 60.0f * (((r - g) / delta) + 4.0f);
