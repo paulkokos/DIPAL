@@ -142,3 +142,6 @@ conan/
 
 # Specific to DIPAL
 compile_commands.json.template
+
+# Claude Code local config
+.claude-rules/
