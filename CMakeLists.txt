@@ -41,12 +41,10 @@ if(WIN32 AND BUILD_SHARED_LIBS)
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 endif()
 
-# On macOS with non-Apple Clang, force static library build (libc++ ABI incompatibility)
+# On macOS, force static library build (libc++ ABI issues with Homebrew LLVM)
 if(APPLE AND BUILD_SHARED_LIBS)
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT CMAKE_CXX_COMPILER MATCHES "/usr/bin/clang")
-        message(STATUS "macOS with Homebrew LLVM detected: Building as static library (libc++ ABI incompatibility)")
-        set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
-    endif()
+    message(STATUS "macOS detected: Building as static library")
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 endif()
 
 # ============================================================================
