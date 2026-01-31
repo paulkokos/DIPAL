@@ -33,7 +33,6 @@ Result<std::unique_ptr<Image>> GaussianBlurFilter::apply(const Image& image) con
     
     int width = image.getWidth();
     int height = image.getHeight();
-    [[maybe_unused]] int channels = image.getChannels();
     
     if (width == 0 || height == 0) {
         return makeErrorResult<std::unique_ptr<Image>>(
