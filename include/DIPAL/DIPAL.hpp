@@ -29,6 +29,7 @@
 #include "IO/BMPImageIO.hpp"
 #include "IO/ImageIO.hpp"
 #include "IO/JPEGImageIO.hpp"
+#include "IO/PNGImageIO.hpp"
 #include "IO/PPMImageIO.hpp"
 
 // Processing includes
@@ -65,7 +66,7 @@
 // Version information
 #define DIPAL_VERSION_MAJOR 0
 #define DIPAL_VERSION_MINOR 1
-#define DIPAL_VERSION_PATCH 0
+#define DIPAL_VERSION_PATCH 5
 
 namespace DIPAL {
 /**
@@ -73,7 +74,7 @@ namespace DIPAL {
  * @return Version string in format "MAJOR.MINOR.PATCH"
  */
 inline const char* getVersion() {
-    return "0.1.0";
+    return "0.1.5";
 }
 }  // namespace DIPAL
 

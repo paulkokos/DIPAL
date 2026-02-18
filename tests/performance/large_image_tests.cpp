@@ -13,24 +13,18 @@ using namespace std::chrono;
 /**
  * @brief Performance test fixture for LargeImagePerformance
  */
-class LargeImagePerformanceTest : public ::testing::Test {
+class LargeImageTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Setup for performance tests
-    }
-    
-    void TearDown() override {
-        // Cleanup after performance tests
-    }
-    
-    // Helper method to measure execution time
+    void SetUp() override {}
+    void TearDown() override {}
+
     template<typename Func>
     double measureExecutionTime(Func&& func) {
         auto start = high_resolution_clock::now();
         func();
         auto end = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(end - start);
-        return duration.count() / 1000.0; // Return milliseconds
+        return duration.count() / 1000.0;  // Return milliseconds
     }
 };
 
@@ -38,37 +32,39 @@ protected:
 // BENCHMARK TESTS
 // ============================================================================
 
-TEST_F(LargeImagePerformanceTest, PerformanceBenchmark) {
-    // Benchmark core operations
-    // TODO: Implement performance benchmarks
-    
-    // Example benchmark structure:
-    // auto executionTime = measureExecutionTime([&]() {
-    //     // Operation to benchmark
-    // });
-    // 
-    // EXPECT_LT(executionTime, 1000.0) << "Operation took too long: " << executionTime << "ms";
-    
-    EXPECT_TRUE(true) << "Performance benchmark not implemented";
+TEST_F(LargeImageTest, PerformanceBenchmark) {
+    double ms = measureExecutionTime([&]() {
+        auto r = ImageFactory::createGrayscale(1000, 1000);
+        ASSERT_TRUE(r);
+    });
+    EXPECT_LT(ms, 2000.0) << "Creating 1000x1000 took " << ms << "ms";
 }
 
 // ============================================================================
 // SCALABILITY TESTS
 // ============================================================================
 
-TEST_F(LargeImagePerformanceTest, ScalabilityTest) {
-    // Test performance with increasing load
-    // TODO: Implement scalability tests
-    EXPECT_TRUE(true) << "Scalability test not implemented";
+TEST_F(LargeImageTest, ScalabilityTest) {
+    auto imgResult = ImageFactory::createGrayscale(512, 512);
+    ASSERT_TRUE(imgResult);
+    GaussianBlurFilter filter(1.0f, 5);
+    double ms = measureExecutionTime([&]() {
+        auto r = filter.apply(*imgResult.value());
+        (void)r;
+    });
+    EXPECT_LT(ms, 3000.0) << "Filter on 512x512 took " << ms << "ms";
 }
 
 // ============================================================================
 // MEMORY PERFORMANCE TESTS
 // ============================================================================
 
-TEST_F(LargeImagePerformanceTest, MemoryPerformance) {
-    // Test memory usage and allocation patterns
-    // TODO: Implement memory performance tests
-    EXPECT_TRUE(true) << "Memory performance test not implemented";
+TEST_F(LargeImageTest, MemoryPerformance) {
+    auto imgResult = ImageFactory::createGrayscale(500, 500);
+    ASSERT_TRUE(imgResult);
+    auto& img = *imgResult.value();
+    img.setPixel(499, 499, 200);
+    auto r = img.getPixel(499, 499);
+    ASSERT_TRUE(r);
+    EXPECT_EQ(r.value(), 200);
 }
-

@@ -1,5 +1,5 @@
 // tests/integration/recovery_tests.cpp
-// Priority: 🔧 MEDIUM
+// Priority: 🔧 HIGH
 // Integration test for DIPAL Library
 
 #include <DIPAL/DIPAL.hpp>
@@ -16,49 +16,55 @@ using namespace DIPAL;
  */
 class RecoveryTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Setup for integration tests
-        // Initialize multiple components that will interact
-    }
+    void SetUp() override {}
 
-    void TearDown() override {
-        // Cleanup after integration tests
-    }
+    void TearDown() override {}
 
-    // Helper methods for creating test scenarios
-    std::unique_ptr<Image> createTestImage([[maybe_unused]] int width = 100,
-                                           [[maybe_unused]] int height = 100) {
-        // TODO: Implement test image creation
-        return nullptr;
+    std::unique_ptr<Image> createTestImage(int width = 100,
+                                           int height = 100) {
+        auto result = ImageFactory::createGrayscale(width, height);
+        if (!result) return nullptr;
+        return std::move(result.value());
     }
 };
 
-// ============================================================================
-// COMPONENT INTERACTION TESTS
-// ============================================================================
-
 TEST_F(RecoveryTest, ComponentInteraction) {
-    // Test interaction between multiple components
-    // TODO: Implement component interaction tests
-    EXPECT_TRUE(true) << "Component interaction test not implemented";
-}
+    auto img = ImageFactory::createGrayscale(20, 20);
+    ASSERT_TRUE(img);
 
-// ============================================================================
-// WORKFLOW TESTS
-// ============================================================================
+    ImageProcessor processor;
+    GaussianBlurFilter filter;
+    auto result = processor.applyFilter(*img.value(), filter);
+    ASSERT_TRUE(result);
+
+    auto result2 = processor.applyFilter(*result.value(), filter);
+    ASSERT_TRUE(result2);
+}
 
 TEST_F(RecoveryTest, CompleteWorkflow) {
-    // Test complete workflows from start to finish
-    // TODO: Implement complete workflow tests
-    EXPECT_TRUE(true) << "Complete workflow test not implemented";
+    ImageProcessor processor;
+    EXPECT_FALSE(processor.canUndo());
+    EXPECT_EQ(processor.getUndoCount(), 0u);
+
+    auto img = ImageFactory::createGrayscale(20, 20);
+    ASSERT_TRUE(img);
+    GaussianBlurFilter filter;
+    auto result = processor.applyFilter(*img.value(), filter);
+    ASSERT_TRUE(result);
 }
 
-// ============================================================================
-// ERROR PROPAGATION TESTS
-// ============================================================================
-
 TEST_F(RecoveryTest, ErrorPropagation) {
-    // Test how errors propagate through the system
-    // TODO: Implement error propagation tests
-    EXPECT_TRUE(true) << "Error propagation test not implemented";
+    auto observer = std::make_shared<ConsoleObserver>();
+    ImageProcessor processor;
+    processor.addObserver(observer);
+
+    auto img = ImageFactory::createGrayscale(10, 10);
+    ASSERT_TRUE(img);
+
+    GaussianBlurFilter filter;
+    auto result = processor.applyFilter(*img.value(), filter);
+    ASSERT_TRUE(result);
+
+    processor.removeObserver(observer);
+    SUCCEED();
 }
