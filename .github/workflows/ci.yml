@@ -255,6 +255,7 @@ jobs:
             -DCMAKE_EXE_LINKER_FLAGS="--coverage"
           cmake --build build-coverage --parallel
           ctest --test-dir build-coverage --output-on-failure
+          mkdir -p coverage
           gcovr --root . --filter 'include/DIPAL/' \
                 --html-details coverage/index.html \
                 --xml coverage/coverage.xml \
