@@ -16,7 +16,7 @@
 // Version information
 #define DIPAL_VERSION_MAJOR 0
 #define DIPAL_VERSION_MINOR 1
-#define DIPAL_VERSION_PATCH 0
+#define DIPAL_VERSION_PATCH 5
 
 namespace DIPAL {
 

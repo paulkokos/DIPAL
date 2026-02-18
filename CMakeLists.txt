@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(DIPAL
-        VERSION 0.1.0
+        VERSION 0.1.5
         LANGUAGES CXX
         DESCRIPTION "Digital Image Processing and Analysis Library"
 )

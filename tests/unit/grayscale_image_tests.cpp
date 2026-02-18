@@ -1,10 +1,9 @@
 // tests/unit/grayscale_image_tests.cpp
 // Priority: ⭐ CRITICAL
-// Auto-generated test file for DIPAL Library
+// Unit tests for GrayscaleImage
 
 #include <gtest/gtest.h>
 #include <DIPAL/DIPAL.hpp>
-
 
 using namespace DIPAL;
 
@@ -13,76 +12,87 @@ using namespace DIPAL;
  */
 class GrayscaleImageTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Common setup code for GrayscaleImage tests
-        // Initialize any required objects or state
-    }
-    
-    void TearDown() override {
-        // Common cleanup code for GrayscaleImage tests
-        // Clean up any resources
-    }
-    
-    // Helper methods for this test suite
-    // Add common utility functions here
+    void SetUp() override {}
+    void TearDown() override {}
 };
 
 // ============================================================================
 // BASIC FUNCTIONALITY TESTS
 // ============================================================================
 
-TEST_F(GrayscaleImageTest, DefaultConstruction) {
-    // Test default construction/creation
-    // TODO: Implement basic construction test
-    EXPECT_TRUE(true) << "Default construction test not implemented";
+TEST_F(GrayscaleImageTest, ConstructionSetsProperties) {
+    GrayscaleImage img(20, 30);
+    EXPECT_EQ(img.getWidth(), 20);
+    EXPECT_EQ(img.getHeight(), 30);
+    EXPECT_EQ(img.getType(), Image::Type::Grayscale);
+    EXPECT_EQ(img.getChannels(), 1);
+    EXPECT_FALSE(img.isEmpty());
 }
 
-TEST_F(GrayscaleImageTest, BasicOperations) {
-    // Test basic operations
-    // TODO: Implement basic operations test
-    EXPECT_TRUE(true) << "Basic operations test not implemented";
+TEST_F(GrayscaleImageTest, SetAndGetPixel) {
+    GrayscaleImage img(5, 5);
+    auto setResult = img.setPixel(2, 2, 128);
+    ASSERT_TRUE(setResult);
+    auto getResult = img.getPixel(2, 2);
+    ASSERT_TRUE(getResult);
+    EXPECT_EQ(getResult.value(), 128);
 }
 
 // ============================================================================
 // ERROR HANDLING TESTS
 // ============================================================================
 
-TEST_F(GrayscaleImageTest, ErrorHandling) {
-    // Test error conditions and edge cases
-    // TODO: Implement error handling tests
-    EXPECT_TRUE(true) << "Error handling test not implemented";
+TEST_F(GrayscaleImageTest, OutOfRangePixelError) {
+    GrayscaleImage img(5, 5);
+    auto r = img.getPixel(10, 10);
+    EXPECT_FALSE(r.has_value());
+}
+
+TEST_F(GrayscaleImageTest, SetOutOfRangeError) {
+    GrayscaleImage img(5, 5);
+    auto r = img.setPixel(-1, 0, 0);
+    EXPECT_FALSE(r.has_value());
 }
 
 // ============================================================================
 // EDGE CASE TESTS
 // ============================================================================
 
-TEST_F(GrayscaleImageTest, BoundaryConditions) {
-    // Test boundary conditions and limits
-    // TODO: Implement boundary condition tests
-    EXPECT_TRUE(true) << "Boundary condition test not implemented";
+TEST_F(GrayscaleImageTest, CloneProducesDeepCopy) {
+    GrayscaleImage img(4, 4);
+    img.setPixel(0, 0, 200);
+    auto cloneBase = img.clone();
+    ASSERT_NE(cloneBase, nullptr);
+    auto& clone = dynamic_cast<GrayscaleImage&>(*cloneBase);
+    auto r = clone.getPixel(0, 0);
+    ASSERT_TRUE(r);
+    EXPECT_EQ(r.value(), 200);
+
+    clone.setPixel(0, 0, 50);
+    EXPECT_EQ(img.getPixel(0, 0).value(), 200);  // Original unchanged
 }
 
 // ============================================================================
 // PERFORMANCE TESTS (if applicable)
 // ============================================================================
 
-TEST_F(GrayscaleImageTest, BasicPerformance) {
-    // Basic performance validation
-    // TODO: Implement performance tests if needed
-    EXPECT_TRUE(true) << "Performance test not implemented";
+TEST_F(GrayscaleImageTest, GetRowSpan) {
+    GrayscaleImage img(8, 4);
+    img.setPixel(3, 1, 77);
+    auto row = img.getRow(1);
+    ASSERT_EQ(static_cast<int>(row.size()), 8);
+    EXPECT_EQ(row[3], 77);
 }
 
 // ============================================================================
 // INTEGRATION TESTS (if applicable)
 // ============================================================================
 
-TEST_F(GrayscaleImageTest, Integration) {
-    // Integration with other components
-    // TODO: Implement integration tests if needed
-    EXPECT_TRUE(true) << "Integration test not implemented";
+TEST_F(GrayscaleImageTest, DataSpan) {
+    GrayscaleImage img(2, 2);
+    auto span = img.getDataSpan();
+    EXPECT_EQ(span.size(), 4u);  // 2x2x1 channel
 }
 
 // Additional test cases should be added based on specific functionality
 // of the class under test
-

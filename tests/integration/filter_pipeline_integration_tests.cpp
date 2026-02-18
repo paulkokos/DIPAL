@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <vector>
+#include <span>
 
 #include <gtest/gtest.h>
 
@@ -16,49 +17,54 @@ using namespace DIPAL;
  */
 class FilterPipelineIntegrationTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Setup for integration tests
-        // Initialize multiple components that will interact
-    }
+    void SetUp() override {}
 
-    void TearDown() override {
-        // Cleanup after integration tests
-    }
+    void TearDown() override {}
 
-    // Helper methods for creating test scenarios
-    std::unique_ptr<Image> createTestImage([[maybe_unused]] int width = 100,
-                                           [[maybe_unused]] int height = 100) {
-        // TODO: Implement test image creation
-        return nullptr;
+    std::unique_ptr<Image> createTestImage(int width = 100,
+                                           int height = 100) {
+        auto result = ImageFactory::createGrayscale(width, height);
+        if (!result) return nullptr;
+        return std::move(result.value());
     }
 };
 
-// ============================================================================
-// COMPONENT INTERACTION TESTS
-// ============================================================================
-
 TEST_F(FilterPipelineIntegrationTest, ComponentInteraction) {
-    // Test interaction between multiple components
-    // TODO: Implement component interaction tests
-    EXPECT_TRUE(true) << "Component interaction test not implemented";
-}
+    auto imgResult = ImageFactory::createGrayscale(50, 50);
+    ASSERT_TRUE(imgResult);
 
-// ============================================================================
-// WORKFLOW TESTS
-// ============================================================================
+    ImageProcessor processor;
+    GaussianBlurFilter filter(1.0f, 3);
+
+    auto result = processor.applyFilter(*imgResult.value(), filter);
+    ASSERT_TRUE(result);
+    EXPECT_EQ(result.value()->getWidth(), 50);
+    EXPECT_EQ(result.value()->getHeight(), 50);
+}
 
 TEST_F(FilterPipelineIntegrationTest, CompleteWorkflow) {
-    // Test complete workflows from start to finish
-    // TODO: Implement complete workflow tests
-    EXPECT_TRUE(true) << "Complete workflow test not implemented";
+    auto imgResult = ImageFactory::createGrayscale(64, 64);
+    ASSERT_TRUE(imgResult);
+
+    for (int y = 0; y < 64; ++y) {
+        for (int x = 0; x < 64; ++x) {
+            imgResult.value()->setPixel(x, y, static_cast<uint8_t>((x + y) % 256));
+        }
+    }
+
+    ImageProcessor processor;
+    std::vector<std::unique_ptr<ProcessingCommand>> commands;
+    commands.push_back(std::make_unique<FilterCommand>(std::make_unique<GaussianBlurFilter>(1.0f, 3)));
+    commands.push_back(std::make_unique<FilterCommand>(std::make_unique<SobelFilter>(true)));
+
+    auto result = processor.processAll(*imgResult.value(), std::span(commands.data(), commands.size()));
+    ASSERT_TRUE(result);
+    EXPECT_EQ(result.value()->getType(), Image::Type::Grayscale);
 }
 
-// ============================================================================
-// ERROR PROPAGATION TESTS
-// ============================================================================
-
 TEST_F(FilterPipelineIntegrationTest, ErrorPropagation) {
-    // Test how errors propagate through the system
-    // TODO: Implement error propagation tests
-    EXPECT_TRUE(true) << "Error propagation test not implemented";
+    auto result = ImageIO::load("nonexistent_file.bmp");
+    ASSERT_FALSE(result.has_value());
+    EXPECT_FALSE(result.error().toString().empty());
+    EXPECT_EQ(result.error().code(), ErrorCode::FileNotFound);
 }
