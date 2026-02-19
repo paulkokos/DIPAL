@@ -47,12 +47,9 @@ int main() {
     }
     std::cout << "✓ Filter applied successfully" << std::endl;
 
-    // Get a pixel value to show the image is processed
-    std::cout << "Checking pixel value at center (50, 50): ";
-    auto pixelResult = blurResult.value()->getPixel(50, 50);
-    if (pixelResult) {
-        std::cout << static_cast<int>(pixelResult.value()) << std::endl;
-    }
+    // Verify the filtered image
+    std::cout << "Filtered image size: " << blurResult.value()->getWidth()
+              << "x" << blurResult.value()->getHeight() << std::endl;
 
     // Demonstrate error handling
     std::cout << std::endl << "Demonstrating error handling..." << std::endl;
