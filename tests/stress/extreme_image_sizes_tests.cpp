@@ -97,22 +97,22 @@ TEST_F(ExtremeImageSizesTest, ConcurrentImageCreation) {
 
 TEST_F(ExtremeImageSizesTest, ConcurrentFilterApplication) {
     // Test concurrent filter application on large images
-    std::vector<std::future<bool>> futures;
+    std::atomic<int> successCount(0);
+    std::vector<std::thread> threads;
 
     for (int i = 0; i < 3; ++i) {
-        futures.push_back(std::async(std::launch::async, [&]() {
+        threads.emplace_back([&]() {
             auto img = ImageFactory::createGrayscale(300, 300);
-            if (!img) return false;
+            if (!img) return;
 
             GaussianBlurFilter filter;
             auto result = filter.apply(*img.value());
-            return result.has_value();
-        }));
+            if (result.has_value()) ++successCount;
+        });
     }
 
-    int successCount = 0;
-    for (auto& future : futures) {
-        if (future.get()) ++successCount;
+    for (auto& thread : threads) {
+        thread.join();
     }
     EXPECT_EQ(successCount, 3);
 }

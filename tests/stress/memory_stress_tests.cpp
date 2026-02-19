@@ -7,6 +7,7 @@
 #include <thread>
 #include <vector>
 #include <memory>
+#include <atomic>
 
 using namespace DIPAL;
 
@@ -81,22 +82,20 @@ TEST_F(MemoryStressTest, LargePixelBuffers) {
 
 TEST_F(MemoryStressTest, ConcurrentMemoryAllocation) {
     // Test concurrent memory allocation by multiple threads
-    std::vector<std::future<int>> futures;
+    std::atomic<int> totalAllocations(0);
+    std::vector<std::thread> threads;
 
     for (int t = 0; t < 4; ++t) {
-        futures.push_back(std::async(std::launch::async, [&]() {
-            int allocCount = 0;
+        threads.emplace_back([&]() {
             for (int i = 0; i < 10; ++i) {
                 auto img = ImageFactory::createGrayscale(100, 100);
-                if (img) ++allocCount;
+                if (img) ++totalAllocations;
             }
-            return allocCount;
-        }));
+        });
     }
 
-    int totalAllocations = 0;
-    for (auto& future : futures) {
-        totalAllocations += future.get();
+    for (auto& thread : threads) {
+        thread.join();
     }
     EXPECT_EQ(totalAllocations, 40);
 }
