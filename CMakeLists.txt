@@ -63,6 +63,11 @@ else()
         add_compile_options(-fcolor-diagnostics)
     endif()
 
+    # Apple-specific: Explicitly link C++ standard library for std::future support
+    if(APPLE)
+        add_link_options(-lc++)
+    endif()
+
     # Additional optimizations in Release mode (native only, not for cross-compilation)
     if(CMAKE_BUILD_TYPE MATCHES Release AND NOT CMAKE_CROSSCOMPILING)
         add_compile_options(-march=native)
