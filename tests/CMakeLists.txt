@@ -59,12 +59,15 @@ add_dipal_test(image_conversion_tests integration)
 add_dipal_test(filter_pipeline_integration_tests integration)
 add_dipal_test(error_propagation_tests integration)
 add_dipal_test(recovery_tests integration)
+add_dipal_test(filter_chain_tests integration)
+add_dipal_test(io_tests integration)
 
 # Add performance tests
 add_dipal_test(filter_performance_tests performance)
 add_dipal_test(large_image_tests performance)
 add_dipal_test(batch_processing_tests performance)
 add_dipal_test(performance_regression_tests performance)
+add_dipal_test(filter_benchmark performance)
 
 # Add stress tests
 add_dipal_test(memory_stress_tests stress)
