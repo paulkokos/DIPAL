@@ -61,10 +61,18 @@ else()
     # Clang-specific optimizations
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         add_compile_options(-fcolor-diagnostics)
-        # On macOS, explicitly use libc++ for consistency
+        # On macOS, explicitly use libc++ for consistency and add Homebrew LLVM paths
         if(APPLE)
             add_compile_options(-stdlib=libc++)
             add_link_options(-stdlib=libc++)
+            # Add Homebrew LLVM lib paths for macOS to resolve symbol lookup
+            # This ensures the linker finds the correct libc++ with exception_ptr symbols
+            execute_process(COMMAND brew --prefix llvm@18 OUTPUT_VARIABLE HOMEBREW_LLVM_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+            if(HOMEBREW_LLVM_PREFIX)
+                message(STATUS "Using Homebrew LLVM at: ${HOMEBREW_LLVM_PREFIX}")
+                add_link_options(-L${HOMEBREW_LLVM_PREFIX}/lib)
+                add_link_options(-Wl,-rpath,${HOMEBREW_LLVM_PREFIX}/lib)
+            endif()
         endif()
     endif()
 
