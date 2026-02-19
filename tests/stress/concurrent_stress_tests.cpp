@@ -74,21 +74,23 @@ TEST_F(ConcurrentStressTest, MultiThreadedPixelOperations) {
 
 TEST_F(ConcurrentStressTest, MultiThreadedFilterApplication) {
     // Test concurrent filter application
-    std::vector<std::future<bool>> futures;
+    std::atomic<int> successCount(0);
+    std::vector<std::thread> threads;
 
     for (int i = 0; i < 6; ++i) {
-        futures.push_back(std::async(std::launch::async, [&]() {
+        threads.emplace_back([&]() {
             auto img = ImageFactory::createGrayscale(80, 80);
-            if (!img) return false;
+            if (!img) return;
 
             GaussianBlurFilter filter;
-            return filter.apply(*img.value()).has_value();
-        }));
+            if (filter.apply(*img.value()).has_value()) {
+                ++successCount;
+            }
+        });
     }
 
-    int successCount = 0;
-    for (auto& future : futures) {
-        if (future.get()) ++successCount;
+    for (auto& thread : threads) {
+        thread.join();
     }
     EXPECT_EQ(successCount, 6);
 }
@@ -122,10 +124,11 @@ TEST_F(ConcurrentStressTest, HighContention) {
 
 TEST_F(ConcurrentStressTest, RaceConditionTesting) {
     // Test for race conditions with rapid create/destroy cycles
-    std::vector<std::future<int>> futures;
+    std::atomic<int> totalSuccess(0);
+    std::vector<std::thread> threads;
 
     for (int t = 0; t < 4; ++t) {
-        futures.push_back(std::async(std::launch::async, [&]() {
+        threads.emplace_back([&]() {
             int successCount = 0;
             for (int i = 0; i < 20; ++i) {
                 auto img = ImageFactory::createGrayscale(50, 50);
@@ -134,13 +137,12 @@ TEST_F(ConcurrentStressTest, RaceConditionTesting) {
                     ++successCount;
                 }
             }
-            return successCount;
-        }));
+            totalSuccess += successCount;
+        });
     }
 
-    int totalSuccess = 0;
-    for (auto& future : futures) {
-        totalSuccess += future.get();
+    for (auto& thread : threads) {
+        thread.join();
     }
     EXPECT_EQ(totalSuccess, 80);  // 4 threads * 20 iterations
 }
