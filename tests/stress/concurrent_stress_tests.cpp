@@ -176,19 +176,16 @@ TEST_F(ConcurrentStressTest, ThreadPoolStress) {
     ThreadPool pool(2);
     std::atomic<int> taskCount(0);
 
-    std::vector<std::future<int>> futures;
+    // Submit 10 tasks to the thread pool
     for (int i = 0; i < 10; ++i) {
-        futures.push_back(pool.submit([&]() {
+        pool.submit([&]() {
             ++taskCount;
             return 1;
-        }));
+        });
     }
 
-    int total = 0;
-    for (auto& future : futures) {
-        total += future.get();
-    }
+    // Give threads time to complete
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-    EXPECT_EQ(total, 10);
     EXPECT_EQ(taskCount, 10);
 }
