@@ -1,10 +1,9 @@
 // tests/unit/error_tests.cpp
 // Priority: ⭐ CRITICAL
-// Auto-generated test file for DIPAL Library
+// Unit tests for Error type
 
 #include <gtest/gtest.h>
 #include <DIPAL/DIPAL.hpp>
-
 
 using namespace DIPAL;
 
@@ -13,54 +12,62 @@ using namespace DIPAL;
  */
 class ErrorTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Common setup code for Error tests
-        // Initialize any required objects or state
-    }
-    
-    void TearDown() override {
-        // Common cleanup code for Error tests
-        // Clean up any resources
-    }
-    
-    // Helper methods for this test suite
-    // Add common utility functions here
+    void SetUp() override {}
+    void TearDown() override {}
 };
 
 // ============================================================================
 // BASIC FUNCTIONALITY TESTS
 // ============================================================================
 
-TEST_F(ErrorTest, DefaultConstruction) {
-    // Test default construction/creation
-    // TODO: Implement basic construction test
-    EXPECT_TRUE(true) << "Default construction test not implemented";
+TEST_F(ErrorTest, ConstructWithCode) {
+    Error e(ErrorCode::Success);
+    EXPECT_EQ(e.code(), ErrorCode::Success);
+    EXPECT_EQ(e.category(), ErrorCategory::None);
+    EXPECT_TRUE(e.message().empty());
 }
 
-TEST_F(ErrorTest, BasicOperations) {
-    // Test basic operations
-    // TODO: Implement basic operations test
-    EXPECT_TRUE(true) << "Basic operations test not implemented";
+TEST_F(ErrorTest, ConstructWithCodeAndMessage) {
+    Error e(ErrorCode::FileNotFound, "file.bmp", ErrorCategory::IO);
+    EXPECT_EQ(e.code(), ErrorCode::FileNotFound);
+    EXPECT_EQ(e.category(), ErrorCategory::IO);
+    EXPECT_EQ(e.message(), "file.bmp");
 }
 
 // ============================================================================
 // ERROR HANDLING TESTS
 // ============================================================================
 
-TEST_F(ErrorTest, ErrorHandling) {
-    // Test error conditions and edge cases
-    // TODO: Implement error handling tests
-    EXPECT_TRUE(true) << "Error handling test not implemented";
+TEST_F(ErrorTest, ToStringNotEmpty) {
+    Error e(ErrorCode::AllocationFailed, "out of memory", ErrorCategory::Memory);
+    std::string s = e.toString();
+    EXPECT_FALSE(s.empty());
+    EXPECT_NE(s.find("out of memory"), std::string::npos);
+}
+
+TEST_F(ErrorTest, ImplicitStringConversion) {
+    Error e(ErrorCode::InvalidParameter, "bad", ErrorCategory::Parameter);
+    std::string s = e;
+    EXPECT_FALSE(s.empty());
 }
 
 // ============================================================================
 // EDGE CASE TESTS
 // ============================================================================
 
-TEST_F(ErrorTest, BoundaryConditions) {
-    // Test boundary conditions and limits
-    // TODO: Implement boundary condition tests
-    EXPECT_TRUE(true) << "Boundary condition test not implemented";
+TEST_F(ErrorTest, AllErrorCodes) {
+    std::vector<ErrorCode> codes = {
+        ErrorCode::Success, ErrorCode::Unknown,
+        ErrorCode::FileNotFound, ErrorCode::FileAccessDenied, ErrorCode::InvalidFormat,
+        ErrorCode::AllocationFailed, ErrorCode::InvalidAccess,
+        ErrorCode::InvalidParameter, ErrorCode::OutOfRange,
+        ErrorCode::UnsupportedFormat, ErrorCode::CorruptedData,
+        ErrorCode::ProcessingFailed, ErrorCode::NotImplemented, ErrorCode::InternalError
+    };
+    for (auto code : codes) {
+        Error e(code);
+        EXPECT_FALSE(e.toString().empty()) << "Empty toString for code " << static_cast<int>(code);
+    }
 }
 
 // ============================================================================
@@ -68,9 +75,12 @@ TEST_F(ErrorTest, BoundaryConditions) {
 // ============================================================================
 
 TEST_F(ErrorTest, BasicPerformance) {
-    // Basic performance validation
-    // TODO: Implement performance tests if needed
-    EXPECT_TRUE(true) << "Performance test not implemented";
+    for (int i = 0; i < 100; ++i) {
+        Error e(ErrorCode::Unknown, "test", ErrorCategory::Parameter);
+        auto s = e.toString();
+        (void)s;
+    }
+    SUCCEED();
 }
 
 // ============================================================================
@@ -78,11 +88,11 @@ TEST_F(ErrorTest, BasicPerformance) {
 // ============================================================================
 
 TEST_F(ErrorTest, Integration) {
-    // Integration with other components
-    // TODO: Implement integration tests if needed
-    EXPECT_TRUE(true) << "Integration test not implemented";
+    auto result = makeErrorResult<int>(ErrorCode::FileNotFound, "test.bmp", ErrorCategory::IO);
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error().code(), ErrorCode::FileNotFound);
+    EXPECT_EQ(result.error().category(), ErrorCategory::IO);
 }
 
 // Additional test cases should be added based on specific functionality
 // of the class under test
-

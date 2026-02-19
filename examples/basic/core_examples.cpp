@@ -3,12 +3,14 @@
 #include <iostream>
 
 int main() {
-    DIPAL::LibraryGuard guard;
+  DIPAL::LibraryGuard guard;
 
-    std::cout << "DIPAL Version: " << DIPAL::Core::getVersionString() << std::endl;
-    std::cout << "Build Info: " << DIPAL::Core::getBuildInfo().toString() << std::endl;
-    std::cout << "SSE2 Support: " << (DIPAL::Core::hasSSE2Support() ? "Yes" : "No") << std::endl;
-    std::cout << "Optimal Threads: " << DIPAL::Core::getOptimalThreadCount() << std::endl;
+  std::cout << "DIPAL Version: " << DIPAL::Core::getVersionString() << '\n';
+  std::cout << "Build Info: " << DIPAL::Core::getBuildInfo().toString() << '\n';
+  std::cout << "SSE2 Support: "
+            << (DIPAL::Core::hasSSE2Support() ? "Yes" : "No") << '\n';
+  std::cout << "Optimal Threads: " << DIPAL::Core::getOptimalThreadCount()
+            << '\n';
 
-    return 0;
+  return 0;
 }

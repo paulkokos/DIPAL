@@ -1,16 +1,41 @@
+# DIPAL clangd configuration
+# This file configures clangd for better IDE integration
+
 CompileFlags:
-  Add: [-std=c++23, -Wall, -Wextra, -Wpedantic]
-  
+  Add:
+    - "-std=c++23"
+    - "-Wall"
+    - "-Wextra"
+    - "-Wpedantic"
+
 Diagnostics:
-  UnusedIncludes: Strict
-  
+  ClangTidy:
+    Add:
+      - bugprone-*
+      - cppcoreguidelines-*
+      - modernize-*
+      - performance-*
+      - readability-*
+    Remove:
+      - modernize-use-trailing-return-type
+      - readability-magic-numbers
+      - cppcoreguidelines-avoid-magic-numbers
+      - readability-identifier-length
+  UnusedIncludes: None
+  MissingIncludes: None
+
 InlayHints:
   Enabled: Yes
   ParameterNames: Yes
   DeducedTypes: Yes
-  
+  Designators: Yes
+
 Hover:
   ShowAKA: Yes
 
+Completion:
+  AllScopes: Yes
+
 Index:
   Background: Build
+  StandardLibrary: Yes

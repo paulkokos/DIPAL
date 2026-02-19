@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(DIPAL
-        VERSION 0.1.0
+        VERSION 0.1.6
         LANGUAGES CXX
         DESCRIPTION "Digital Image Processing and Analysis Library"
 )
@@ -61,6 +61,25 @@ else()
     # Clang-specific optimizations
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         add_compile_options(-fcolor-diagnostics)
+        # On macOS, explicitly use libc++ for consistency and add Homebrew LLVM paths
+        if(APPLE)
+            add_compile_options(-stdlib=libc++)
+            add_link_options(-stdlib=libc++)
+            # Add Homebrew LLVM lib paths for macOS to resolve symbol lookup
+            # This ensures the linker finds the correct libc++ with exception_ptr symbols
+            find_program(BREW_EXECUTABLE brew)
+            if(BREW_EXECUTABLE)
+                execute_process(COMMAND ${BREW_EXECUTABLE} --prefix llvm@18
+                    OUTPUT_VARIABLE HOMEBREW_LLVM_PREFIX
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+                    ERROR_QUIET)
+                if(HOMEBREW_LLVM_PREFIX)
+                    message(STATUS "Using Homebrew LLVM at: ${HOMEBREW_LLVM_PREFIX}")
+                    add_link_options(-L${HOMEBREW_LLVM_PREFIX}/lib)
+                    add_link_options(-Wl,-rpath,${HOMEBREW_LLVM_PREFIX}/lib)
+                endif()
+            endif()
+        endif()
     endif()
 
     # Additional optimizations in Release mode (native only, not for cross-compilation)
@@ -70,11 +89,41 @@ else()
 endif()
 
 # Enable Link Time Optimization if requested
-if(ENABLE_LTO)
+# Disable LTO on macOS arm64 due to issues with std::future exception handling
+message(STATUS "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
+
+# Detect arm64 on macOS (supports multiple ways it might be reported)
+set(IS_MACOS_ARM64 FALSE)
+if(APPLE)
+    # Check CMAKE_SYSTEM_PROCESSOR (might be arm64, aarch64, or not set)
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64|ARM64")
+        set(IS_MACOS_ARM64 TRUE)
+    # Check CMAKE_OSX_ARCHITECTURES explicitly
+    elseif(CMAKE_OSX_ARCHITECTURES MATCHES "arm64")
+        set(IS_MACOS_ARM64 TRUE)
+    # On native arm64 builds, CMAKE_SYSTEM_PROCESSOR might be empty - check system info
+    else()
+        execute_process(COMMAND uname -m OUTPUT_VARIABLE ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+        if(ARCH MATCHES "arm64|aarch64")
+            set(IS_MACOS_ARM64 TRUE)
+        endif()
+    endif()
+endif()
+
+if(IS_MACOS_ARM64)
+    message(STATUS "macOS arm64 detected: Disabling LTO and IPO due to std::future exception handling issues")
+    set(ENABLE_LTO OFF CACHE BOOL "Enable Link Time Optimization" FORCE)
+    set(ENABLE_IPO OFF CACHE BOOL "Enable Interprocedural Optimization" FORCE)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
+elseif(ENABLE_LTO)
     include(CheckIPOSupported)
     check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_OUTPUT)
     if(IPO_SUPPORTED)
+        message(STATUS "Link Time Optimization: Enabled")
         set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+    else()
+        message(STATUS "Link Time Optimization: Not supported on this platform")
     endif()
 endif()
 

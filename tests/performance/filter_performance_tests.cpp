@@ -15,22 +15,16 @@ using namespace std::chrono;
  */
 class FilterPerformanceTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Setup for performance tests
-    }
-    
-    void TearDown() override {
-        // Cleanup after performance tests
-    }
-    
-    // Helper method to measure execution time
+    void SetUp() override {}
+    void TearDown() override {}
+
     template<typename Func>
     double measureExecutionTime(Func&& func) {
         auto start = high_resolution_clock::now();
         func();
         auto end = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(end - start);
-        return duration.count() / 1000.0; // Return milliseconds
+        return duration.count() / 1000.0;  // Return milliseconds
     }
 };
 
@@ -39,17 +33,18 @@ protected:
 // ============================================================================
 
 TEST_F(FilterPerformanceTest, PerformanceBenchmark) {
-    // Benchmark core operations
-    // TODO: Implement performance benchmarks
-    
-    // Example benchmark structure:
-    // auto executionTime = measureExecutionTime([&]() {
-    //     // Operation to benchmark
-    // });
-    // 
-    // EXPECT_LT(executionTime, 1000.0) << "Operation took too long: " << executionTime << "ms";
-    
-    EXPECT_TRUE(true) << "Performance benchmark not implemented";
+    auto imgResult = ImageFactory::createGrayscale(100, 100);
+    ASSERT_TRUE(imgResult);
+    for (int y = 0; y < 100; ++y)
+        for (int x = 0; x < 100; ++x)
+            imgResult.value()->setPixel(x, y, static_cast<uint8_t>((x + y) % 256));
+
+    GaussianBlurFilter filter(1.0f, 3);
+    double ms = measureExecutionTime([&]() {
+        auto r = filter.apply(*imgResult.value());
+        (void)r;
+    });
+    EXPECT_LT(ms, 500.0) << "GaussianBlur on 100x100 took " << ms << "ms";
 }
 
 // ============================================================================
@@ -57,9 +52,16 @@ TEST_F(FilterPerformanceTest, PerformanceBenchmark) {
 // ============================================================================
 
 TEST_F(FilterPerformanceTest, ScalabilityTest) {
-    // Test performance with increasing load
-    // TODO: Implement scalability tests
-    EXPECT_TRUE(true) << "Scalability test not implemented";
+    GaussianBlurFilter filter(1.0f, 3);
+    for (int sz : {50, 100}) {
+        auto imgResult = ImageFactory::createGrayscale(sz, sz);
+        ASSERT_TRUE(imgResult);
+        double ms = measureExecutionTime([&]() {
+            auto r = filter.apply(*imgResult.value());
+            (void)r;
+        });
+        EXPECT_LT(ms, 5000.0) << "Filter on " << sz << "x" << sz << " took " << ms << "ms";
+    }
 }
 
 // ============================================================================
@@ -67,8 +69,12 @@ TEST_F(FilterPerformanceTest, ScalabilityTest) {
 // ============================================================================
 
 TEST_F(FilterPerformanceTest, MemoryPerformance) {
-    // Test memory usage and allocation patterns
-    // TODO: Implement memory performance tests
-    EXPECT_TRUE(true) << "Memory performance test not implemented";
+    GaussianBlurFilter filter;
+    for (int i = 0; i < 10; ++i) {
+        auto imgResult = ImageFactory::createGrayscale(50, 50);
+        ASSERT_TRUE(imgResult);
+        auto r = filter.apply(*imgResult.value());
+        ASSERT_TRUE(r);
+    }
+    SUCCEED();
 }
-

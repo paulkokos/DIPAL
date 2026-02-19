@@ -16,49 +16,44 @@ using namespace DIPAL;
  */
 class ImageConversionTest : public ::testing::Test {
 protected:
-    void SetUp() override {
-        // Setup for integration tests
-        // Initialize multiple components that will interact
-    }
+    void SetUp() override {}
 
-    void TearDown() override {
-        // Cleanup after integration tests
-    }
+    void TearDown() override {}
 
-    // Helper methods for creating test scenarios
-    std::unique_ptr<Image> createTestImage([[maybe_unused]] int width = 100,
-                                           [[maybe_unused]] int height = 100) {
-        // TODO: Implement test image creation
-        return nullptr;
+    std::unique_ptr<Image> createTestImage(int width = 100,
+                                           int height = 100) {
+        auto result = ImageFactory::createGrayscale(width, height);
+        if (!result) return nullptr;
+        return std::move(result.value());
     }
 };
 
-// ============================================================================
-// COMPONENT INTERACTION TESTS
-// ============================================================================
-
 TEST_F(ImageConversionTest, ComponentInteraction) {
-    // Test interaction between multiple components
-    // TODO: Implement component interaction tests
-    EXPECT_TRUE(true) << "Component interaction test not implemented";
-}
+    auto gray = ImageFactory::createGrayscale(10, 10);
+    ASSERT_TRUE(gray);
+    ASSERT_TRUE(gray.value()->setPixel(5, 5, 128));
 
-// ============================================================================
-// WORKFLOW TESTS
-// ============================================================================
+    auto color = ImageFactory::toColor(*gray.value());
+    ASSERT_TRUE(color);
+
+    uint8_t r, g, b, a;
+    ASSERT_TRUE(color.value()->getPixel(5, 5, r, g, b, a));
+    EXPECT_EQ(r, 128);
+    EXPECT_EQ(g, 128);
+    EXPECT_EQ(b, 128);
+}
 
 TEST_F(ImageConversionTest, CompleteWorkflow) {
-    // Test complete workflows from start to finish
-    // TODO: Implement complete workflow tests
-    EXPECT_TRUE(true) << "Complete workflow test not implemented";
+    auto color = ImageFactory::createColor(16, 16, false);
+    ASSERT_TRUE(color);
+    ASSERT_TRUE(color.value()->setPixel(0, 0, 200, 100, 50));
+
+    auto gray = ImageFactory::toGrayscale(*color.value());
+    ASSERT_TRUE(gray);
+    EXPECT_EQ(gray.value()->getType(), Image::Type::Grayscale);
 }
 
-// ============================================================================
-// ERROR PROPAGATION TESTS
-// ============================================================================
-
 TEST_F(ImageConversionTest, ErrorPropagation) {
-    // Test how errors propagate through the system
-    // TODO: Implement error propagation tests
-    EXPECT_TRUE(true) << "Error propagation test not implemented";
+    auto invalid = ImageFactory::createGrayscale(0, 100);
+    EXPECT_FALSE(invalid.has_value());
 }
