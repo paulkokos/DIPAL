@@ -66,7 +66,7 @@
 // Version information
 #define DIPAL_VERSION_MAJOR 0
 #define DIPAL_VERSION_MINOR 1
-#define DIPAL_VERSION_PATCH 5
+#define DIPAL_VERSION_PATCH 6
 
 namespace DIPAL {
 /**
@@ -74,7 +74,7 @@ namespace DIPAL {
  * @return Version string in format "MAJOR.MINOR.PATCH"
  */
 inline const char* getVersion() {
-    return "0.1.5";
+    return "0.1.6";
 }
 }  // namespace DIPAL
 
