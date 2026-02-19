@@ -2,7 +2,7 @@
 # DIPAL Build Script
 # Usage: ./scripts/build.sh [options]
 
-set -e
+set -eo pipefail
 
 # Colors for output
 RED='\033[0;31m'

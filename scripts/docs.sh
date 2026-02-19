@@ -74,12 +74,13 @@ fi
 # Create Doxyfile if it doesn't exist
 if [ ! -f "Doxyfile" ]; then
     echo -e "${YELLOW}Creating Doxyfile...${NC}"
-    cat > Doxyfile << 'EOF'
+    DIPAL_VERSION=$(grep -E 'VERSION [0-9]+\.[0-9]+\.[0-9]+' CMakeLists.txt | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    cat > Doxyfile << EOF
 # DIPAL Doxygen Configuration
 
 PROJECT_NAME           = "DIPAL"
 PROJECT_BRIEF          = "Digital Image Processing and Analysis Library"
-PROJECT_NUMBER         = 0.1.4
+PROJECT_NUMBER         = ${DIPAL_VERSION}
 
 OUTPUT_DIRECTORY       = docs/api
 INPUT                  = include src

@@ -7,8 +7,6 @@ CompileFlags:
     - "-Wall"
     - "-Wextra"
     - "-Wpedantic"
-  Remove:
-    - "-W*"  # Remove warnings that may conflict with clangd
 
 Diagnostics:
   ClangTidy:

@@ -61,7 +61,6 @@ TEST_F(ParallelBenchmarkTest, ParallelFilterApply) {
 TEST_F(ParallelBenchmarkTest, ThreadPoolSubmitAndWait) {
     // Test concurrent task execution without using futures
     // to avoid std::future issues on macOS arm64
-    ThreadPool pool(2);
     std::atomic<int> counter{0};
 
     std::vector<std::thread> threads;
