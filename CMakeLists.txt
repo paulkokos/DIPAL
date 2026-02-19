@@ -63,11 +63,6 @@ else()
         add_compile_options(-fcolor-diagnostics)
     endif()
 
-    # Apple-specific: Explicitly link C++ standard library for std::future support
-    if(APPLE)
-        add_link_options(-lc++)
-    endif()
-
     # Additional optimizations in Release mode (native only, not for cross-compilation)
     if(CMAKE_BUILD_TYPE MATCHES Release AND NOT CMAKE_CROSSCOMPILING)
         add_compile_options(-march=native)
@@ -75,11 +70,16 @@ else()
 endif()
 
 # Enable Link Time Optimization if requested
+# Disable LTO on macOS arm64 due to issues with std::future exception handling
 if(ENABLE_LTO)
-    include(CheckIPOSupported)
-    check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_OUTPUT)
-    if(IPO_SUPPORTED)
-        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+    if(APPLE AND CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
+        message(STATUS "macOS arm64 detected: Disabling LTO due to exception handling issues")
+    else()
+        include(CheckIPOSupported)
+        check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_OUTPUT)
+        if(IPO_SUPPORTED)
+            set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+        endif()
     endif()
 endif()
 
