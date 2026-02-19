@@ -67,11 +67,17 @@ else()
             add_link_options(-stdlib=libc++)
             # Add Homebrew LLVM lib paths for macOS to resolve symbol lookup
             # This ensures the linker finds the correct libc++ with exception_ptr symbols
-            execute_process(COMMAND brew --prefix llvm@18 OUTPUT_VARIABLE HOMEBREW_LLVM_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
-            if(HOMEBREW_LLVM_PREFIX)
-                message(STATUS "Using Homebrew LLVM at: ${HOMEBREW_LLVM_PREFIX}")
-                add_link_options(-L${HOMEBREW_LLVM_PREFIX}/lib)
-                add_link_options(-Wl,-rpath,${HOMEBREW_LLVM_PREFIX}/lib)
+            find_program(BREW_EXECUTABLE brew)
+            if(BREW_EXECUTABLE)
+                execute_process(COMMAND ${BREW_EXECUTABLE} --prefix llvm@18
+                    OUTPUT_VARIABLE HOMEBREW_LLVM_PREFIX
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+                    ERROR_QUIET)
+                if(HOMEBREW_LLVM_PREFIX)
+                    message(STATUS "Using Homebrew LLVM at: ${HOMEBREW_LLVM_PREFIX}")
+                    add_link_options(-L${HOMEBREW_LLVM_PREFIX}/lib)
+                    add_link_options(-Wl,-rpath,${HOMEBREW_LLVM_PREFIX}/lib)
+                endif()
             endif()
         endif()
     endif()

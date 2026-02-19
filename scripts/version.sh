@@ -83,9 +83,16 @@ fi
 
 cd "$PROJECT_ROOT"
 
-# Get current version from CMakeLists.txt
+# Portable in-place sed (works on both BSD/macOS and GNU/Linux sed)
+portable_sed() {
+    local expr="$1"
+    local file="$2"
+    sed -i.bak -E "$expr" "$file" && rm -f "$file.bak"
+}
+
+# Get current version from CMakeLists.txt (portable: no grep -P)
 get_version() {
-    grep -oP 'VERSION \K[0-9]+\.[0-9]+\.[0-9]+' CMakeLists.txt | head -1
+    grep -E 'VERSION [0-9]+\.[0-9]+\.[0-9]+' CMakeLists.txt | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1
 }
 
 # Set version in all files
@@ -105,29 +112,29 @@ set_version() {
     fi
 
     # Update CMakeLists.txt
-    sed -i "s/VERSION [0-9]\+\.[0-9]\+\.[0-9]\+/VERSION $new_ver/" CMakeLists.txt
+    portable_sed "s/VERSION [0-9]+\.[0-9]+\.[0-9]+/VERSION $new_ver/" CMakeLists.txt
     echo -e "  ${GREEN}Updated: CMakeLists.txt${NC}"
 
     # Update DIPAL.hpp version macros if they exist
     if [ -f "include/DIPAL/DIPAL.hpp" ]; then
         if grep -q "DIPAL_VERSION_MAJOR" include/DIPAL/DIPAL.hpp; then
-            sed -i "s/#define DIPAL_VERSION_MAJOR [0-9]\+/#define DIPAL_VERSION_MAJOR $major/" include/DIPAL/DIPAL.hpp
-            sed -i "s/#define DIPAL_VERSION_MINOR [0-9]\+/#define DIPAL_VERSION_MINOR $minor/" include/DIPAL/DIPAL.hpp
-            sed -i "s/#define DIPAL_VERSION_PATCH [0-9]\+/#define DIPAL_VERSION_PATCH $patch/" include/DIPAL/DIPAL.hpp
+            portable_sed "s/#define DIPAL_VERSION_MAJOR [0-9]+/#define DIPAL_VERSION_MAJOR $major/" include/DIPAL/DIPAL.hpp
+            portable_sed "s/#define DIPAL_VERSION_MINOR [0-9]+/#define DIPAL_VERSION_MINOR $minor/" include/DIPAL/DIPAL.hpp
+            portable_sed "s/#define DIPAL_VERSION_PATCH [0-9]+/#define DIPAL_VERSION_PATCH $patch/" include/DIPAL/DIPAL.hpp
             echo -e "  ${GREEN}Updated: include/DIPAL/DIPAL.hpp${NC}"
         fi
     fi
 
     # Update Doxyfile if it exists
     if [ -f "Doxyfile" ]; then
-        sed -i "s/PROJECT_NUMBER *= *[0-9]\+\.[0-9]\+\.[0-9]\+/PROJECT_NUMBER         = $new_ver/" Doxyfile
+        portable_sed "s/PROJECT_NUMBER *= *[0-9]+\.[0-9]+\.[0-9]+/PROJECT_NUMBER         = $new_ver/" Doxyfile
         echo -e "  ${GREEN}Updated: Doxyfile${NC}"
     fi
 
     # Update packaging files
     for file in packaging/vcpkg/vcpkg.json packaging/conan/conanfile.py packaging/homebrew/dipal.rb packaging/aur/PKGBUILD; do
         if [ -f "$file" ]; then
-            sed -i "s/[0-9]\+\.[0-9]\+\.[0-9]\+/$new_ver/g" "$file"
+            portable_sed "s/[0-9]+\.[0-9]+\.[0-9]+/$new_ver/g" "$file"
             echo -e "  ${GREEN}Updated: $file${NC}"
         fi
     done
