@@ -49,7 +49,14 @@ TEST_F(PlatformCompatibilityTest, PathSeparators) {
 
 TEST_F(PlatformCompatibilityTest, EnvironmentVariables) {
     // Test environment variable access
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996)  // Suppress 'getenv' unsafe warning on MSVC
+#endif
     const char* homeEnv = std::getenv("HOME");
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
     if (homeEnv != nullptr) {
         EXPECT_GT(std::string(homeEnv).length(), 0);
     }

@@ -143,7 +143,8 @@ TEST_F(ExtremeImageSizesTest, ColorImageStress) {
     for (int i = 0; i < 10; ++i) {
         int x = (i * 25) % 256;
         int y = (i * 15) % 256;
-        ASSERT_TRUE(img.value()->setPixel(x, y, 100 + i, 150 - i, 200));
+        ASSERT_TRUE(img.value()->setPixel(x, y, static_cast<uint8_t>(100 + i),
+                                          static_cast<uint8_t>(150 - i), 200));
     }
 
     SUCCEED();
