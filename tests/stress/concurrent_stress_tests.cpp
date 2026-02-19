@@ -6,7 +6,6 @@
 #include <DIPAL/DIPAL.hpp>
 #include <thread>
 #include <vector>
-#include <future>
 #include <atomic>
 #include <chrono>
 
@@ -23,12 +22,12 @@ protected:
 
     template<typename Func>
     void runConcurrentOperations(int numThreads, Func&& func) {
-        std::vector<std::future<void>> futures;
+        std::vector<std::thread> threads;
         for (int i = 0; i < numThreads; ++i) {
-            futures.push_back(std::async(std::launch::async, func));
+            threads.emplace_back(func);
         }
-        for (auto& future : futures) {
-            future.wait();
+        for (auto& thread : threads) {
+            thread.join();
         }
     }
 };
