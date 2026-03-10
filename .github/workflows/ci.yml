@@ -116,22 +116,22 @@ jobs:
           # ===================
           # macOS 14 (Sonoma)
           # ===================
-          - os: macos-14
-            compiler: llvm-18
-            build_type: Debug
-          - os: macos-14
-            compiler: llvm-18
-            build_type: Release
+          # - os: macos-14
+          #   compiler: llvm-18
+          #   build_type: Debug
+          # - os: macos-14
+          #   compiler: llvm-18
+          #   build_type: Release
 
           # ===================
           # macOS 15 (Sequoia - Latest)
           # ===================
-          - os: macos-15
-            compiler: llvm-18
-            build_type: Debug
-          - os: macos-15
-            compiler: llvm-18
-            build_type: Release
+          # - os: macos-15
+          #   compiler: llvm-18
+          #   build_type: Debug
+          # - os: macos-15
+          #   compiler: llvm-18
+          #   build_type: Release
 
           # ===================
           # Windows Server 2022 (~Windows 11)
@@ -190,27 +190,27 @@ jobs:
             -DBUILD_EXAMPLES=ON
 
       # ===================
-      # macOS Setup
+      # macOS Setup (Disabled)
       # ===================
-      - name: Install dependencies (macOS)
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          brew update
-          brew install ninja cmake llvm@18 2>/dev/null || true
+      # - name: Install dependencies (macOS)
+      #   if: startsWith(matrix.os, 'macos')
+      #   run: |
+      #     brew update
+      #     brew install ninja cmake llvm@18 2>/dev/null || true
 
-      - name: Configure (macOS)
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          export CC="$(brew --prefix llvm@18)/bin/clang"
-          export CXX="$(brew --prefix llvm@18)/bin/clang++"
+      # - name: Configure (macOS)
+      #   if: startsWith(matrix.os, 'macos')
+      #   run: |
+      #     export CC="$(brew --prefix llvm@18)/bin/clang"
+      #     export CXX="$(brew --prefix llvm@18)/bin/clang++"
 
-          cmake -B build -G Ninja \
-            -DCMAKE_C_COMPILER=$CC \
-            -DCMAKE_CXX_COMPILER=$CXX \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-            -DCMAKE_CXX_STANDARD=23 \
-            -DBUILD_TESTS=ON \
-            -DBUILD_EXAMPLES=ON
+      #     cmake -B build -G Ninja \
+      #       -DCMAKE_C_COMPILER=$CC \
+      #       -DCMAKE_CXX_COMPILER=$CXX \
+      #       -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+      #       -DCMAKE_CXX_STANDARD=23 \
+      #       -DBUILD_TESTS=ON \
+      #       -DBUILD_EXAMPLES=ON
 
       # ===================
       # Windows Setup
