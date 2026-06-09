@@ -87,6 +87,117 @@ struct HSV {
 };
 
 /**
+ * @brief HSI color structure (Hue-Saturation-Intensity)
+ */
+struct HSI {
+    float h;  // Hue [0, 360)
+    float s;  // Saturation [0, 1]
+    float i;  // Intensity [0, 1]
+
+    constexpr HSI() noexcept : h(0.0f), s(0.0f), i(0.0f) {}
+    constexpr HSI(float h, float s, float i) noexcept : h(h), s(s), i(i) {}
+
+    bool operator==(const HSI& o) const noexcept {
+        constexpr float eps = 0.0001f;
+        return std::abs(h-o.h)<eps && std::abs(s-o.s)<eps && std::abs(i-o.i)<eps;
+    }
+    bool operator!=(const HSI& o) const noexcept { return !(*this == o); }
+};
+
+/**
+ * @brief HLS color structure (Hue-Lightness-Saturation)
+ */
+struct HLS {
+    float h;  // Hue [0, 360)
+    float l;  // Lightness [0, 1]
+    float s;  // Saturation [0, 1]
+
+    constexpr HLS() noexcept : h(0.0f), l(0.0f), s(0.0f) {}
+    constexpr HLS(float h, float l, float s) noexcept : h(h), l(l), s(s) {}
+
+    bool operator==(const HLS& o) const noexcept {
+        constexpr float eps = 0.0001f;
+        return std::abs(h-o.h)<eps && std::abs(l-o.l)<eps && std::abs(s-o.s)<eps;
+    }
+    bool operator!=(const HLS& o) const noexcept { return !(*this == o); }
+};
+
+/**
+ * @brief CIELAB color structure (perceptually uniform)
+ * L* in [0, 100], a* and b* typically in [-128, 127]
+ */
+struct Lab {
+    float L;
+    float a;
+    float b;
+
+    constexpr Lab() noexcept : L(0.0f), a(0.0f), b(0.0f) {}
+    constexpr Lab(float L, float a, float b) noexcept : L(L), a(a), b(b) {}
+
+    bool operator==(const Lab& o) const noexcept {
+        constexpr float eps = 0.001f;
+        return std::abs(L-o.L)<eps && std::abs(a-o.a)<eps && std::abs(b-o.b)<eps;
+    }
+    bool operator!=(const Lab& o) const noexcept { return !(*this == o); }
+};
+
+/**
+ * @brief CMY color structure (subtractive, printing)
+ * Each channel in [0, 1]
+ */
+struct CMY {
+    float c;  // Cyan
+    float m;  // Magenta
+    float y;  // Yellow
+
+    constexpr CMY() noexcept : c(0.0f), m(0.0f), y(0.0f) {}
+    constexpr CMY(float c, float m, float y) noexcept : c(c), m(m), y(y) {}
+
+    bool operator==(const CMY& o) const noexcept {
+        constexpr float eps = 0.0001f;
+        return std::abs(c-o.c)<eps && std::abs(m-o.m)<eps && std::abs(y-o.y)<eps;
+    }
+    bool operator!=(const CMY& o) const noexcept { return !(*this == o); }
+};
+
+/**
+ * @brief YCbCr color structure (luma + chroma, BT.601)
+ * Y in [16, 235], Cb/Cr in [16, 240] (studio swing)
+ */
+struct YCbCr {
+    uint8_t y;
+    uint8_t cb;
+    uint8_t cr;
+
+    constexpr YCbCr() noexcept : y(16), cb(128), cr(128) {}
+    constexpr YCbCr(uint8_t y, uint8_t cb, uint8_t cr) noexcept : y(y), cb(cb), cr(cr) {}
+
+    bool operator==(const YCbCr& o) const noexcept {
+        return y == o.y && cb == o.cb && cr == o.cr;
+    }
+    bool operator!=(const YCbCr& o) const noexcept { return !(*this == o); }
+};
+
+/**
+ * @brief YIQ color structure (NTSC broadcast)
+ * Y in [0, 1], I in [-0.596, 0.596], Q in [-0.523, 0.523]
+ */
+struct YIQ {
+    float y;
+    float i;
+    float q;
+
+    constexpr YIQ() noexcept : y(0.0f), i(0.0f), q(0.0f) {}
+    constexpr YIQ(float y, float i, float q) noexcept : y(y), i(i), q(q) {}
+
+    bool operator==(const YIQ& o) const noexcept {
+        constexpr float eps = 0.0001f;
+        return std::abs(y-o.y)<eps && std::abs(i-o.i)<eps && std::abs(q-o.q)<eps;
+    }
+    bool operator!=(const YIQ& o) const noexcept { return !(*this == o); }
+};
+
+/**
  * @brief 2D size structure
  */
 struct Size {
