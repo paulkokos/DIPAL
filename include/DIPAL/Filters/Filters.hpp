@@ -22,5 +22,8 @@
 #include "TopHatFilter.hpp"
 #include "HitOrMissFilter.hpp"
 #include "SkeletonFilter.hpp"
+#include "BilateralFilter.hpp"
+#include "HighPassFilter.hpp"
+#include "LowPassFilter.hpp"
 
 #endif  // DIPAL_FILTERS_HPP

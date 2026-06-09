@@ -39,6 +39,9 @@
 #include "Filters/TopHatFilter.hpp"
 #include "Filters/HitOrMissFilter.hpp"
 #include "Filters/SkeletonFilter.hpp"
+#include "Filters/BilateralFilter.hpp"
+#include "Filters/HighPassFilter.hpp"
+#include "Filters/LowPassFilter.hpp"
 
 // I/O Includes
 #include "IO/BMPImageIO.hpp"
