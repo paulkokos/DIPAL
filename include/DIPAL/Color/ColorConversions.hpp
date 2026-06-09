@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include "../Core/Types.hpp"
+#include <array>
 
 namespace DIPAL {
 
@@ -62,6 +63,48 @@ public:
      * @return Blended color
      */
     [[nodiscard]] static RGBA blendColors(const RGBA& foreground, const RGBA& background);
+
+    // -------------------------------------------------------------------------
+    // HSI
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static HSI  rgbToHsi(const RGB& rgb);
+    [[nodiscard]] static RGB  hsiToRgb(const HSI& hsi);
+
+    // -------------------------------------------------------------------------
+    // HLS
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static HLS  rgbToHls(const RGB& rgb);
+    [[nodiscard]] static RGB  hlsToRgb(const HLS& hls);
+
+    // -------------------------------------------------------------------------
+    // CIELAB  (D65 illuminant, sRGB primaries)
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static Lab  rgbToLab(const RGB& rgb);
+    [[nodiscard]] static RGB  labToRgb(const Lab& lab);
+
+    // -------------------------------------------------------------------------
+    // CMY
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static CMY  rgbToCmy(const RGB& rgb);
+    [[nodiscard]] static RGB  cmyToRgb(const CMY& cmy);
+
+    // -------------------------------------------------------------------------
+    // sRGB  (linear ↔ gamma-corrected)
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static std::array<float,3> rgbToLinear(const RGB& rgb);
+    [[nodiscard]] static RGB  linearToRgb(const std::array<float,3>& linear);
+
+    // -------------------------------------------------------------------------
+    // YCbCr  (BT.601 studio swing)
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static YCbCr rgbToYCbCr(const RGB& rgb);
+    [[nodiscard]] static RGB   yCbCrToRgb(const YCbCr& ycbcr);
+
+    // -------------------------------------------------------------------------
+    // YIQ  (NTSC)
+    // -------------------------------------------------------------------------
+    [[nodiscard]] static YIQ  rgbToYiq(const RGB& rgb);
+    [[nodiscard]] static RGB  yiqToRgb(const YIQ& yiq);
 };
 
 } // namespace DIPAL
