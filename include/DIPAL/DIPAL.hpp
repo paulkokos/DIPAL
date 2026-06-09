@@ -20,6 +20,8 @@
 
 // Filter includes
 #include "Filters/FilterStrategy.hpp"
+#include "Filters/Kernel.hpp"
+#include "Filters/ConvolutionFilter.hpp"
 #include "Filters/GaussianBlurFilter.hpp"
 #include "Filters/MedianFilter.hpp"
 #include "Filters/SobelFilter.hpp"
