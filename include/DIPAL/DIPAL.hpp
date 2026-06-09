@@ -26,6 +26,10 @@
 #include "Filters/MedianFilter.hpp"
 #include "Filters/SobelFilter.hpp"
 #include "Filters/UnsharpMaskFilter.hpp"
+#include "Filters/LaplacianFilter.hpp"
+#include "Filters/PrewittFilter.hpp"
+#include "Filters/RobertsCrossFilter.hpp"
+#include "Filters/CannyFilter.hpp"
 
 // I/O Includes
 #include "IO/BMPImageIO.hpp"

@@ -9,5 +9,9 @@
 #include "MedianFilter.hpp"
 #include "SobelFilter.hpp"
 #include "UnsharpMaskFilter.hpp"
+#include "LaplacianFilter.hpp"
+#include "PrewittFilter.hpp"
+#include "RobertsCrossFilter.hpp"
+#include "CannyFilter.hpp"
 
 #endif  // DIPAL_FILTERS_HPP
