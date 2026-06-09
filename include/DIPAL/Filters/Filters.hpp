@@ -13,5 +13,14 @@
 #include "PrewittFilter.hpp"
 #include "RobertsCrossFilter.hpp"
 #include "CannyFilter.hpp"
+#include "StructuringElement.hpp"
+#include "ErosionFilter.hpp"
+#include "DilationFilter.hpp"
+#include "OpeningFilter.hpp"
+#include "ClosingFilter.hpp"
+#include "MorphologicalGradientFilter.hpp"
+#include "TopHatFilter.hpp"
+#include "HitOrMissFilter.hpp"
+#include "SkeletonFilter.hpp"
 
 #endif  // DIPAL_FILTERS_HPP
