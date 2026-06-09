@@ -20,10 +20,25 @@
 
 // Filter includes
 #include "Filters/FilterStrategy.hpp"
+#include "Filters/Kernel.hpp"
+#include "Filters/ConvolutionFilter.hpp"
 #include "Filters/GaussianBlurFilter.hpp"
 #include "Filters/MedianFilter.hpp"
 #include "Filters/SobelFilter.hpp"
 #include "Filters/UnsharpMaskFilter.hpp"
+#include "Filters/LaplacianFilter.hpp"
+#include "Filters/PrewittFilter.hpp"
+#include "Filters/RobertsCrossFilter.hpp"
+#include "Filters/CannyFilter.hpp"
+#include "Filters/StructuringElement.hpp"
+#include "Filters/ErosionFilter.hpp"
+#include "Filters/DilationFilter.hpp"
+#include "Filters/OpeningFilter.hpp"
+#include "Filters/ClosingFilter.hpp"
+#include "Filters/MorphologicalGradientFilter.hpp"
+#include "Filters/TopHatFilter.hpp"
+#include "Filters/HitOrMissFilter.hpp"
+#include "Filters/SkeletonFilter.hpp"
 
 // I/O Includes
 #include "IO/BMPImageIO.hpp"
